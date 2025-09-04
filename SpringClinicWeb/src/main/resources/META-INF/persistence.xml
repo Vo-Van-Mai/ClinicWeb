@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+  <!-- Define Persistence Unit -->
+  <persistence-unit name="my_persistence_unit">
+    <class>com.vvmntl.pojo.Rating</class>
+    <class>com.vvmntl.pojo.Message</class>
+    <class>com.vvmntl.pojo.User</class>
+    <class>com.vvmntl.pojo.Doctor</class>
+    <class>com.vvmntl.pojo.Appointmentslot</class>
+    <class>com.vvmntl.pojo.Paymentdetail</class>
+    <class>com.vvmntl.pojo.Appointment</class>
+    <class>com.vvmntl.pojo.AppointmentService</class>
+    <class>com.vvmntl.pojo.Prescriptdetail</class>
+    <class>com.vvmntl.pojo.Payment</class>
+    <class>com.vvmntl.pojo.Pharmacy</class>
+    <class>com.vvmntl.pojo.Workschedule</class>
+    <class>com.vvmntl.pojo.Specialize</class>
+    <class>com.vvmntl.pojo.CategoryMedicine</class>
+    <class>com.vvmntl.pojo.Medicine</class>
+    <class>com.vvmntl.pojo.Service</class>
+    <class>com.vvmntl.pojo.DoctorSpecialize</class>
+    <class>com.vvmntl.pojo.Medicalrecord</class>
+    <class>com.vvmntl.pojo.Patient</class>
+    <class>com.vvmntl.pojo.Prescription</class>
+    <class>com.vvmntl.pojo.Chat</class>
+    <class>com.vvmntl.pojo.Category</class>
+  </persistence-unit>
+</persistence>
