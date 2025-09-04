@@ -69,8 +69,9 @@ public class Appointment implements Serializable {
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
     @ManyToOne
     private Patient patientId;
-    @OneToMany(mappedBy = "appointmentId")
-    private Set<AppointmentService> appointmentServiceSet;
+    @JoinColumn(name = "service_id", referencedColumnName = "id")
+    @ManyToOne
+    private Service serviceId;
     @OneToMany(mappedBy = "appointmentId")
     private Set<Payment> paymentSet;
 
@@ -161,12 +162,12 @@ public class Appointment implements Serializable {
         this.patientId = patientId;
     }
 
-    public Set<AppointmentService> getAppointmentServiceSet() {
-        return appointmentServiceSet;
+    public Service getServiceId() {
+        return serviceId;
     }
 
-    public void setAppointmentServiceSet(Set<AppointmentService> appointmentServiceSet) {
-        this.appointmentServiceSet = appointmentServiceSet;
+    public void setServiceId(Service serviceId) {
+        this.serviceId = serviceId;
     }
 
     public Set<Payment> getPaymentSet() {

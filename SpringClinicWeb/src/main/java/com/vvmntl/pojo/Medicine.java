@@ -43,8 +43,7 @@ import java.util.Set;
     @NamedQuery(name = "Medicine.findByStock", query = "SELECT m FROM Medicine m WHERE m.stock = :stock"),
     @NamedQuery(name = "Medicine.findByStatus", query = "SELECT m FROM Medicine m WHERE m.status = :status"),
     @NamedQuery(name = "Medicine.findByUpdatedDate", query = "SELECT m FROM Medicine m WHERE m.updatedDate = :updatedDate"),
-    @NamedQuery(name = "Medicine.findByCreatedDate", query = "SELECT m FROM Medicine m WHERE m.createdDate = :createdDate"),
-    @NamedQuery(name = "Medicine.findByMedicinecol", query = "SELECT m FROM Medicine m WHERE m.medicinecol = :medicinecol")})
+    @NamedQuery(name = "Medicine.findByCreatedDate", query = "SELECT m FROM Medicine m WHERE m.createdDate = :createdDate")})
 public class Medicine implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -89,9 +88,6 @@ public class Medicine implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
-    @Size(max = 45)
-    @Column(name = "medicinecol")
-    private String medicinecol;
     @OneToMany(mappedBy = "medicineId")
     private Set<Prescriptdetail> prescriptdetailSet;
     @OneToMany(mappedBy = "medicineId")
@@ -211,14 +207,6 @@ public class Medicine implements Serializable {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
-    }
-
-    public String getMedicinecol() {
-        return medicinecol;
-    }
-
-    public void setMedicinecol(String medicinecol) {
-        this.medicinecol = medicinecol;
     }
 
     public Set<Prescriptdetail> getPrescriptdetailSet() {

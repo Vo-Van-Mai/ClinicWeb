@@ -7,6 +7,8 @@ package com.vvmntl.pojo;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -35,8 +37,8 @@ public class Service implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
@@ -50,7 +52,7 @@ public class Service implements Serializable {
     @Column(name = "price")
     private BigDecimal price;
     @OneToMany(mappedBy = "serviceId")
-    private Set<AppointmentService> appointmentServiceSet;
+    private Set<Appointment> appointmentSet;
     @JoinColumn(name = "specialize_id", referencedColumnName = "id")
     @ManyToOne
     private Specialize specializeId;
@@ -92,12 +94,12 @@ public class Service implements Serializable {
         this.price = price;
     }
 
-    public Set<AppointmentService> getAppointmentServiceSet() {
-        return appointmentServiceSet;
+    public Set<Appointment> getAppointmentSet() {
+        return appointmentSet;
     }
 
-    public void setAppointmentServiceSet(Set<AppointmentService> appointmentServiceSet) {
-        this.appointmentServiceSet = appointmentServiceSet;
+    public void setAppointmentSet(Set<Appointment> appointmentSet) {
+        this.appointmentSet = appointmentSet;
     }
 
     public Specialize getSpecializeId() {
