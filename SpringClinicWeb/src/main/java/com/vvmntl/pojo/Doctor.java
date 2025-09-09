@@ -5,7 +5,6 @@
 package com.vvmntl.pojo;
 
 import jakarta.persistence.Basic;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -61,7 +60,7 @@ public class Doctor implements Serializable {
     private User user;
     @OneToMany(mappedBy = "doctorId")
     private Set<Chat> chatSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctorId")
+    @OneToMany(mappedBy = "doctorId")
     private Set<DoctorSpecialize> doctorSpecializeSet;
     @OneToMany(mappedBy = "doctorId")
     private Set<Workschedule> workscheduleSet;

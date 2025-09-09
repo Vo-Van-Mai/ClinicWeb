@@ -15,7 +15,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -25,7 +28,8 @@ import java.io.Serializable;
 @Table(name = "doctor_specialize")
 @NamedQueries({
     @NamedQuery(name = "DoctorSpecialize.findAll", query = "SELECT d FROM DoctorSpecialize d"),
-    @NamedQuery(name = "DoctorSpecialize.findById", query = "SELECT d FROM DoctorSpecialize d WHERE d.id = :id")})
+    @NamedQuery(name = "DoctorSpecialize.findById", query = "SELECT d FROM DoctorSpecialize d WHERE d.id = :id"),
+    @NamedQuery(name = "DoctorSpecialize.findByJoinDate", query = "SELECT d FROM DoctorSpecialize d WHERE d.joinDate = :joinDate")})
 public class DoctorSpecialize implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,11 +38,14 @@ public class DoctorSpecialize implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Column(name = "join_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date joinDate;
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Doctor doctorId;
     @JoinColumn(name = "specialize_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Specialize specializeId;
 
     public DoctorSpecialize() {
@@ -54,6 +61,14 @@ public class DoctorSpecialize implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Date getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(Date joinDate) {
+        this.joinDate = joinDate;
     }
 
     public Doctor getDoctorId() {

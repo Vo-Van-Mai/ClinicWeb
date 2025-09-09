@@ -5,7 +5,6 @@
 package com.vvmntl.pojo;
 
 import jakarta.persistence.Basic;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -50,7 +49,7 @@ public class Specialize implements Serializable {
     private String description;
     @OneToMany(mappedBy = "specializeId")
     private Set<Service> serviceSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "specializeId")
+    @OneToMany(mappedBy = "specializeId")
     private Set<DoctorSpecialize> doctorSpecializeSet;
 
     public Specialize() {

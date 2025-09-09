@@ -68,7 +68,7 @@ CREATE TABLE `appointmentslot` (
   `schedule_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_appslot_schedule_idx` (`schedule_id`),
-  CONSTRAINT `fk_appslot_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `workschedule` (`id`)
+  CONSTRAINT `fk_appslot_schedule` FOREIGN KEY (`schedule_id`) REFERENCES `workschedule` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -96,7 +96,7 @@ CREATE TABLE `category` (
   `pharmacy_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_pharmacy_category_idx` (`pharmacy_id`),
-  CONSTRAINT `fk_pharmacy_category` FOREIGN KEY (`pharmacy_id`) REFERENCES `pharmacy` (`id`)
+  CONSTRAINT `fk_pharmacy_category` FOREIGN KEY (`pharmacy_id`) REFERENCES `pharmacy` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -124,8 +124,8 @@ CREATE TABLE `category_medicine` (
   PRIMARY KEY (`id`),
   KEY `fk_category_catemedicine_idx` (`category_id`),
   KEY `fk_medicine_catemedicine_idx` (`medicine_id`),
-  CONSTRAINT `fk_category_catemedicine` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
-  CONSTRAINT `fk_medicine_catemedicine` FOREIGN KEY (`medicine_id`) REFERENCES `medicine` (`id`)
+  CONSTRAINT `fk_category_catemedicine` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_medicine_catemedicine` FOREIGN KEY (`medicine_id`) REFERENCES `medicine` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -191,7 +191,7 @@ CREATE TABLE `doctor` (
 
 LOCK TABLES `doctor` WRITE;
 /*!40000 ALTER TABLE `doctor` DISABLE KEYS */;
-INSERT INTO `doctor` VALUES (2,'Cardiology specialist with over 15 years of experience.',15,'LIC-12345',1),(5,'General practitioner with 10 years of experience.',10,'LIC-67890',1);
+INSERT INTO `doctor` VALUES (2,'Cardiology specialist with over 15 years of experience.',15,'LIC-12345',1),(5,'General practitioner with 10 years of experience.',10,'LIC-67890',1),(6,'Chuyên khoa Tim mạch',10,'LIC-1006',1),(7,'Chuyên khoa Nội tổng quát',8,'LIC-1007',1),(8,'Chuyên khoa Nhi khoa',12,'LIC-1008',1),(9,'Chuyên khoa Ngoại tổng quát',15,'LIC-1009',1),(10,'Chuyên khoa Da liễu',7,'LIC-1010',1),(11,'Chuyên khoa Răng - Hàm - Mặt',9,'LIC-1011',1),(12,'Chuyên khoa Tai - Mũi - Họng',11,'LIC-1012',1),(13,'Chuyên khoa Mắt',13,'LIC-1013',1),(14,'Chuyên khoa Sản - Phụ khoa',10,'LIC-1014',1),(15,'Chuyên khoa Thần kinh',14,'LIC-1015',1);
 /*!40000 ALTER TABLE `doctor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,14 +204,15 @@ DROP TABLE IF EXISTS `doctor_specialize`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `doctor_specialize` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `doctor_id` int NOT NULL,
-  `specialize_id` int NOT NULL,
+  `doctor_id` int DEFAULT NULL,
+  `specialize_id` int DEFAULT NULL,
+  `join_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_together` (`doctor_id`,`specialize_id`),
   KEY `fk_doctor_specialize_idx` (`doctor_id`),
   KEY `fk_specialize_id_idx` (`specialize_id`),
-  CONSTRAINT `fk_doctor_id` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`),
-  CONSTRAINT `fk_specialize_id` FOREIGN KEY (`specialize_id`) REFERENCES `specialize` (`id`)
+  CONSTRAINT `fk_doctor_id` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_specialize_id` FOREIGN KEY (`specialize_id`) REFERENCES `specialize` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -221,7 +222,7 @@ CREATE TABLE `doctor_specialize` (
 
 LOCK TABLES `doctor_specialize` WRITE;
 /*!40000 ALTER TABLE `doctor_specialize` DISABLE KEYS */;
-INSERT INTO `doctor_specialize` VALUES (1,2,1),(2,2,3),(3,5,3);
+INSERT INTO `doctor_specialize` VALUES (1,2,1,'2025-09-09 19:59:53'),(2,2,3,'2025-09-09 19:59:53'),(3,5,3,'2025-09-09 19:59:53');
 /*!40000 ALTER TABLE `doctor_specialize` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,7 +307,7 @@ CREATE TABLE `message` (
   `chat_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_message_chat_idx` (`chat_id`),
-  CONSTRAINT `fk_message_chat` FOREIGN KEY (`chat_id`) REFERENCES `chat` (`id`)
+  CONSTRAINT `fk_message_chat` FOREIGN KEY (`chat_id`) REFERENCES `chat` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -502,8 +503,8 @@ CREATE TABLE `rating` (
   PRIMARY KEY (`id`),
   KEY `fk_patient_rating_idx` (`patient_id`),
   KEY `fk_doctor_rating_idx` (`doctor_id`),
-  CONSTRAINT `fk_doctor_rating` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`),
-  CONSTRAINT `fk_patient_rating` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`id`)
+  CONSTRAINT `fk_doctor_rating` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_patient_rating` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -532,8 +533,8 @@ CREATE TABLE `service` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`),
   KEY `fk_service_specialize_idx` (`specialize_id`),
-  CONSTRAINT `fk_service_specialize` FOREIGN KEY (`specialize_id`) REFERENCES `specialize` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `fk_service_specialize` FOREIGN KEY (`specialize_id`) REFERENCES `specialize` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -542,7 +543,7 @@ CREATE TABLE `service` (
 
 LOCK TABLES `service` WRITE;
 /*!40000 ALTER TABLE `service` DISABLE KEYS */;
-INSERT INTO `service` VALUES (1,'Tư vấn tim mạch',500000.00,1),(2,'Kiểm tra da liễu',200000.00,2),(3,'Khám tai mũi họng cơ bản',150000.00,3);
+INSERT INTO `service` VALUES (1,'Tư vấn tim mạch',500000.00,1),(2,'Kiểm tra da liễu',200000.00,2),(3,'Khám tai mũi họng cơ bản',150000.00,3),(4,'Khám tim mạch tổng quát',300000.00,1),(5,'Điện tâm đồ (ECG)',250000.00,1),(6,'Siêu âm tim Doppler màu',600000.00,1),(7,'Khám da liễu tổng quát',200000.00,2),(8,'Điều trị mụn chuyên sâu',500000.00,2),(9,'Xóa sẹo bằng laser',1200000.00,2),(10,'Khám tai mũi họng tổng quát',200000.00,3),(11,'Nội soi tai mũi họng',350000.00,3),(12,'Lấy dị vật tai - mũi - họng',400000.00,3),(13,'Khám sức khỏe tổng quát',400000.00,4),(14,'Xét nghiệm máu cơ bản',250000.00,4),(15,'Khám và tư vấn tiểu đường',300000.00,4),(16,'Khám ngoại khoa tổng quát',350000.00,5),(17,'Phẫu thuật cắt ruột thừa',7000000.00,5),(18,'Cắt u mỡ dưới da',2000000.00,5),(19,'Khám nhi tổng quát',250000.00,6),(20,'Tiêm chủng mở rộng cho trẻ',150000.00,6),(21,'Khám và điều trị sốt siêu vi',200000.00,6),(22,'Khám phụ khoa tổng quát',300000.00,7),(23,'Siêu âm thai 4D',500000.00,7),(24,'Khám và tư vấn kế hoạch hóa gia đình',250000.00,7),(25,'Khám răng tổng quát',200000.00,8),(26,'Nhổ răng sâu',400000.00,8),(27,'Niềng răng chỉnh nha',15000000.00,8),(28,'Khám mắt tổng quát',250000.00,9),(29,'Đo thị lực & kính thuốc',200000.00,9),(30,'Phẫu thuật đục thủy tinh thể',10000000.00,9),(31,'Khám thần kinh tổng quát',350000.00,10),(32,'Điện não đồ (EEG)',600000.00,10),(33,'Khám và điều trị đau nửa đầu',400000.00,10);
 /*!40000 ALTER TABLE `service` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -558,7 +559,7 @@ CREATE TABLE `specialize` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -567,7 +568,7 @@ CREATE TABLE `specialize` (
 
 LOCK TABLES `specialize` WRITE;
 /*!40000 ALTER TABLE `specialize` DISABLE KEYS */;
-INSERT INTO `specialize` VALUES (1,'Tim mạch','Chuyên tư vấn và giải quyết các vấn đề về tim mạch, Tim mạch là nền tảng của sự sống'),(2,'Da liễu','Chuyên tư vấn và giải quyết các vấn đề về da liễu, các bệnh ngoài gia, viêm ngữa,...'),(3,'Tai mũi họng','Chuyên giải quyết các vấn đề về tai mũi họng, từ trẻ em đến người lớn');
+INSERT INTO `specialize` VALUES (1,'Tim mạch','Chuyên tư vấn và giải quyết các vấn đề về tim mạch, Tim mạch là nền tảng của sự sống'),(2,'Da liễu','Chuyên tư vấn và giải quyết các vấn đề về da liễu, các bệnh ngoài gia, viêm ngữa,...'),(3,'Tai mũi họng','Chẩn đoán và điều trị các bệnh lý về tai, mũi, họng và thanh quản.'),(4,'Nội tổng quát','Khám và điều trị các bệnh lý nội khoa phổ biến như huyết áp, tiểu đường, tim mạch.'),(5,'Ngoại tổng quát','Thực hiện phẫu thuật và điều trị các bệnh lý cần can thiệp ngoại khoa.'),(6,'Nhi khoa','Khám và điều trị bệnh cho trẻ sơ sinh, trẻ nhỏ và thanh thiếu niên.'),(7,'Sản - Phụ khoa','Khám, tư vấn và điều trị các vấn đề sức khỏe sinh sản, thai sản và phụ khoa.'),(8,'Răng - Hàm - Mặt','Chăm sóc sức khỏe răng miệng, chỉnh nha và phẫu thuật thẩm mỹ hàm mặt.'),(9,'Mắt','Khám, chẩn đoán và điều trị các bệnh lý về mắt và thị lực.'),(10,'Thần kinh','Khám và điều trị các bệnh liên quan đến hệ thần kinh trung ương và ngoại biên.');
 /*!40000 ALTER TABLE `specialize` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -580,24 +581,24 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `first_name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `last_name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `date_of_birth` datetime DEFAULT NULL,
-  `phone` varchar(15) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `is_active` tinyint(1) DEFAULT '1',
   `is_admin` tinyint(1) DEFAULT '0',
-  `gender` enum('MALE','FEMALE','OTHER') COLLATE utf8mb4_unicode_520_ci DEFAULT 'OTHER',
-  `avatar` varchar(100) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `gender` enum('MALE','FEMALE','OTHER') COLLATE utf8mb4_unicode_ci DEFAULT 'OTHER',
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
-  `role` enum('ADMIN','DOCTOR','PATIENT') COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'PATIENT',
+  `role` enum('ADMIN','DOCTOR','PATIENT') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'PATIENT',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `phone_UNIQUE` (`phone`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -606,7 +607,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (2,'aaaaa','123456','A','Nguyen Van','1980-05-15 00:00:00','1234567890','nguyenvana@gmail.com',1,0,'MALE',NULL,'2025-09-05 03:16:59','DOCTOR'),(3,'bbbbb','123456','B','Nguyen Van','1980-05-15 00:00:00','1234567891','nguyenvanb@gmail.com',1,0,'MALE',NULL,'2025-09-05 03:16:59','PATIENT'),(4,'admin','123456','Admin','User','1975-01-01 00:00:00','1122334455','admin@example.com',1,1,'OTHER',NULL,'2025-09-05 03:16:59','ADMIN'),(5,'anhtuan','password789','Anh','Tuan','1985-03-25 00:00:00','1112223333','anhtuan@example.com',1,0,'MALE',NULL,'2025-09-05 03:16:59','DOCTOR');
+INSERT INTO `user` VALUES (2,'aaaaa','123456','A','Nguyen Van','1980-05-15 00:00:00','1234567890','nguyenvana@gmail.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-05 03:16:59','DOCTOR'),(3,'bbbbb','123456','B','Nguyen Van','1980-05-15 00:00:00','1234567891','nguyenvanb@gmail.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-05 03:16:59','PATIENT'),(4,'admin','123456','Admin','User','1975-01-01 00:00:00','1122334455','admin@example.com',1,1,'OTHER','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-05 03:16:59','ADMIN'),(5,'anhtuan','password789','Anh','Tuan','1985-03-25 00:00:00','1112223333','anhtuan@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-05 03:16:59','DOCTOR'),(6,'dr.nguyen','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Mãi','Võ Văn','1980-05-12 00:00:00','0901234567','nguyen.bacsi@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(7,'dr.tran','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Anh','Nguyễn Thị Hồng ','1985-03-20 00:00:00','0902234567','tran.bacsi@example.com',1,0,'FEMALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(8,'dr.le','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Nam','Đặng Phương','1978-09-08 00:00:00','0903234567','le.bacsi@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(9,'dr.pham','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Lan','Phạm Hoàng ','1990-11-02 00:00:00','0904234567','pham.bacsi@example.com',1,0,'FEMALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(10,'dr.hoang','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Sơn','Hoàng Văn','1982-01-15 00:00:00','0905234567','hoang.bacsi@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(11,'dr.vo','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Anh','Võ Thị Minh','1992-07-25 00:00:00','0906234567','vo.bacsi@example.com',1,0,'FEMALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(12,'dr.bui','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Minh','Bùi Anh ','1988-12-05 00:00:00','0907234567','bui.bacsi@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(13,'dr.dang','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Ly','Phan Hoang Yến','1995-04-30 00:00:00','0908234567','dang.bacsi@example.com',1,0,'FEMALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(14,'dr.truong','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Tín','Lê Trung','1983-08-18 00:00:00','0909234567','truong.bacsi@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(15,'dr.dinh','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Hoa','Trân Thị','1987-06-22 00:00:00','0910234567','dinh.bacsi@example.com',1,0,'FEMALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -625,7 +626,7 @@ CREATE TABLE `workschedule` (
   `doctor_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_doctor_workschedule_idx` (`doctor_id`),
-  CONSTRAINT `fk_doctor_workschedule` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`)
+  CONSTRAINT `fk_doctor_workschedule` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -648,4 +649,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-09-05  3:53:51
+-- Dump completed on 2025-09-09 20:29:15

@@ -23,7 +23,4 @@ public class CategoryServiceImpl implements CategoryService{
     public Category getCategoryById(int id) {
         return this.cateRepo.getCategoryById(id);
     }
-
-     
-    
 }

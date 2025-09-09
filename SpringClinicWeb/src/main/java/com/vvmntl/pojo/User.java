@@ -8,6 +8,8 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -89,10 +91,10 @@ public class User implements Serializable {
     private Boolean isActive;
     @Column(name = "is_admin")
     private Boolean isAdmin;
-    @Size(max = 6)
-    @Column(name = "gender")
-    private String gender;
-    @Size(max = 100)
+    @Enumerated(EnumType.STRING)
+    @Column(name="gender")
+    private Gender gender;
+    @Size(max = 255)
     @Column(name = "avatar")
     private String avatar;
     @Column(name = "created_date")
@@ -101,8 +103,8 @@ public class User implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 7)
-    @Column(name = "role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Doctor doctor;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
@@ -115,7 +117,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Integer id, String username, String password, String firstName, String lastName, String email, String role) {
+    public User(Integer id, String username, String password, String firstName, String lastName, String email, Role role) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -205,11 +207,11 @@ public class User implements Serializable {
         this.isAdmin = isAdmin;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -229,11 +231,11 @@ public class User implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

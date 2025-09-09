@@ -1,0 +1,51 @@
+<!<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head> 
+    <th:object th:replace="base :: bt"></th:object>
+</head>
+<body class="container">
+    <div th:replace="base :: menu"></div>
+
+    <div>
+        <h1 class="text-center text-info">
+            Danh sách khoa trong hệ thống
+        </h1>
+
+        <form th:action="@{/specialize}" class="d-flex">
+            <div class="mb-3 mt-3 flex-grow-1">
+                <input type="text" class="form-control" id="kw" placeholder="Nhập tên khoa muốn tìm kiếm...." name="kw">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        </form>
+
+
+        <table class="table table-striped text-center align-middle">
+            <thead>
+                <tr>
+                    <th>Mã khoa</th>
+                    <th>Tên khoa</th>
+                    <th>Mô tả</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="s: ${specialize}">
+                    <td th:text="${s.id}"></td>
+                    <td th:text="${s.name}"></td>
+                    <td th:text="${s.description}"></td>
+                    <th>
+                        <button class="btn btn-danger">Xóa</button>
+                        <a class="btn btn-success">Cập nhật</a>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div th:replace="base :: footer"></div>
+    <script th:src="@{/js/main.js}">
+
+    </script>
+</body>
+</html>
