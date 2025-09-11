@@ -13,11 +13,13 @@
 
         <form th:action="@{/specialize}" class="d-flex">
             <div class="mb-3 mt-3 flex-grow-1">
-                <input type="text" class="form-control" id="kw" placeholder="Nhập tên khoa muốn tìm kiếm...." name="kw">
+                <input type="text" class="form-control" id="kw" placeholder="Nhập tên khoa muốn tìm kiếm...." name="name">
             </div>
 
             <button type="submit" class="btn btn-primary">Tìm kiếm</button>
         </form>
+        
+        <a class="btn btn-info" th:href="@{/specialize/addview}">Thêm khoa mới</a>
 
 
         <table class="table table-striped text-center align-middle">
@@ -26,6 +28,7 @@
                     <th>Mã khoa</th>
                     <th>Tên khoa</th>
                     <th>Mô tả</th>
+                    <th>Trạng thái hoạt động</th>
                     <th></th>
                 </tr>
             </thead>
@@ -34,8 +37,9 @@
                     <td th:text="${s.id}"></td>
                     <td th:text="${s.name}"></td>
                     <td th:text="${s.description}"></td>
+                    <td th:text="${s.isActive}"></td>
                     <th>
-                        <button class="btn btn-danger">Xóa</button>
+                        <button class="btn btn-danger" th:onclick="'deleteSpecialize(\''+@{/api/specialize/}+'\','+${s.id}+')'">Xóa</button>
                         <a class="btn btn-success">Cập nhật</a>
                     </th>
                 </tr>
@@ -44,8 +48,6 @@
 
     </div>
     <div th:replace="base :: footer"></div>
-    <script th:src="@{/js/main.js}">
-
-    </script>
+    <script th:src="@{/js/main.js}"></script>
 </body>
 </html>

@@ -8,38 +8,36 @@
 
     <div>
         <h1 class="text-center text-info">
-            Danh sách khoa trong hệ thống
+            Danh sách dịch vụ trong hệ thống
         </h1>
 
-        <form th:action="@{/specialize}" class="d-flex">
+        <form th:action="@{/service}" class="d-flex">
             <div class="mb-3 mt-3 flex-grow-1">
                 <input type="text" class="form-control" id="kw" placeholder="Nhập tên khoa muốn tìm kiếm...." name="name">
             </div>
 
             <button type="submit" class="btn btn-primary">Tìm kiếm</button>
         </form>
-        
-        <a class="btn btn-info" th:href="@{/specialize/addview}">Thêm khoa mới</a>
 
 
         <table class="table table-striped text-center align-middle">
             <thead>
                 <tr>
-                    <th>Mã khoa</th>
-                    <th>Tên khoa</th>
-                    <th>Mô tả</th>
-                    <th>Trạng thái hoạt động</th>
+                    <th>Mã dịch vụ</th>
+                    <th>Tên dịch vụ</th>
+                    <th>Giá dịch vụ</th>
+                    <th>Khoa</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="s: ${specialize}">
+                <tr th:each="s: ${services}">
                     <td th:text="${s.id}"></td>
                     <td th:text="${s.name}"></td>
-                    <td th:text="${s.description}"></td>
-                    <td th:text="${s.isActive}"></td>
+                    <td th:text="${s.price}"></td>
+                    <td th:text="${s.specializeId.name}"></td>
                     <th>
-                        <button class="btn btn-danger" th:onclick="'deleteSpecialize(\''+@{/api/specialize/}+'\','+${s.id}+')'">Xóa</button>
+                        <button class="btn btn-danger">Xóa</button>
                         <a class="btn btn-success">Cập nhật</a>
                     </th>
                 </tr>
@@ -48,6 +46,8 @@
 
     </div>
     <div th:replace="base :: footer"></div>
-    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/main.js}">
+
+    </script>
 </body>
 </html>

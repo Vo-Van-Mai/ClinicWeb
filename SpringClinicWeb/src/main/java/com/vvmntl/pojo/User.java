@@ -5,7 +5,6 @@
 package com.vvmntl.pojo;
 
 import jakarta.persistence.Basic;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -15,7 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -23,6 +22,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 /**
  *
@@ -87,12 +87,12 @@ public class User implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "email")
     private String email;
-    @Column(name = "is_active")
-    private Boolean isActive;
+    @Column(name = "is_active", columnDefinition = "boolean default true")
+    private Boolean isActive = true;
     @Column(name = "is_admin")
     private Boolean isAdmin;
+    @Size(max = 6)
     @Enumerated(EnumType.STRING)
-    @Column(name="gender")
     private Gender gender;
     @Size(max = 255)
     @Column(name = "avatar")
@@ -105,10 +105,8 @@ public class User implements Serializable {
     @Size(min = 1, max = 7)
     @Enumerated(EnumType.STRING)
     private Role role;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-    private Doctor doctor;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-    private Patient patient;
+    @OneToMany(mappedBy = "userId")
+    private Set<Notification> notificationSet;
 
     public User() {
     }
@@ -239,20 +237,12 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
+    public Set<Notification> getNotificationSet() {
+        return notificationSet;
     }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
-    }
-
-    public Patient getPatient() {
-        return patient;
-    }
-
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setNotificationSet(Set<Notification> notificationSet) {
+        this.notificationSet = notificationSet;
     }
 
     @Override

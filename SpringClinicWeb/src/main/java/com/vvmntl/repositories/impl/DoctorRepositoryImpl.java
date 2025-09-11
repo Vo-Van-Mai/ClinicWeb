@@ -5,10 +5,14 @@
 package com.vvmntl.repositories.impl;
 
 import com.vvmntl.pojo.Doctor;
+import com.vvmntl.pojo.DoctorSpecialize;
+import com.vvmntl.pojo.Specialize;
 import com.vvmntl.repositories.DoctorRepository;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import java.util.ArrayList;
@@ -43,7 +47,9 @@ public class DoctorRepositoryImpl implements DoctorRepository{
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Doctor> query = b.createQuery(Doctor.class);
         Root<Doctor> r = query.from(Doctor.class);
-        query.select(r);
+        r.fetch("doctorSpecializeSet", JoinType.LEFT);
+
+        query.select(r).distinct(true);
         
         if (params != null){
             List<Predicate> predicates = new ArrayList<>();
@@ -64,6 +70,21 @@ public class DoctorRepositoryImpl implements DoctorRepository{
             q.setFirstResult(start);
         }
         
+        return q.getResultList();
+    }
+
+    @Override
+    public List<Doctor> getDoctorBySpecializeId(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Doctor> query = b.createQuery(Doctor.class);
+        Root<Doctor> r = query.from(Doctor.class);
+        Join<Doctor, DoctorSpecialize> dsJoin = r.join("doctorSpecializeSet" );
+        Join<DoctorSpecialize, Specialize> sJoin = dsJoin.join("specializeId");
+        
+        query.select(r).where(b.equal(sJoin.get("id"), id));
+        
+        Query q = s.createQuery(query);
         return q.getResultList();
     }
     

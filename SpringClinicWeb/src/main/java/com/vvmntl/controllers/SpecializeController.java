@@ -4,12 +4,19 @@
  */
 package com.vvmntl.controllers;
 
+import com.vvmntl.pojo.Specialize;
 import com.vvmntl.services.SpecializeService;
+import jakarta.validation.Valid;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -22,8 +29,24 @@ public class SpecializeController {
     private SpecializeService SpeService;
     
     @GetMapping
-    public String list(Model model){
-        model.addAttribute("specialize", this.SpeService.list());
+    public String list(Model model, @RequestParam Map<String, String> params){
+        model.addAttribute("specialize", this.SpeService.list(params));
         return "specialize";
     }
+    
+    @GetMapping("/addview")
+    public String addSpecializeView(Model model){
+        model.addAttribute("specialize", new Specialize());
+        return "addSpecialize";
+    }
+    
+    @PostMapping("/add")
+    public String addSpecialize(@ModelAttribute(value="specialize") @Valid Specialize s, BindingResult result){
+        if(!result.hasErrors()){
+            this.SpeService.addOrUpdateSpecialize(s);
+            return "redirect:/specialize";
+        }
+        return "addSpecialize";
+    }
+            
 }

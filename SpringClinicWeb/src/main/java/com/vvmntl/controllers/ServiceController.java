@@ -4,14 +4,13 @@
  */
 package com.vvmntl.controllers;
 
-import com.vvmntl.services.CategoryService;
-import com.vvmntl.services.DoctorService;
+import com.vvmntl.services.ServiceService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -19,18 +18,15 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author BRAVO15
  */
 @Controller
-public class IndexController {
+@RequestMapping("/service")
+public class ServiceController {
     @Autowired
-    private CategoryService cateService;
+    private ServiceService serService;
     
-    @Autowired
-    private DoctorService doctorService;
-    
-    @GetMapping("/")
-    public String index(Model model, @RequestParam Map<String, String> params){
-        params.put("page", "1");
-        model.addAttribute("doctors", this.doctorService.getDoctor(params));
-        return "index";
+    @GetMapping()
+    public String list(Model model, @RequestParam Map<String, String> params){
+        model.addAttribute("services", this.serService.getService(params));
+        return "service";
     }
     
 }

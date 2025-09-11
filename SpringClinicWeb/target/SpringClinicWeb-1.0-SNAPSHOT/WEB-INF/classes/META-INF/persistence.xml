@@ -24,5 +24,6 @@
     <class>com.vvmntl.pojo.Workschedule</class>
     <class>com.vvmntl.pojo.Rating</class>
     <class>com.vvmntl.pojo.Patient</class>
+    <class>com.vvmntl.pojo.Notification</class>
   </persistence-unit>
 </persistence>

@@ -4,16 +4,14 @@
  */
 package com.vvmntl.services;
 
-import com.vvmntl.pojo.Doctor;
-import java.util.List;
-import java.util.Map;
+import com.vvmntl.pojo.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  *
  * @author BRAVO15
  */
-public interface DoctorService {
-    List<Doctor> list();
-    List<Doctor> getDoctor(Map <String, String> params);
-    List<Doctor> getDoctorBySpecializeId(int id);
+public interface UserService extends UserDetailsService{
+    User getUserByUsername(String username);
+    
 }

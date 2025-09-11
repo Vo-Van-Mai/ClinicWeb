@@ -2,6 +2,7 @@ package com.vvmntl.repositories;
 
 import com.vvmntl.pojo.Specialize;
 import java.util.List;
+import java.util.Map;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -13,6 +14,10 @@ import java.util.List;
  * @author BRAVO15
  */
 public interface SpecializeRepository {
-    List<Specialize> list();
+    List<Specialize> list(Map <String, String> params);
     Specialize getSpecializeById(int id);
+    Specialize addOrUpdateSpecialize(Specialize s);
+    boolean delSpecialize(int id);
+    Specialize getSpecializerByName(String name);
+    
 }

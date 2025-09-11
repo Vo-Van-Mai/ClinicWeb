@@ -4,7 +4,7 @@
  */
 package com.vvmntl.repositories;
 
-import com.vvmntl.pojo.Doctor;
+import com.vvmntl.pojo.Service;
 import java.util.List;
 import java.util.Map;
 
@@ -12,8 +12,6 @@ import java.util.Map;
  *
  * @author BRAVO15
  */
-public interface DoctorRepository {
-    List<Doctor> list();
-    List<Doctor> getDoctor(Map<String, String> params);
-    List<Doctor> getDoctorBySpecializeId(int id);
+public interface ServiceRepository {
+    List<Service> getService(Map<String, String> params);
 }

@@ -97,7 +97,7 @@ CREATE TABLE `category` (
   PRIMARY KEY (`id`),
   KEY `fk_pharmacy_category_idx` (`pharmacy_id`),
   CONSTRAINT `fk_pharmacy_category` FOREIGN KEY (`pharmacy_id`) REFERENCES `pharmacy` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,7 +106,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'Painkillers','Thuốc giảm đau.',1),(2,'Antibiotics','Thuốc kháng sinh điều trị nhiễm khuẩn.',1);
+INSERT INTO `category` VALUES (1,'Painkillers','Thuốc giảm đau.',1),(2,'Antibiotics','Thuốc kháng sinh điều trị nhiễm khuẩn.',1),(3,'Kháng viêm','Thuốc chống viêm không steroid (NSAID)',1),(4,'Tim mạch','Thuốc điều trị các bệnh về tim mạch',1),(5,'Hô hấp','Thuốc điều trị các bệnh đường hô hấp',1),(6,'Tiêu hóa','Thuốc hỗ trợ tiêu hóa, trị dạ dày',1),(7,'Vitamin - Khoáng chất','Vitamin và khoáng chất bổ sung',1),(8,'Nội tiết','Thuốc điều trị rối loạn nội tiết',1),(9,'Da liễu','Thuốc điều trị các bệnh ngoài da',1),(10,'Thần kinh','Thuốc an thần, giảm lo âu, động kinh',1),(11,'Kháng sinh','Thuốc diệt hoặc ức chế vi khuẩn',1),(12,'Giảm đau - Hạ sốt','Thuốc giảm đau và hạ sốt thông thường',1);
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,7 +213,7 @@ CREATE TABLE `doctor_specialize` (
   KEY `fk_specialize_id_idx` (`specialize_id`),
   CONSTRAINT `fk_doctor_id` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_specialize_id` FOREIGN KEY (`specialize_id`) REFERENCES `specialize` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -222,7 +222,7 @@ CREATE TABLE `doctor_specialize` (
 
 LOCK TABLES `doctor_specialize` WRITE;
 /*!40000 ALTER TABLE `doctor_specialize` DISABLE KEYS */;
-INSERT INTO `doctor_specialize` VALUES (1,2,1,'2025-09-09 19:59:53'),(2,2,3,'2025-09-09 19:59:53'),(3,5,3,'2025-09-09 19:59:53');
+INSERT INTO `doctor_specialize` VALUES (1,2,1,'2025-09-09 19:59:53'),(2,2,3,'2025-09-09 19:59:53'),(3,5,3,'2025-09-09 19:59:53'),(4,5,1,'2025-09-10 16:10:51'),(5,6,2,'2025-09-10 16:10:51'),(6,7,3,'2025-09-10 16:10:51'),(7,8,4,'2025-09-10 16:10:51'),(8,9,5,'2025-09-10 16:10:51'),(9,10,1,'2025-09-10 16:10:51'),(10,11,2,'2025-09-10 16:10:51'),(11,12,3,'2025-09-10 16:10:51'),(12,13,4,'2025-09-10 16:10:51'),(13,14,5,'2025-09-10 16:10:51'),(14,15,1,'2025-09-10 16:10:51');
 /*!40000 ALTER TABLE `doctor_specialize` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -279,7 +279,7 @@ CREATE TABLE `medicine` (
   `updated_date` datetime DEFAULT NULL,
   `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -288,7 +288,7 @@ CREATE TABLE `medicine` (
 
 LOCK TABLES `medicine` WRITE;
 /*!40000 ALTER TABLE `medicine` DISABLE KEYS */;
-INSERT INTO `medicine` VALUES (1,'Paracetamol','Panadol',100,'tablet','Thuốc giảm đau và hạ sốt.','2026-12-31 00:00:00',5.50,1,500,'AVAILABLE','2025-09-05 03:44:44','2025-09-05 03:44:44'),(2,'Amoxicillin','Amoxil',50,'capsule','Kháng sinh điều trị nhiễm khuẩn.','2027-06-30 00:00:00',12.75,1,250,'AVAILABLE','2025-09-05 03:44:44','2025-09-05 03:44:44');
+INSERT INTO `medicine` VALUES (1,'Paracetamol','Panadol',100,'tablet','Thuốc giảm đau và hạ sốt.','2026-12-31 00:00:00',5.50,1,500,'AVAILABLE','2025-09-05 03:44:44','2025-09-05 03:44:44'),(2,'Amoxicillin','Amoxil',50,'capsule','Kháng sinh điều trị nhiễm khuẩn.','2027-06-30 00:00:00',12.75,1,250,'AVAILABLE','2025-09-05 03:44:44','2025-09-05 03:44:44'),(3,'Amoxicillin','Amoxil',100,'viên','Kháng sinh phổ rộng','2025-12-31 00:00:00',5000.00,1,100,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(4,'Cefuroxime','Zinnat',50,'viên','Kháng sinh điều trị viêm họng, viêm phổi','2026-06-30 00:00:00',15000.00,1,50,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(5,'Paracetamol','Panadol',200,'viên','Thuốc giảm đau, hạ sốt','2025-08-15 00:00:00',2000.00,1,200,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(6,'Ibuprofen','Brufen',120,'viên','Thuốc giảm đau, kháng viêm','2026-01-20 00:00:00',7000.00,1,120,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(7,'Diclofenac','Voltaren',90,'viên','Kháng viêm không steroid (NSAID)','2026-04-10 00:00:00',8000.00,1,90,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(8,'Amlodipine','Norvasc',75,'viên','Điều trị cao huyết áp, đau thắt ngực','2026-02-28 00:00:00',12000.00,1,75,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(9,'Atorvastatin','Lipitor',60,'viên','Giảm cholesterol máu','2025-11-15 00:00:00',18000.00,1,60,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(10,'Salbutamol','Ventolin',40,'ống hít','Thuốc giãn phế quản, trị hen suyễn','2026-07-01 00:00:00',90000.00,1,40,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(11,'Bromhexin','Bisotab',150,'viên','Thuốc long đờm','2025-10-20 00:00:00',4000.00,1,150,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(12,'Omeprazole','Losec',100,'viên','Điều trị trào ngược dạ dày thực quản','2026-03-30 00:00:00',10000.00,1,100,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(13,'Domperidone','Motilium',80,'viên','Chống nôn, khó tiêu','2025-09-25 00:00:00',7000.00,1,80,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(14,'Vitamin C','Cebion',300,'viên','Bổ sung vitamin C tăng sức đề kháng','2027-03-10 00:00:00',1000.00,0,300,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(15,'Vitamin D3','Vigantol',80,'lọ','Bổ sung vitamin D cho xương chắc khỏe','2026-09-01 00:00:00',25000.00,0,80,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(16,'Calcium Carbonate','CalciK2',120,'viên','Bổ sung canxi','2027-01-15 00:00:00',15000.00,0,120,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(17,'Levothyroxine','Euthyrox',50,'viên','Điều trị suy giáp','2026-06-10 00:00:00',9000.00,1,50,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(18,'Ketoconazole','Nizoral',30,'chai','Dầu gội trị nấm da đầu','2026-05-05 00:00:00',65000.00,0,30,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(19,'Clobetasol','Dermovate',45,'tuýp','Thuốc bôi trị viêm da, vảy nến','2025-12-12 00:00:00',120000.00,0,45,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(20,'Diazepam','Seduxen',25,'viên','Thuốc an thần, chống co giật','2026-08-22 00:00:00',5000.00,1,25,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(21,'Carbamazepine','Tegretol',40,'viên','Điều trị động kinh, đau dây thần kinh','2026-11-11 00:00:00',18000.00,1,40,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35'),(22,'Amitriptyline','Laroxyl',60,'viên','Điều trị trầm cảm, đau thần kinh','2026-10-05 00:00:00',15000.00,1,60,'AVAILABLE','2025-09-09 22:03:35','2025-09-09 22:03:35');
 /*!40000 ALTER TABLE `medicine` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -318,6 +318,36 @@ CREATE TABLE `message` (
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `notification`
+--
+
+DROP TABLE IF EXISTS `notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notification` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` enum('SYSTEM','WARNING','INFO') COLLATE utf8mb4_unicode_ci DEFAULT 'INFO',
+  `check_read` tinyint(1) DEFAULT '0',
+  `created_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `user_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_notification_user_idx` (`user_id`),
+  CONSTRAINT `fk_notification_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notification`
+--
+
+LOCK TABLES `notification` WRITE;
+/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -530,6 +560,7 @@ CREATE TABLE `service` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `specialize_id` int DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`),
   KEY `fk_service_specialize_idx` (`specialize_id`),
@@ -543,7 +574,7 @@ CREATE TABLE `service` (
 
 LOCK TABLES `service` WRITE;
 /*!40000 ALTER TABLE `service` DISABLE KEYS */;
-INSERT INTO `service` VALUES (1,'Tư vấn tim mạch',500000.00,1),(2,'Kiểm tra da liễu',200000.00,2),(3,'Khám tai mũi họng cơ bản',150000.00,3),(4,'Khám tim mạch tổng quát',300000.00,1),(5,'Điện tâm đồ (ECG)',250000.00,1),(6,'Siêu âm tim Doppler màu',600000.00,1),(7,'Khám da liễu tổng quát',200000.00,2),(8,'Điều trị mụn chuyên sâu',500000.00,2),(9,'Xóa sẹo bằng laser',1200000.00,2),(10,'Khám tai mũi họng tổng quát',200000.00,3),(11,'Nội soi tai mũi họng',350000.00,3),(12,'Lấy dị vật tai - mũi - họng',400000.00,3),(13,'Khám sức khỏe tổng quát',400000.00,4),(14,'Xét nghiệm máu cơ bản',250000.00,4),(15,'Khám và tư vấn tiểu đường',300000.00,4),(16,'Khám ngoại khoa tổng quát',350000.00,5),(17,'Phẫu thuật cắt ruột thừa',7000000.00,5),(18,'Cắt u mỡ dưới da',2000000.00,5),(19,'Khám nhi tổng quát',250000.00,6),(20,'Tiêm chủng mở rộng cho trẻ',150000.00,6),(21,'Khám và điều trị sốt siêu vi',200000.00,6),(22,'Khám phụ khoa tổng quát',300000.00,7),(23,'Siêu âm thai 4D',500000.00,7),(24,'Khám và tư vấn kế hoạch hóa gia đình',250000.00,7),(25,'Khám răng tổng quát',200000.00,8),(26,'Nhổ răng sâu',400000.00,8),(27,'Niềng răng chỉnh nha',15000000.00,8),(28,'Khám mắt tổng quát',250000.00,9),(29,'Đo thị lực & kính thuốc',200000.00,9),(30,'Phẫu thuật đục thủy tinh thể',10000000.00,9),(31,'Khám thần kinh tổng quát',350000.00,10),(32,'Điện não đồ (EEG)',600000.00,10),(33,'Khám và điều trị đau nửa đầu',400000.00,10);
+INSERT INTO `service` VALUES (1,'Tư vấn tim mạch',500000.00,1,1),(2,'Kiểm tra da liễu',200000.00,2,1),(3,'Khám tai mũi họng cơ bản',150000.00,3,1),(4,'Khám tim mạch tổng quát',300000.00,1,1),(5,'Điện tâm đồ (ECG)',250000.00,1,1),(6,'Siêu âm tim Doppler màu',600000.00,1,1),(7,'Khám da liễu tổng quát',200000.00,2,1),(8,'Điều trị mụn chuyên sâu',500000.00,2,1),(9,'Xóa sẹo bằng laser',1200000.00,2,1),(10,'Khám tai mũi họng tổng quát',200000.00,3,1),(11,'Nội soi tai mũi họng',350000.00,3,1),(12,'Lấy dị vật tai - mũi - họng',400000.00,3,1),(13,'Khám sức khỏe tổng quát',400000.00,4,1),(14,'Xét nghiệm máu cơ bản',250000.00,4,1),(15,'Khám và tư vấn tiểu đường',300000.00,4,1),(16,'Khám ngoại khoa tổng quát',350000.00,5,1),(17,'Phẫu thuật cắt ruột thừa',7000000.00,5,1),(18,'Cắt u mỡ dưới da',2000000.00,5,1),(19,'Khám nhi tổng quát',250000.00,6,1),(20,'Tiêm chủng mở rộng cho trẻ',150000.00,6,1),(21,'Khám và điều trị sốt siêu vi',200000.00,6,1),(22,'Khám phụ khoa tổng quát',300000.00,7,1),(23,'Siêu âm thai 4D',500000.00,7,1),(24,'Khám và tư vấn kế hoạch hóa gia đình',250000.00,7,1);
 /*!40000 ALTER TABLE `service` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -558,8 +589,9 @@ CREATE TABLE `specialize` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci,
+  `is_active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -568,7 +600,7 @@ CREATE TABLE `specialize` (
 
 LOCK TABLES `specialize` WRITE;
 /*!40000 ALTER TABLE `specialize` DISABLE KEYS */;
-INSERT INTO `specialize` VALUES (1,'Tim mạch','Chuyên tư vấn và giải quyết các vấn đề về tim mạch, Tim mạch là nền tảng của sự sống'),(2,'Da liễu','Chuyên tư vấn và giải quyết các vấn đề về da liễu, các bệnh ngoài gia, viêm ngữa,...'),(3,'Tai mũi họng','Chẩn đoán và điều trị các bệnh lý về tai, mũi, họng và thanh quản.'),(4,'Nội tổng quát','Khám và điều trị các bệnh lý nội khoa phổ biến như huyết áp, tiểu đường, tim mạch.'),(5,'Ngoại tổng quát','Thực hiện phẫu thuật và điều trị các bệnh lý cần can thiệp ngoại khoa.'),(6,'Nhi khoa','Khám và điều trị bệnh cho trẻ sơ sinh, trẻ nhỏ và thanh thiếu niên.'),(7,'Sản - Phụ khoa','Khám, tư vấn và điều trị các vấn đề sức khỏe sinh sản, thai sản và phụ khoa.'),(8,'Răng - Hàm - Mặt','Chăm sóc sức khỏe răng miệng, chỉnh nha và phẫu thuật thẩm mỹ hàm mặt.'),(9,'Mắt','Khám, chẩn đoán và điều trị các bệnh lý về mắt và thị lực.'),(10,'Thần kinh','Khám và điều trị các bệnh liên quan đến hệ thần kinh trung ương và ngoại biên.');
+INSERT INTO `specialize` VALUES (1,'Tim mạch','Chuyên tư vấn và giải quyết các vấn đề về tim mạch, Tim mạch là nền tảng của sự sống',1),(2,'Da liễu','Chuyên tư vấn và giải quyết các vấn đề về da liễu, các bệnh ngoài gia, viêm ngữa,...',1),(3,'Tai mũi họng','Chẩn đoán và điều trị các bệnh lý về tai, mũi, họng và thanh quản.',1),(4,'Nội tổng quát','Khám và điều trị các bệnh lý nội khoa phổ biến như huyết áp, tiểu đường, tim mạch.',1),(5,'Ngoại tổng quát','Thực hiện phẫu thuật và điều trị các bệnh lý cần can thiệp ngoại khoa.',1),(6,'Nhi khoa','Khám và điều trị bệnh cho trẻ sơ sinh, trẻ nhỏ và thanh thiếu niên.',1),(7,'Sản - Phụ khoa','Khám, tư vấn và điều trị các vấn đề sức khỏe sinh sản, thai sản và phụ khoa.',1);
 /*!40000 ALTER TABLE `specialize` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -607,7 +639,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (2,'aaaaa','123456','A','Nguyen Van','1980-05-15 00:00:00','1234567890','nguyenvana@gmail.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-05 03:16:59','DOCTOR'),(3,'bbbbb','123456','B','Nguyen Van','1980-05-15 00:00:00','1234567891','nguyenvanb@gmail.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-05 03:16:59','PATIENT'),(4,'admin','123456','Admin','User','1975-01-01 00:00:00','1122334455','admin@example.com',1,1,'OTHER','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-05 03:16:59','ADMIN'),(5,'anhtuan','password789','Anh','Tuan','1985-03-25 00:00:00','1112223333','anhtuan@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-05 03:16:59','DOCTOR'),(6,'dr.nguyen','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Mãi','Võ Văn','1980-05-12 00:00:00','0901234567','nguyen.bacsi@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(7,'dr.tran','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Anh','Nguyễn Thị Hồng ','1985-03-20 00:00:00','0902234567','tran.bacsi@example.com',1,0,'FEMALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(8,'dr.le','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Nam','Đặng Phương','1978-09-08 00:00:00','0903234567','le.bacsi@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(9,'dr.pham','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Lan','Phạm Hoàng ','1990-11-02 00:00:00','0904234567','pham.bacsi@example.com',1,0,'FEMALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(10,'dr.hoang','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Sơn','Hoàng Văn','1982-01-15 00:00:00','0905234567','hoang.bacsi@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(11,'dr.vo','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Anh','Võ Thị Minh','1992-07-25 00:00:00','0906234567','vo.bacsi@example.com',1,0,'FEMALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(12,'dr.bui','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Minh','Bùi Anh ','1988-12-05 00:00:00','0907234567','bui.bacsi@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(13,'dr.dang','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Ly','Phan Hoang Yến','1995-04-30 00:00:00','0908234567','dang.bacsi@example.com',1,0,'FEMALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(14,'dr.truong','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Tín','Lê Trung','1983-08-18 00:00:00','0909234567','truong.bacsi@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(15,'dr.dinh','$2a$10$Dow1X.9m7i1ZyQd9.5qD1uUh.9T2h3bTwZVfZt6U4NwDD3M9e0H2C','Hoa','Trân Thị','1987-06-22 00:00:00','0910234567','dinh.bacsi@example.com',1,0,'FEMALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR');
+INSERT INTO `user` VALUES (2,'aaaaa','123456','A','Nguyen Van','1980-05-15 00:00:00','1234567890','nguyenvana@gmail.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-05 03:16:59','DOCTOR'),(3,'bbbbb','123456','B','Nguyen Van','1980-05-15 00:00:00','1234567891','nguyenvanb@gmail.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-05 03:16:59','PATIENT'),(4,'admin','$2a$10$NqClHgKfkwMVYLpDBLIC5u2CIei42Hoo7PP.dL1PO7r2FCOsqp.GO','Admin','User','1975-01-01 00:00:00','1122334455','admin@example.com',1,1,'OTHER','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-05 03:16:59','ADMIN'),(5,'anhtuan','password789','Anh','Tuan','1985-03-25 00:00:00','1112223333','anhtuan@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-05 03:16:59','DOCTOR'),(6,'vanmai','$2a$10$NqClHgKfkwMVYLpDBLIC5u2CIei42Hoo7PP.dL1PO7r2FCOsqp.GO','Mãi','Võ Văn','1980-05-12 00:00:00','0901234567','nguyen.bacsi@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(7,'honganh','$2a$10$NqClHgKfkwMVYLpDBLIC5u2CIei42Hoo7PP.dL1PO7r2FCOsqp.GO','Anh','Nguyễn Thị Hồng ','1985-03-20 00:00:00','0902234567','tran.bacsi@example.com',1,0,'FEMALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(8,'phuongnam','$2a$10$NqClHgKfkwMVYLpDBLIC5u2CIei42Hoo7PP.dL1PO7r2FCOsqp.GO','Nam','Đặng Phương','1978-09-08 00:00:00','0903234567','le.bacsi@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(9,'dr.pham','$2a$10$NqClHgKfkwMVYLpDBLIC5u2CIei42Hoo7PP.dL1PO7r2FCOsqp.GO','Lan','Phạm Hoàng ','1990-11-02 00:00:00','0904234567','pham.bacsi@example.com',1,0,'FEMALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(10,'dr.hoang','$2a$10$NqClHgKfkwMVYLpDBLIC5u2CIei42Hoo7PP.dL1PO7r2FCOsqp.GO','Sơn','Hoàng Văn','1982-01-15 00:00:00','0905234567','hoang.bacsi@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(11,'dr.vo','$2a$10$NqClHgKfkwMVYLpDBLIC5u2CIei42Hoo7PP.dL1PO7r2FCOsqp.GO','Anh','Võ Thị Minh','1992-07-25 00:00:00','0906234567','vo.bacsi@example.com',1,0,'FEMALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(12,'dr.bui','$2a$10$NqClHgKfkwMVYLpDBLIC5u2CIei42Hoo7PP.dL1PO7r2FCOsqp.GO','Minh','Bùi Anh ','1988-12-05 00:00:00','0907234567','bui.bacsi@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(13,'dr.dang','$2a$10$NqClHgKfkwMVYLpDBLIC5u2CIei42Hoo7PP.dL1PO7r2FCOsqp.GO','Ly','Phan Hoang Yến','1995-04-30 00:00:00','0908234567','dang.bacsi@example.com',1,0,'FEMALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(14,'dr.truong','$2a$10$NqClHgKfkwMVYLpDBLIC5u2CIei42Hoo7PP.dL1PO7r2FCOsqp.GO','Tín','Lê Trung','1983-08-18 00:00:00','0909234567','truong.bacsi@example.com',1,0,'MALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR'),(15,'dr.dinh','$2a$10$NqClHgKfkwMVYLpDBLIC5u2CIei42Hoo7PP.dL1PO7r2FCOsqp.GO','Hoa','Trân Thị','1987-06-22 00:00:00','0910234567','dinh.bacsi@example.com',1,0,'FEMALE','https://res.cloudinary.com/disqxvj3s/image/upload/v1754715964/fsgua3oudxllx9iry1g8.jpg','2025-09-07 23:00:51','DOCTOR');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -649,4 +681,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-09-09 20:29:15
+-- Dump completed on 2025-09-11 12:36:51

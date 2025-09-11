@@ -56,6 +56,8 @@ public class Service implements Serializable {
     @JoinColumn(name = "specialize_id", referencedColumnName = "id")
     @ManyToOne
     private Specialize specializeId;
+    @Column(name = "is_active", columnDefinition = "boolean default true")
+    private Boolean isActive = true;
 
     public Service() {
     }
@@ -133,6 +135,20 @@ public class Service implements Serializable {
     @Override
     public String toString() {
         return "com.vvmntl.pojo.Service[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the isActive
+     */
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    /**
+     * @param isActive the isActive to set
+     */
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
     
 }

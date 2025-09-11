@@ -1,0 +1,32 @@
+<!<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head> 
+    <th:object th:replace="base :: bt"></th:object>
+</head>
+<body class="container">
+    <div th:replace="base :: menu"></div>
+
+    <div>
+        <h1 class="text-center text-info">
+            Thêm khoa
+        </h1>
+
+        <form th:action="@{/specialize/add}" th:method="POST" th:object="${specialize}">
+            <div class="mb-3 mt-3">
+                <label for="uname" class="form-label">Tên khoa:</label>
+                <input type="text" class="form-control" id="uname" placeholder="Nhập tên khoa...." th:field="*{name}">
+                <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            </div>
+            <div class="mb-3">
+                <label for="pwd" class="form-label">Mô tả:</label>
+                <input type="text" class="form-control" id="pwd" placeholder="Nhập mô tả cho khoa...." th:field="*{description}" required>
+                
+            </div>
+            <button type="submit" class="btn btn-primary">Thêm khoa</button>
+        </form>
+
+    </div>
+    <div th:replace="base :: footer"></div>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

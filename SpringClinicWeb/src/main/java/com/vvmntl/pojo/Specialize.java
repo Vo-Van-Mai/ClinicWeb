@@ -39,8 +39,8 @@ public class Specialize implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "{specialize.name.nullErr}")
+    @Size(min = 1, max = 255, message = "{specialize.name.lenErr}")
     @Column(name = "name")
     private String name;
     @Lob
@@ -51,6 +51,8 @@ public class Specialize implements Serializable {
     private Set<Service> serviceSet;
     @OneToMany(mappedBy = "specializeId")
     private Set<DoctorSpecialize> doctorSpecializeSet;
+    @Column(name = "is_active", columnDefinition = "boolean default true")
+    private Boolean isActive = true;
 
     public Specialize() {
     }
@@ -127,6 +129,20 @@ public class Specialize implements Serializable {
     @Override
     public String toString() {
         return "com.vvmntl.pojo.Specialize[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the isActive
+     */
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    /**
+     * @param isActive the isActive to set
+     */
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
     
 }
