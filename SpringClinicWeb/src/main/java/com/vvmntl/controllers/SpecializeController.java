@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,9 +26,15 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 @RequestMapping("/specialize")
+@ControllerAdvice
 public class SpecializeController {
     @Autowired
     private SpecializeService SpeService;
+    
+    @ModelAttribute
+    public void commonSpecializeResponse(Model model){
+        model.addAttribute("specialize", this.SpeService.getAllSpecialize()) ;
+    }
     
     @GetMapping
     public String list(Model model, @RequestParam Map<String, String> params){
@@ -46,6 +54,12 @@ public class SpecializeController {
             this.SpeService.addOrUpdateSpecialize(s);
             return "redirect:/specialize";
         }
+        return "addSpecialize";
+    }
+    
+    @GetMapping("/{specialzeId}")
+    public String updateSpecialize(Model model, @PathVariable(value="specialzeId") int id){
+        model.addAttribute("specialize", this.SpeService.getSpecializeById(id));
         return "addSpecialize";
     }
             

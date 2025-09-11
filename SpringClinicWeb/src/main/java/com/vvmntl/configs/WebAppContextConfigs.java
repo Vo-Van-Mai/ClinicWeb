@@ -4,11 +4,17 @@
  */
 package com.vvmntl.configs;
 
+import com.vvmntl.formatters.SpecializeFormatters;
+import com.vvmntl.validator.ServiceValidator;
+import com.vvmntl.validator.WebAppValidator;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -27,7 +33,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan(basePackages = {
     "com.vvmntl.controllers",
     "com.vvmntl.services",
-    "com.vvmntl.repositories",})
+    "com.vvmntl.repositories",
+    "com.vvmntl.formattor",
+    "com.vvmntl.validator",})
 @EnableTransactionManagement
 public class WebAppContextConfigs implements WebMvcConfigurer {
 
@@ -46,24 +54,39 @@ public class WebAppContextConfigs implements WebMvcConfigurer {
         return new StandardServletMultipartResolver();
     }
 
-
-    @Bean(name="validator")
+    @Bean(name = "validator")
     public LocalValidatorFactoryBean validator() {
         LocalValidatorFactoryBean v = new LocalValidatorFactoryBean();
         v.setValidationMessageSource(messageSource());
         return v;
     }
-    
+
     @Override
     public Validator getValidator() {
         return validator();
     }
+
 
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource resource = new ResourceBundleMessageSource();
         resource.setBasename("messages");
         return resource;
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new SpecializeFormatters());
+    }
+
+    @Bean
+    public WebAppValidator serviceNameValidator() {
+        Set<Validator> springValidators = new HashSet<>();
+        springValidators.add(new ServiceValidator());
+
+        WebAppValidator v = new WebAppValidator();
+        v.setSpringValidators(springValidators);
+        return v;
     }
 
 }

@@ -34,7 +34,10 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 @ComponentScan(basePackages = {
     "com.vvmntl.controllers",
     "com.vvmntl.services",
-    "com.vvmntl.repositories",})
+    "com.vvmntl.repositories",
+    "com.vvmntl.validator",
+    "com.vvmntl.formattor"
+})
 public class SpringSecurityConfig {
 
     @Autowired

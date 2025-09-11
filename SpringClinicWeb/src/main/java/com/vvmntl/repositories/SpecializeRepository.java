@@ -15,6 +15,7 @@ import java.util.Map;
  */
 public interface SpecializeRepository {
     List<Specialize> list(Map <String, String> params);
+    List<Specialize> getAllSpecialize();
     Specialize getSpecializeById(int id);
     Specialize addOrUpdateSpecialize(Specialize s);
     boolean delSpecialize(int id);

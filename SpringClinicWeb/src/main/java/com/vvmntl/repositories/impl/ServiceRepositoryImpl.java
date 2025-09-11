@@ -5,7 +5,9 @@
 package com.vvmntl.repositories.impl;
 
 import com.vvmntl.pojo.Service;
+import com.vvmntl.pojo.Specialize;
 import com.vvmntl.repositories.ServiceRepository;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -49,5 +51,41 @@ public class ServiceRepositoryImpl implements ServiceRepository{
         }
         Query q = s.createQuery(query);
         return q.getResultList();
+    }
+
+    @Override
+    public Service getServiceById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query query = s.createNamedQuery("Service.findById", Service.class);
+        query.setParameter("id", id);
+        try {
+            return (Service) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Service addOrUpdateService(Service s) {
+        Session session = this.factory.getObject().getCurrentSession();
+        if(s.getId() == null){
+            session.persist(s);
+            return s;
+        }
+        else {
+            session.merge(s);
+            return session.merge(s);
+        }
+    }
+
+    @Override
+    public boolean deleteService(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Service service = this.getServiceById(id);
+        if (service != null){
+            session.remove(service);
+            return true;
+        }
+        return false;
     }
 }

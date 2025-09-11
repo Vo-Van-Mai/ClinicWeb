@@ -4,17 +4,17 @@
  */
 package com.vvmntl.repositories;
 
-import com.vvmntl.pojo.Service;
+import com.vvmntl.pojo.Appointment;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
  * @author BRAVO15
  */
-public interface ServiceRepository {
-    List<Service> getService(Map<String, String> params);
-    Service getServiceById(int id);
-    Service addOrUpdateService(Service s);
-    boolean deleteService(int id);
+public interface AppointmentRepository {
+    List<Appointment> list();
+    Appointment getAppointmentById(int id);
+    boolean deleteAppointment(int id);
+    List<Appointment> getAppointmentByServiceId(int id);
+    
 }

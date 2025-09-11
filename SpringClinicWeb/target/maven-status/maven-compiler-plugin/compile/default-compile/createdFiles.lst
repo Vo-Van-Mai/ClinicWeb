@@ -17,6 +17,7 @@ com\vvmntl\springclinicweb\JakartaRestConfiguration.class
 com\vvmntl\repositories\SpecializeRepository.class
 com\vvmntl\pojo\Prescription.class
 com\vvmntl\pojo\Appointment.class
+com\vvmntl\services\AppointmentService.class
 com\vvmntl\pojo\Category.class
 com\vvmntl\services\impl\SpecializeServiceImpl.class
 com\vvmntl\services\CategoryService.class
@@ -30,7 +31,9 @@ com\vvmntl\pojo\Service.class
 com\vvmntl\pojo\Payment.class
 com\vvmntl\pojo\Prescriptdetail.class
 com\vvmntl\repositories\impl\CategoryRepositoryImpl.class
+com\vvmntl\services\impl\AppointmentServiceImpl.class
 com\vvmntl\pojo\DoctorSpecialize.class
+com\vvmntl\repositories\impl\AppointmentRepositoryImpl.class
 com\vvmntl\repositories\UserRepository.class
 com\vvmntl\pojo\Paymentdetail.class
 com\vvmntl\pojo\Gender.class
@@ -38,9 +41,13 @@ com\vvmntl\pojo\Role.class
 com\vvmntl\repositories\impl\UserRepositoryImpl.class
 com\vvmntl\configs\WebAppContextConfigs.class
 com\vvmntl\repositories\impl\ServiceRepositoryImpl.class
+com\vvmntl\validator\ServiceValidator.class
 com\vvmntl\services\impl\UserServiceImpl.class
 com\vvmntl\configs\SecurityWebApplicationInitializer.class
+com\vvmntl\repositories\AppointmentRepository.class
 com\vvmntl\services\impl\ServiceSeviceImpl.class
+com\vvmntl\formatters\SpecializeFormatters.class
+com\vvmntl\validator\WebAppValidator.class
 com\vvmntl\repositories\CategoryRepository.class
 com\vvmntl\controllers\IndexController.class
 com\vvmntl\configs\HibernateConfig.class

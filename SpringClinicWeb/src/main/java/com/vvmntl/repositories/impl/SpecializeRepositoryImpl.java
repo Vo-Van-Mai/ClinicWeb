@@ -38,17 +38,18 @@ public class SpecializeRepositoryImpl implements SpecializeRepository {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Specialize> query = b.createQuery(Specialize.class);
-        Root<Specialize> root = query.from(Specialize.class);
+        Root root = query.from(Specialize.class);
         query.select(root);
 
-        if (params != null && !params.isEmpty()) {
+        if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
+            
             String name = params.get("name");
-
+            
             if (name != null && !name.isEmpty()) {
                 predicates.add(b.like(root.get("name"), String.format("%%%s%%", name)));
             }
-            query.where(predicates);
+            query.where(predicates.toArray(new Predicate[0]));
         }
         Query q = s.createQuery(query);
         return q.getResultList();
@@ -66,10 +67,10 @@ public class SpecializeRepositoryImpl implements SpecializeRepository {
     @Override
     public Specialize addOrUpdateSpecialize(Specialize s) {
         Session session = this.factory.getObject().getCurrentSession();
-        if (s.getId() != null) {
-            session.merge(s);
-        } else {
+        if (s.getId() == null) {
             session.persist(s);
+        } else {
+            session.merge(s);
         }
         return s;
     }
@@ -95,6 +96,13 @@ public class SpecializeRepositoryImpl implements SpecializeRepository {
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    @Override
+    public List<Specialize> getAllSpecialize() {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query q = session.createNamedQuery("Specialize.findAll", Specialize.class);
+        return q.getResultList();
     }
 
 }

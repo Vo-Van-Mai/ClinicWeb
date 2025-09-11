@@ -1,0 +1,44 @@
+<!<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head> 
+    <th:object th:replace="base :: bt"></th:object>
+</head>
+<body class="container">
+    <div th:replace="base :: menu"></div>
+
+    <div>
+        <h1 class="text-center text-info">
+            Thêm dịch vụ
+        </h1>
+
+        <form th:action="@{/service/add}" th:method="POST" th:object="${service}">
+            <input type="hidden" th:field="*{id}" />
+            <div class="mb-3 mt-3">
+                <label for="uname" class="form-label">Tên dịch vụ: </label>
+                <input type="text" class="form-control" id="uname" placeholder="Nhập tên dịch vụ...." th:field="*{name}">
+                <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            </div>
+            <div class="mb-3">
+                <label for="pwd" class="form-label">Giá dịch vụ:</label>
+                <input type="number" class="form-control" id="pwd" placeholder="Nhập giá cho dịch vụ...." th:field="*{price}" required>
+                <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="cate" class="form-label">Danh mục khoa: </label>
+                <select class="form-select" th:field="*{specializeId}" id="cate">
+                    <option th:each="s: ${specialize}" th:value="${s.id}" th:text="${s.name}">1</option>
+                </select>
+                <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('specializeId')}" th:errors="*{specializeId}"></div>
+            </div>
+            <a th:href="@{/service}" class="btn btn-danger">Hủy</a>
+            <button th:if="${service.id == null}"  type="submit" class="btn btn-primary">Thêm dịch vụ</button>
+            <button th:unless="${service.id == null}" type="submit" class="btn btn-primary">Cập nhật dịch vụ</button>
+            
+
+        </form>
+
+    </div>
+    <div th:replace="base :: footer"></div>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

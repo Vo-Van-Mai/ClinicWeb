@@ -12,6 +12,7 @@
         </h1>
 
         <form th:action="@{/specialize/add}" th:method="POST" th:object="${specialize}">
+            <input type="hidden" th:field="*{id}" />
             <div class="mb-3 mt-3">
                 <label for="uname" class="form-label">Tên khoa:</label>
                 <input type="text" class="form-control" id="uname" placeholder="Nhập tên khoa...." th:field="*{name}">
@@ -22,7 +23,11 @@
                 <input type="text" class="form-control" id="pwd" placeholder="Nhập mô tả cho khoa...." th:field="*{description}" required>
                 
             </div>
-            <button type="submit" class="btn btn-primary">Thêm khoa</button>
+            <a th:href="@{/specialize}" class="btn btn-danger">Hủy</a>
+            <button th:if="${specialize.id == null}"  type="submit" class="btn btn-primary">Thêm khoa</button>
+            <button th:unless="${specialize.id == null}" type="submit" class="btn btn-primary">Cập nhật</button>
+            
+
         </form>
 
     </div>

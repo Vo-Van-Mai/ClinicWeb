@@ -43,14 +43,13 @@ public class SpecializeServiceImpl implements SpecializeService {
             Specialize speci = this.getSpecializerByName(s.getName());
             if (speci != null) {
                 throw new IllegalStateException("Tên khoa đã tồn tại!");
-            }
-        } else {
-            Specialize existing = this.getSpecializerByName(s.getName());
-            if (existing != null && !existing.getId().equals(s.getId())) {
-                throw new IllegalStateException("Tên khoa đã tồn tại!");
-            }
+            } 
         }
-        return this.SpeRepo.addOrUpdateSpecialize(s);
+        else{
+            return this.SpeRepo.addOrUpdateSpecialize(s);
+        }
+         return this.SpeRepo.addOrUpdateSpecialize(s);
+        
     }
 
     @Override
@@ -73,5 +72,10 @@ public class SpecializeServiceImpl implements SpecializeService {
     @Override
     public Specialize getSpecializerByName(String name) {
         return this.SpeRepo.getSpecializerByName(name);
+    }
+
+    @Override
+    public List<Specialize> getAllSpecialize() {
+        return this.SpeRepo.getAllSpecialize();
     }
 }

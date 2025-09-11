@@ -18,7 +18,7 @@
 
             <button type="submit" class="btn btn-primary">Tìm kiếm</button>
         </form>
-
+        <a class="btn btn-success" th:href="@{/service/add-service}">Thêm dịch vụ</a>
 
         <table class="table table-striped text-center align-middle">
             <thead>
@@ -31,15 +31,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="s: ${services}">
+                <tr th:unless="${services.isEmpty()}" th:each="s: ${services}">
                     <td th:text="${s.id}"></td>
                     <td th:text="${s.name}"></td>
                     <td th:text="${s.price}"></td>
                     <td th:text="${s.specializeId.name}"></td>
                     <th>
                         <button class="btn btn-danger">Xóa</button>
-                        <a class="btn btn-success">Cập nhật</a>
+                        <a th:href="@{/service/} + ${s.id}" class="btn btn-success">Cập nhật</a>
                     </th>
+                </tr>
+                <tr th:if="${services.isEmpty()}">
+                    <td colspan="5" align="center">Không có dịch vụ phù hợp!</td>
                 </tr>
             </tbody>
         </table>

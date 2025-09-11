@@ -16,6 +16,8 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
@@ -42,19 +44,21 @@ public class Service implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{service.name.nullerr}")
     @Size(min = 1, max = 255)
     @Column(name = "name")
     private String name;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
+    @Min(value=5000, message = "{service.price.minErr}")
     @Column(name = "price")
     private BigDecimal price;
     @OneToMany(mappedBy = "serviceId")
     private Set<Appointment> appointmentSet;
     @JoinColumn(name = "specialize_id", referencedColumnName = "id")
     @ManyToOne
+    @NotNull(message = "{service.specialize.nullErr}")
     private Specialize specializeId;
     @Column(name = "is_active", columnDefinition = "boolean default true")
     private Boolean isActive = true;
