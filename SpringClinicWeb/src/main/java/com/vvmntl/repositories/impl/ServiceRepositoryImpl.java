@@ -56,13 +56,7 @@ public class ServiceRepositoryImpl implements ServiceRepository{
     @Override
     public Service getServiceById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query query = s.createNamedQuery("Service.findById", Service.class);
-        query.setParameter("id", id);
-        try {
-            return (Service) query.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
+        return s.find(Service.class, id);
     }
 
     @Override

@@ -40,7 +40,7 @@ CREATE TABLE `appointment` (
   CONSTRAINT `fk_apppoint_slot` FOREIGN KEY (`appointment_slot`) REFERENCES `appointmentslot` (`id`),
   CONSTRAINT `fk_patient_appoint` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`id`),
   CONSTRAINT `fk_service_appoint` FOREIGN KEY (`service_id`) REFERENCES `service` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +49,7 @@ CREATE TABLE `appointment` (
 
 LOCK TABLES `appointment` WRITE;
 /*!40000 ALTER TABLE `appointment` DISABLE KEYS */;
-INSERT INTO `appointment` VALUES (2,'2025-09-05 03:34:42','PENDING',1,'https://online-room.com/abcde',0,0,3,1,1);
+INSERT INTO `appointment` VALUES (2,'2025-09-05 03:34:42','PENDING',1,'https://online-room.com/abcde',0,0,3,1,1),(3,'2025-09-05 03:34:42','PENDING',1,'https://online-room.com/abcde',0,0,3,2,36);
 /*!40000 ALTER TABLE `appointment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -565,7 +565,7 @@ CREATE TABLE `service` (
   UNIQUE KEY `name_UNIQUE` (`name`),
   KEY `fk_service_specialize_idx` (`specialize_id`),
   CONSTRAINT `fk_service_specialize` FOREIGN KEY (`specialize_id`) REFERENCES `specialize` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -574,7 +574,7 @@ CREATE TABLE `service` (
 
 LOCK TABLES `service` WRITE;
 /*!40000 ALTER TABLE `service` DISABLE KEYS */;
-INSERT INTO `service` VALUES (1,'Tư vấn tim mạch',500000.00,1,1),(2,'Kiểm tra da liễu',200000.00,2,1),(3,'Khám tai mũi họng cơ bản',150000.00,3,1),(4,'Khám tim mạch tổng quát',300000.00,1,1),(5,'Điện tâm đồ (ECG)',250000.00,1,1),(6,'Siêu âm tim Doppler màu',600000.00,1,1),(7,'Khám da liễu tổng quát',200000.00,2,1),(8,'Điều trị mụn chuyên sâu',500000.00,2,1),(9,'Xóa sẹo bằng laser',1200000.00,2,1),(10,'Khám tai mũi họng tổng quát',200000.00,3,1),(11,'Nội soi tai mũi họng',350000.00,3,1),(12,'Lấy dị vật tai - mũi - họng',400000.00,3,1),(13,'Khám sức khỏe tổng quát',400000.00,4,1),(14,'Xét nghiệm máu cơ bản',250000.00,4,1),(15,'Khám và tư vấn tiểu đường',300000.00,4,1),(16,'Khám ngoại khoa tổng quát',350000.00,5,1),(17,'Phẫu thuật cắt ruột thừa',7000000.00,5,1),(18,'Cắt u mỡ dưới da',2000000.00,5,1),(19,'Khám nhi tổng quát',250000.00,6,1),(20,'Tiêm chủng mở rộng cho trẻ',150000.00,6,1),(21,'Khám và điều trị sốt siêu vi',200000.00,6,1),(22,'Khám phụ khoa tổng quát',300000.00,7,1),(23,'Siêu âm thai 4D',500000.00,7,1),(24,'Khám và tư vấn kế hoạch hóa gia đình',250000.00,7,1);
+INSERT INTO `service` VALUES (1,'Tư vấn tim mạch',500000.00,1,1),(2,'Kiểm tra da liễu',200000.00,2,1),(3,'Khám tai mũi họng cơ bản',150000.00,3,1),(4,'Khám tim mạch tổng quát',300000.00,1,1),(5,'Điện tâm đồ (ECG)',250000.00,1,1),(6,'Siêu âm tim Doppler màu',600000.00,1,1),(7,'Khám da liễu tổng quát',200000.00,2,1),(8,'Điều trị mụn chuyên sâu',500000.00,2,1),(9,'Xóa sẹo bằng laser',1200000.00,2,1),(10,'Khám tai mũi họng tổng quát',200000.00,3,1),(11,'Nội soi tai mũi họng',350000.00,3,1),(12,'Lấy dị vật tai - mũi - họng',400000.00,3,1),(13,'Khám sức khỏe tổng quát',400000.00,4,1),(14,'Xét nghiệm máu cơ bản',250000.00,4,1),(15,'Khám và tư vấn tiểu đường',300000.00,4,1),(16,'Khám ngoại khoa tổng quát',350000.00,5,1),(17,'Phẫu thuật cắt ruột thừa',7000000.00,5,1),(18,'Cắt u mỡ dưới da',2000000.00,5,1),(19,'Khám nhi tổng quát',250000.00,6,1),(20,'Tiêm chủng mở rộng cho trẻ',150000.00,6,1),(21,'Khám và điều trị sốt siêu vi',200000.00,6,1),(22,'Khám phụ khoa tổng quát',300000.00,7,1),(23,'Siêu âm thai 4D',500000.00,7,1),(24,'Khám và tư vấn kế hoạch hóa gia đình',250000.00,7,1),(34,'Đo điện tâm đồ',200000.00,1,1),(36,'Đo huyết áp 2 Khoa ngoại tổng quát',200000.00,5,1);
 /*!40000 ALTER TABLE `service` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -591,7 +591,7 @@ CREATE TABLE `specialize` (
   `description` text COLLATE utf8mb4_unicode_ci,
   `is_active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -600,7 +600,7 @@ CREATE TABLE `specialize` (
 
 LOCK TABLES `specialize` WRITE;
 /*!40000 ALTER TABLE `specialize` DISABLE KEYS */;
-INSERT INTO `specialize` VALUES (1,'Tim mạch','Chuyên tư vấn và giải quyết các vấn đề về tim mạch, Tim mạch là nền tảng của sự sống',1),(2,'Da liễu','Chuyên tư vấn và giải quyết các vấn đề về da liễu, các bệnh ngoài gia, viêm ngữa,...',1),(3,'Tai mũi họng','Chẩn đoán và điều trị các bệnh lý về tai, mũi, họng và thanh quản.',1),(4,'Nội tổng quát','Khám và điều trị các bệnh lý nội khoa phổ biến như huyết áp, tiểu đường, tim mạch.',1),(5,'Ngoại tổng quát','Thực hiện phẫu thuật và điều trị các bệnh lý cần can thiệp ngoại khoa.',1),(6,'Nhi khoa','Khám và điều trị bệnh cho trẻ sơ sinh, trẻ nhỏ và thanh thiếu niên.',1),(7,'Sản - Phụ khoa','Khám, tư vấn và điều trị các vấn đề sức khỏe sinh sản, thai sản và phụ khoa.',1);
+INSERT INTO `specialize` VALUES (1,'Tim mạch','Chuyên tư vấn và giải quyết các vấn đề về tim mạch, Tim mạch là nền tảng của sự sống',1),(2,'Da liễu','Chuyên tư vấn và giải quyết các vấn đề về da liễu, các bệnh ngoài gia, viêm ngữa,...',1),(3,'Tai mũi họng','Chẩn đoán và điều trị các bệnh lý về tai, mũi, họng và thanh quản.',1),(4,'Nội tổng quát','Khám và điều trị các bệnh lý nội khoa phổ biến như huyết áp, tiểu đường, tim mạch.',1),(5,'Ngoại tổng quát','Thực hiện phẫu thuật và điều trị các bệnh lý cần can thiệp ngoại khoa.',1),(6,'Nhi khoa','Khám và điều trị bệnh cho trẻ sơ sinh, trẻ nhỏ và thanh thiếu niên.',1),(7,'Sản - Phụ khoa','Khám, tư vấn và điều trị các vấn đề sức khỏe sinh sản, thai sản và phụ khoa.',1),(18,'Tim mạch 2','Chuyên tư vấn và giải quyết các vấn đề về tim mạch, Tim mạch là nền tảng của sự sống',1);
 /*!40000 ALTER TABLE `specialize` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -681,4 +681,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-09-11 12:36:51
+-- Dump completed on 2025-09-12 14:43:17

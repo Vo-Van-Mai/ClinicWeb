@@ -87,5 +87,35 @@ public class DoctorRepositoryImpl implements DoctorRepository{
         Query q = s.createQuery(query);
         return q.getResultList();
     }
+
+    @Override
+    public Doctor addOrUpdateDoctor(Doctor d) {
+        Session s = this.factory.getObject().getCurrentSession();
+        if(d.getId()==null){
+            s.persist(d);
+            return d;
+        }
+        else{
+            s.merge(d);
+            return s.merge(d);
+        }
+    }
+
+    @Override
+    public boolean deleteDoctor(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Doctor d = this.getDoctorById(id);
+        if (d!=null){
+            s.remove(d);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Doctor getDoctorById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.find(Doctor.class, id);
+    }
     
 }

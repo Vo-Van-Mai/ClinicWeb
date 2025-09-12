@@ -58,10 +58,7 @@ public class SpecializeRepositoryImpl implements SpecializeRepository {
     @Override
     public Specialize getSpecializeById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
-
-        Query query = s.createNamedQuery("Specialize.findById", Specialize.class);
-        query.setParameter("id", id);
-        return (Specialize) query.getSingleResult();
+        return s.find(Specialize.class, id);
     }
 
     @Override

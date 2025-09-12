@@ -4,7 +4,9 @@ D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\configs\Secur
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\configs\SpringSecurityConfig.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\configs\ThymeleafConfig.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\configs\WebAppContextConfigs.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\ApiServiceController.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\ApiSpecializeController.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\DoctorController.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\IndexController.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\ServiceController.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\SpecializeController.java
@@ -62,5 +64,7 @@ D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\Spec
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\UserService.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\springclinicweb\JakartaRestConfiguration.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\springclinicweb\resources\JakartaEE11Resource.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\validator\DoctorValidator.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\validator\ServiceValidator.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\validator\UserValidator.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\validator\WebAppValidator.java

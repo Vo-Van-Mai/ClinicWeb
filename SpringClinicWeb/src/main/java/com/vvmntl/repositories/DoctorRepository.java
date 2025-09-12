@@ -16,4 +16,7 @@ public interface DoctorRepository {
     List<Doctor> list();
     List<Doctor> getDoctor(Map<String, String> params);
     List<Doctor> getDoctorBySpecializeId(int id);
+    Doctor addOrUpdateDoctor(Doctor d);
+    boolean deleteDoctor(int id);
+    Doctor getDoctorById(int id);
 }

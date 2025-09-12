@@ -41,5 +41,10 @@ public class UserServiceImpl implements UserService{
         authorities.add(new SimpleGrantedAuthority("ROLE_" + u.getRole().name()));
         return new org.springframework.security.core.userdetails.User(u.getUsername(), u.getPassword(), authorities);
     }
+
+    @Override
+    public User getUserByEmail(String email) {
+       return this.userRepo.getUserByEmail(email);
+    }
     
 }

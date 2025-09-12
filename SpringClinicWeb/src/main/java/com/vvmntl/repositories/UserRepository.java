@@ -13,4 +13,5 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 public interface UserRepository{
     User getUserByUsername(String username);
+    User getUserByEmail(String email);
 }

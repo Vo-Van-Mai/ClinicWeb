@@ -6,6 +6,7 @@ package com.vvmntl.configs;
 
 import com.vvmntl.formatters.SpecializeFormatters;
 import com.vvmntl.validator.ServiceValidator;
+import com.vvmntl.validator.UserValidator;
 import com.vvmntl.validator.WebAppValidator;
 import java.util.HashSet;
 import java.util.Set;
@@ -88,5 +89,5 @@ public class WebAppContextConfigs implements WebMvcConfigurer {
         v.setSpringValidators(springValidators);
         return v;
     }
-
+ 
 }

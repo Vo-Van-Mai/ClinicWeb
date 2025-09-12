@@ -5,6 +5,7 @@
 package com.vvmntl.validator;
 
 import com.vvmntl.pojo.Service;
+import java.math.BigDecimal;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -16,7 +17,6 @@ import org.springframework.validation.Validator;
 @Component
 public class ServiceValidator implements Validator{ 
     
-    
     @Override
     public boolean supports(Class<?> clazz) {
         return Service.class.isAssignableFrom(clazz);
@@ -25,8 +25,10 @@ public class ServiceValidator implements Validator{
     @Override
     public void validate(Object target, Errors errors) {
         Service s = (Service) target;
-        if (!s.getName().contains("Khoa"))
-            errors.rejectValue("name", "service.name.contrain");
+        if (s.getName().isEmpty())
+            errors.rejectValue("name", "service.name.nullErr");
+        if (s.getPrice().compareTo(new BigDecimal(50000)) < 0)
+            errors.rejectValue("price", "service.price.priceValidatorMsg");
     }
     
 }

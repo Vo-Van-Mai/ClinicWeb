@@ -37,7 +37,7 @@
                     <td th:text="${s.price}"></td>
                     <td th:text="${s.specializeId.name}"></td>
                     <th>
-                        <button class="btn btn-danger">Xóa</button>
+                        <button th:onclick="'deleteService(\''+@{/api/service/}+'\','+${s.id}+')'" class="btn btn-danger">Xóa</button>
                         <a th:href="@{/service/} + ${s.id}" class="btn btn-success">Cập nhật</a>
                     </th>
                 </tr>
