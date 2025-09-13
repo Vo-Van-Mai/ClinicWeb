@@ -4,6 +4,7 @@
  */
 package com.vvmntl.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,9 +44,11 @@ public class DoctorSpecialize implements Serializable {
     private Date joinDate;
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnoreProperties("doctorSpecializeSet")
     private Doctor doctorId;
     @JoinColumn(name = "specialize_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnoreProperties("doctorSpecializeSet")
     private Specialize specializeId;
 
     public DoctorSpecialize() {

@@ -1,75 +1,78 @@
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/configs/DispatcherServletInit.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/configs/HibernateConfig.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/configs/SecurityWebApplicationInitializer.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/configs/SpringSecurityConfig.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/configs/ThymeleafConfig.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/configs/WebAppContextConfigs.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/ApiServiceController.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/ApiSpecializeController.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/DoctorController.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/IndexController.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/ServiceController.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/SpecializeController.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/StatsController.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/UserController.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/exception/ResourceNotFoundException.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/formatters/CategoryFormatter.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/formatters/SpecializeFormatters.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Appointment.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Appointmentslot.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Category.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/CategoryMedicine.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Chat.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Doctor.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/DoctorSpecialize.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Gender.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Medicalrecord.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Medicine.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Message.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Notification.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Patient.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Payment.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Paymentdetail.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Pharmacy.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Prescriptdetail.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Prescription.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Rating.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Role.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Service.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Specialize.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/User.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Workschedule.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/AppointmentRepository.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/CategoryRepository.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/DoctorRepository.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/ServiceRepository.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/SpecializeRepository.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/StatsRepository.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/UserRepository.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/impl/AppointmentRepositoryImpl.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/impl/CategoryRepositoryImpl.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/impl/DoctorRepositoryImpl.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/impl/ServiceRepositoryImpl.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/impl/SpecializeRepositoryImpl.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/impl/StatsRepositoryImpl.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/impl/UserRepositoryImpl.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/AppointmentService.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/CategoryService.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/DoctorService.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/ServiceService.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/SpecializeService.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/StatsServices.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/UserService.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/impl/AppointmentServiceImpl.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/impl/CategoryServiceImpl.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/impl/DoctorServiceImpl.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/impl/ServiceSeviceImpl.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/impl/SpecializeServiceImpl.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/impl/StatsServicesImpl.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/impl/UserServiceImpl.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/springclinicweb/JakartaRestConfiguration.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/springclinicweb/resources/JakartaEE11Resource.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/validator/DoctorValidator.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/validator/ServiceValidator.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/validator/UserValidator.java
-/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/validator/WebAppValidator.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\configs\DispatcherServletInit.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\configs\HibernateConfig.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\configs\JacksonConfig.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\configs\SecurityWebApplicationInitializer.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\configs\SpringSecurityConfig.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\configs\ThymeleafConfig.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\configs\WebAppContextConfigs.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\ApiDoctorController.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\ApiServiceController.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\ApiSpecializeController.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\ApiUserController.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\DoctorController.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\IndexController.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\ServiceController.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\SpecializeController.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\StatsController.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\UserController.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\exception\ResourceNotFoundException.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\formatters\CategoryFormatter.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\formatters\SpecializeFormatters.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Appointment.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Appointmentslot.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Category.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\CategoryMedicine.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Chat.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Doctor.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\DoctorSpecialize.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Gender.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Medicalrecord.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Medicine.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Message.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Notification.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Patient.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Payment.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Paymentdetail.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Pharmacy.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Prescriptdetail.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Prescription.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Rating.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Role.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Service.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Specialize.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\User.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Workschedule.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\AppointmentRepository.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\CategoryRepository.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\DoctorRepository.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\impl\AppointmentRepositoryImpl.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\impl\CategoryRepositoryImpl.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\impl\DoctorRepositoryImpl.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\impl\ServiceRepositoryImpl.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\impl\SpecializeRepositoryImpl.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\impl\StatsRepositoryImpl.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\impl\UserRepositoryImpl.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\ServiceRepository.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\SpecializeRepository.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\StatsRepository.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\UserRepository.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\AppointmentService.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\CategoryService.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\DoctorService.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\impl\AppointmentServiceImpl.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\impl\CategoryServiceImpl.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\impl\DoctorServiceImpl.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\impl\ServiceSeviceImpl.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\impl\SpecializeServiceImpl.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\impl\StatsServicesImpl.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\impl\UserServiceImpl.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\ServiceService.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\SpecializeService.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\StatsServices.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\UserService.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\springclinicweb\JakartaRestConfiguration.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\springclinicweb\resources\JakartaEE11Resource.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\validator\DoctorValidator.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\validator\ServiceValidator.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\validator\UserValidator.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\validator\WebAppValidator.java

@@ -4,6 +4,8 @@
  */
 package com.vvmntl.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -47,9 +49,11 @@ public class Specialize implements Serializable {
     @Size(max = 65535)
     @Column(name = "description")
     private String description;
+    @JsonIgnore
     @OneToMany(mappedBy = "specializeId")
     private Set<Service> serviceSet;
     @OneToMany(mappedBy = "specializeId")
+    @JsonIgnore
     private Set<DoctorSpecialize> doctorSpecializeSet;
     @Column(name = "is_active", columnDefinition = "boolean default true")
     private Boolean isActive = true;

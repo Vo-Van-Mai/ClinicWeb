@@ -8,6 +8,8 @@ import com.vvmntl.pojo.User;
 import com.vvmntl.services.UserService;
 import com.vvmntl.validator.UserValidator;
 import jakarta.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,16 +53,21 @@ public class UserController {
     @PostMapping("/user/add")
     public String add(@ModelAttribute(value="user") @Valid User u, BindingResult result){
         if (!result.hasErrors()){
-            System.out.println("com.vvmntl.controllers.UserController.add()");
-            this.userService.addUser(u);
-            return "redirect:/";
+            Map<String, String> params = new HashMap<>();
+            params.put("username", u.getUsername());
+            params.put("firstName", u.getFirstName());
+            params.put("lastName", u.getLastName());
+            params.put("email", u.getEmail());
+            params.put("phone", u.getPhone());
+            params.put("dateOfBirth",u.getDateOfBirth() != null ? u.getDateOfBirth().toString() : null);
+            params.put("gender",u.getGender() != null ? u.getGender().name() : null);
+            params.put("role",u.getRole() != null ? u.getRole().name() : null);
+            params.put("isAdmin", String.valueOf(u.getIsAdmin()));
+             this.userService.addUser(params, u.getFile());
+             return "redirect:/";
         }
             
         else{
-            System.out.println("com.vvmntl.controllers.UserController.add()dddd");
-            System.out.println("File object: " + u.getFile());
-            System.out.println("File empty? " + u.getFile().isEmpty());
-            System.out.println("File name: " + u.getFile().getOriginalFilename());
             result.getAllErrors().forEach(e -> System.out.println(e));
             return "add_user";
         }

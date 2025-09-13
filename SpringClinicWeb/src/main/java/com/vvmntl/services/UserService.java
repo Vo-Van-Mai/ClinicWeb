@@ -5,7 +5,9 @@
 package com.vvmntl.services;
 
 import com.vvmntl.pojo.User;
+import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -15,7 +17,7 @@ public interface UserService extends UserDetailsService{
     User getUserById(int id);
     User getUserByUsername(String username);
     User getUserByEmail(String email);
-    User addUser(User u);
+    User addUser(Map <String, String> params, MultipartFile avatar);
     User updateUser(User user);
     boolean deleteUser(int id);
 }

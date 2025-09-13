@@ -47,7 +47,23 @@ public class ServiceRepositoryImpl implements ServiceRepository{
             if (name != null && !name.isEmpty()){
                 predicates.add(b.like(root.get("name"), String.format("%%%s%%", name)));
             }
-            query.where(predicates);
+           String specializeIdStr = params.get("specializeId");
+            
+            if (specializeIdStr != null && !specializeIdStr.isEmpty()) {
+                try {
+                    Integer specializeId = Integer.parseInt(specializeIdStr);
+                    predicates.add(b.equal(root.get("specializeId").get("id"), specializeId));
+                } catch (NumberFormatException e) {
+                    
+                }
+            }
+
+            String specializeName = params.get("specializeName");
+            if (specializeName != null && !specializeName.isEmpty()) {
+                predicates.add(b.like(root.get("specializeId").get("name"), "%" + specializeName + "%"));
+            }
+
+            query.where(predicates.toArray(new Predicate[0]));
         }
         Query q = s.createQuery(query);
         return q.getResultList();

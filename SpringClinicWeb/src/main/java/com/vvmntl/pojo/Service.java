@@ -4,6 +4,7 @@
  */
 package com.vvmntl.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -54,6 +55,7 @@ public class Service implements Serializable {
     @Min(value=5000, message = "{service.price.minErr}")
     @Column(name = "price")
     private BigDecimal price;
+    @JsonIgnore
     @OneToMany(mappedBy = "serviceId")
     private Set<Appointment> appointmentSet;
     @JoinColumn(name = "specialize_id", referencedColumnName = "id")

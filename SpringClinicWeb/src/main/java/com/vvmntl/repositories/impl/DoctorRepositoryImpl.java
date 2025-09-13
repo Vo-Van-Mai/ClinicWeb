@@ -8,6 +8,7 @@ import com.vvmntl.pojo.Doctor;
 import com.vvmntl.pojo.DoctorSpecialize;
 import com.vvmntl.pojo.Role;
 import com.vvmntl.pojo.Specialize;
+import com.vvmntl.pojo.User;
 import com.vvmntl.repositories.DoctorRepository;
 import com.vvmntl.services.UserService;
 import jakarta.persistence.Query;
@@ -64,7 +65,39 @@ public class DoctorRepositoryImpl implements DoctorRepository {
             if (kw != null && !kw.isEmpty()) {
                 predicates.add(b.like(r.get("user").get("firstName"), String.format("%%%s%%", kw)));
             }
-            query.where(predicates);
+            
+            String expYear = params.get("minYear");
+            if (expYear != null && !expYear.isEmpty()) {
+                predicates.add(
+                    b.greaterThanOrEqualTo(r.get("yearOfExperience"), Integer.parseInt(expYear))
+                );
+            }
+
+            String verified = params.get("isVerified");
+            if (verified != null && !verified.isEmpty()) {
+                predicates.add(
+                    b.equal(r.get("isVerified"), Boolean.parseBoolean(verified))
+                );
+            }
+
+            String license = params.get("licenseNumber");
+            if (license != null && !license.isEmpty()) {
+                predicates.add(
+                    b.equal(r.get("licenseNumber"), license)
+                );
+            }
+
+            String specialize = params.get("specialize");
+            if (specialize != null && !specialize.isEmpty()) {
+                Join<Object, Object> sp = r.join("doctorSpecializeSet", JoinType.LEFT);
+                predicates.add(
+                    b.equal(sp.get("specializeId").get("name"), specialize)
+                );
+            }
+            
+            if (!predicates.isEmpty()) {
+                query.where(b.and(predicates.toArray(new Predicate[0])));
+            }
         }
         Query q = s.createQuery(query);
 
@@ -117,11 +150,6 @@ public class DoctorRepositoryImpl implements DoctorRepository {
         if (d.getUser() == null) {
             throw new RuntimeException("Không tìm thấy");
         }
-        if (d.getUser().getId() == null) {
-            d.getUser().setRole(Role.DOCTOR);
-            this.userService.addUser(d.getUser());
-        }
-
         s.persist(d);
         return d;
     }

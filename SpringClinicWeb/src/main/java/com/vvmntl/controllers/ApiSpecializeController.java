@@ -1,12 +1,15 @@
 package com.vvmntl.controllers;
 
 import com.vvmntl.exception.ResourceNotFoundException;
+import com.vvmntl.pojo.Specialize;
 import com.vvmntl.services.SpecializeService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,7 +31,7 @@ public class ApiSpecializeController {
     @Autowired
     private SpecializeService speciService;
 
-    @DeleteMapping("/specialize/{id}")
+    @DeleteMapping("/specializes/{id}")
     public ResponseEntity<String> destroy(@PathVariable(value="id") int id) {
         try {
             this.speciService.delSpecialize(id);
@@ -43,5 +46,10 @@ public class ApiSpecializeController {
             // Lỗi khác → trả HTTP 500
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi server: " + ex.getMessage());
         }
+    }
+    
+    @GetMapping("/specializes")
+    public ResponseEntity<List<Specialize>> list(){
+        return new ResponseEntity<>(this.speciService.getAllSpecialize(), HttpStatus.OK);
     }
 }

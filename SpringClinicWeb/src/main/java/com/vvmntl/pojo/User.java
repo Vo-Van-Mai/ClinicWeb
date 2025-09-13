@@ -4,6 +4,8 @@
  */
 package com.vvmntl.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -102,11 +104,13 @@ public class User implements Serializable {
     @Column(name = "avatar")
     private String avatar;
     @Column(name = "created_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdDate;
     @Basic(optional = false)
     @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;
+    @JsonIgnore
     @OneToMany(mappedBy = "userId")
     private Set<Notification> notificationSet;
     

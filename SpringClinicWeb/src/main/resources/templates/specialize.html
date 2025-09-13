@@ -39,7 +39,7 @@
                     <td th:text="${s.description}"></td>
                     <td th:text="${s.isActive}"></td>
                     <th>
-                        <button class="btn btn-danger" th:onclick="'deleteSpecialize(\''+@{/api/specialize/}+'\','+${s.id}+')'">Xóa</button>
+                        <button class="btn btn-danger" th:onclick="'deleteSpecialize(\''+@{/api/specializes/}+'\','+${s.id}+')'">Xóa</button>
                         <a th:href="@{/specialize/} + ${s.id}" class="btn btn-success">Cập nhật</a>
                         
                     </th>
