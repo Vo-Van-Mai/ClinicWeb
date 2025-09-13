@@ -1,0 +1,227 @@
+<!<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head> 
+    <th:object th:replace="base :: bt"></th:object>
+</head>
+<body class="container">
+    <div th:replace="base :: menu"></div>
+
+    <main class="container">
+        <h1 class="text-center text-info mb-5">THỐNG KÊ BÁO CÁO</h1>
+
+        <div class="row mb-5 p-3 border rounded">
+            <h2 class="text-primary">Doanh thu theo thuốc</h2>
+            <div class="col-md-6">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID Thuốc</th>
+                            <th>Tên Loại Thuốc</th>
+                            <th>Tổng doanh thu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="m: ${medicineRevenues}">
+                            <td th:text="${m[0]}"></td>
+                            <td th:text="${m[1]}"></td>
+                            <td th:text="${m[2] + ' VND'}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <canvas id="medicineChart"></canvas>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div class="row mb-5 p-3 border rounded">
+            <h2 class="text-primary">Doanh thu theo chuyên khoa</h2>
+            <div class="col-md-6">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID Chuyên khoa</th>
+                            <th>Tên chuyên khoa</th>
+                            <th>Tổng doanh thu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="s: ${specializeRevenues}">
+                            <td th:text="${s[0]}"></td>
+                            <td th:text="${s[1]}"></td>
+                            <td th:text="${s[2] + ' VND'}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <canvas id="specializeChart"></canvas>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div class="row mb-5 p-3 border rounded">
+            <h2 class="text-primary">Số lịch khám theo bác sĩ</h2>
+            <div class="col-md-6">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID Bác sĩ</th>
+                            <th>Tên bác sĩ</th>
+                            <th>Số lịch khám</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="d: ${doctorAppointments}">
+                            <td th:text="${d[0]}"></td>
+                            <td th:text="${d[1]}"></td>
+                            <td th:text="${d[2]}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <canvas id="doctorChart"></canvas>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div class="row p-3 border rounded">
+            <h2 class="text-primary" th:text="'Số lịch khám theo tháng (Năm ' + ${currentYear} + ')'"></h2>
+            <div class="col-md-6">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Tháng</th>
+                            <th>Số lịch khám</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="a: ${monthlyAppointments}">
+                            <td th:text="'Tháng ' + ${a[0]}"></td>
+                            <td th:text="${a[1]}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <canvas id="monthlyChart"></canvas>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="base :: footer"></div>
+    <script th:src="@{/js/main.js}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script th:inline="javascript">
+        let medicineRevenues = [[${medicineRevenues}]];
+        let specializeRevenues = [[${specializeRevenues}]];
+        let doctorAppointments = [[${doctorAppointments}]];
+        let monthlyAppointments = [[${monthlyAppointments}]];
+
+        let medLabels = medicineRevenues.map(r => r[1]);
+        let medData = medicineRevenues.map(r => r[2]);
+                
+        let specLabels = specializeRevenues.map(r => r[1]);
+        let specData = specializeRevenues.map(r => r[2]);
+                
+        let docLabels = doctorAppointments.map(r => r[1]);
+        let docData = doctorAppointments.map(r => r[2]);
+                
+        let monthLabels = monthlyAppointments.map(r => "Tháng " + r[0]);
+        let monthData = monthlyAppointments.map(r => r[1]);
+
+        window.onload = function () {
+            const medCtx = document.getElementById('medicineChart');
+
+            new Chart(medCtx, {
+                type: 'bar',
+                data: {
+                    labels: medLabels,
+                    datasets: [{
+                            label: '# Doanh thu thuốc',
+                            data: medData,
+                            borderWidth: 1
+                        }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            
+            const specCtx = document.getElementById('specializeChart');
+
+            new Chart(specCtx, {
+                type: 'bar',
+                data: {
+                    labels: specLabels,
+                    datasets: [{
+                            label: '# Doanh thu chuyên khoa',
+                            data: specData,
+                            borderWidth: 1
+                        }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            
+            const docCtx = document.getElementById('doctorChart');
+
+            new Chart(docCtx, {
+                type: 'bar',
+                data: {
+                    labels: docLabels,
+                    datasets: [{
+                            label: '# Số lịch khám',
+                            data: docData,
+                            borderWidth: 1
+                        }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            
+            const monthCtx = document.getElementById('monthlyChart');
+
+            new Chart(monthCtx, {
+                type: 'line',
+                data: {
+                    labels: monthLabels,
+                    datasets: [{
+                            label: '# Số lịch khám hàng tháng',
+                            data: monthData,
+                            borderWidth: 1
+                        }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

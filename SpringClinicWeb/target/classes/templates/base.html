@@ -34,6 +34,9 @@
                     <a class="nav-link text-white" href="#">Lịch hẹn</a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item ">
+                    <a class="nav-link text-info" th:href="@{/stats}">Thống Kê</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item ">
                     <a class="nav-link text-danger" th:href="@{/logout}">Đăng xuất</a>
                 </li>
             </ul>
