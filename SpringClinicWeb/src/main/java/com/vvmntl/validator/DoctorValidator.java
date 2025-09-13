@@ -16,10 +16,7 @@ import org.springframework.validation.Validator;
  * @author BRAVO15
  */
 @Component
-public class DoctorValidator implements Validator{
-
-    @Autowired
-    private UserValidator userValidator;
+public class DoctorValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -29,13 +26,11 @@ public class DoctorValidator implements Validator{
     @Override
     public void validate(Object target, Errors errors) {
         Doctor doctor = (Doctor) target;
-        if (doctor.getUser() != null) {
-            ValidationUtils.invokeValidator(userValidator, doctor.getUser(), errors);
-        }
+
 
         if (doctor.getLicenseNumber() == null || doctor.getLicenseNumber().isBlank()) {
             errors.rejectValue("licenseNumber", "doctor.licenseNumber.nullErr");
         }
     }
-    
+
 }

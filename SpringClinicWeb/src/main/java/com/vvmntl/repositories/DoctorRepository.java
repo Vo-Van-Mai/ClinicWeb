@@ -16,7 +16,9 @@ public interface DoctorRepository {
     List<Doctor> list();
     List<Doctor> getDoctor(Map<String, String> params);
     List<Doctor> getDoctorBySpecializeId(int id);
-    Doctor addOrUpdateDoctor(Doctor d);
+    Doctor addDoctor(Doctor d);
+    Doctor updateDoctor(Doctor d);
     boolean deleteDoctor(int id);
     Doctor getDoctorById(int id);
+    long countDoctor(Map<String, String> params);
 }

@@ -4,6 +4,7 @@
  */
 package com.vvmntl.repositories.impl;
 
+import com.vvmntl.exception.ResourceNotFoundException;
 import com.vvmntl.pojo.User;
 import com.vvmntl.repositories.UserRepository;
 import jakarta.persistence.NoResultException;
@@ -49,4 +50,36 @@ public class UserRepositoryImpl implements UserRepository {
             return null;
         }
     }
+     
+
+    @Override
+    public boolean deleteUser(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public User getUserById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.find(User.class, id);
+    }
+    
+
+    @Override
+    public User updateUser(User user) {
+        Session s = this.factory.getObject().getCurrentSession();
+        User u = this.getUserById(user.getId());
+        if (u != null){
+            return (User) s.merge(user);
+        } else{
+            throw new ResourceNotFoundException("Người dùng không tồn tại");
+        }
+    }
+
+    @Override
+    public User addUser(User u) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.persist(u);
+        return u;
+    }
+   
 }

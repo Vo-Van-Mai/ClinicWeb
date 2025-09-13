@@ -1,0 +1,91 @@
+
+<!<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head> 
+    <th:object th:replace="base :: bt"></th:object>
+</head>
+<body class="container">
+    <div th:replace="base :: menu"></div>
+
+    <div>
+        <h1 class="text-center text-info">Tạo tài khoản người dùng</h1>
+        <div class="alert alert-danger" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+
+
+        <form th:action="@{/user/add}" th:method="POST" th:object="${user}" enctype="multipart/form-data" accept-charset="UTF-8">
+
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="form-floating mb-3 mt-3">
+                <label for="username" >Tên đăng nhập:</label>
+                <input type="text"  id="username" placeholder="Nhập username..." th:field="*{username}">
+                <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+            </div>
+
+            <div class="form-floating mb-3 mt-3">
+                <label for="password" >Mật khẩu:</label>
+                <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu..." th:field="*{password}">
+                <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            </div>
+
+            <div class="form-floating mb-3 mt-3">
+                <label for="firstName" >Họ:</label>
+                <input type="text" class="form-control" id="firstName" placeholder="Nhập họ..." th:field="*{firstName}" >
+                <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+            </div>
+
+            <div class="form-floating mb-3 mt-3">
+                <label for="lastName" >Tên:</label>
+                <input type="text" class="form-control" id="lastName" placeholder="Nhập tên..." th:field="*{lastName}" >
+                <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+            </div>
+
+            <div class="form-floating mb-3 mt-3">
+                <label for="dob" >Ngày sinh:</label>
+                <input type="date" class="form-control" id="dob" th:field="*{dateOfBirth}">
+            </div>
+
+            <div class="form-floating mb-3 mt-3">
+                <label for="phone" >Số điện thoại:</label>
+                <input type="text" class="form-control" id="phone" th:field="*{phone}">
+            </div>
+
+            <div class="form-floating mb-3 mt-3">
+                <label for="email" >Email:</label>
+                <input type="email" class="form-control" id="email" th:field="*{email}" >
+                <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            </div>
+
+            <div class="form-floating mb-3 mt-3">
+                <label for="gender" >Giới tính:</label>
+                <select class="form-select" id="gender" th:field="*{gender}">
+                    <option th:value="MALE" th:text="'Nam'"></option>
+                    <option th:value="FEMALE" th:text="'Nữ'"></option>
+                    <option th:value="OTHER" th:text="'Khác'"></option>
+                </select>
+            </div>
+
+            <div class="form-floating mb-3 mt-3">
+                <label for="role" >Vai trò cho người dùng:</label>
+                <select class="form-select" id="role" th:field="*{role}">
+                    <option th:value="${T(com.vvmntl.pojo.Role).DOCTOR}" th:text="'Bác sĩ'"></option>
+                </select>
+                <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></div>
+            </div>
+
+            <div class="form-floating mb-3 mt-3">
+                <label for="avatar" >Ảnh đại diện</label>
+                <input type="file" class="form-control" id="avatar" th:field="*{file}">
+
+            </div>
+
+            <a th:href="@{/}" class="btn btn-danger">Hủy</a>
+            <button type="submit" class="btn btn-primary">Thêm bác sĩ</button>
+        </form>
+    </div>
+    <div th:replace="base :: footer"></div>
+    <script th:src="@{/js/main.js}">
+
+    </script>
+</body>
+</html>

@@ -18,11 +18,15 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -76,6 +80,7 @@ public class User implements Serializable {
     private String lastName;
     @Column(name = "date_of_birth")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date dateOfBirth;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Size(max = 15)
@@ -91,22 +96,22 @@ public class User implements Serializable {
     private Boolean isActive = true;
     @Column(name = "is_admin")
     private Boolean isAdmin;
-    @Size(max = 6)
     @Enumerated(EnumType.STRING)
     private Gender gender;
     @Size(max = 255)
     @Column(name = "avatar")
     private String avatar;
     @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private LocalDateTime createdDate;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 7)
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToMany(mappedBy = "userId")
     private Set<Notification> notificationSet;
+    
+    @Transient
+    private MultipartFile file;
 
     public User() {
     }
@@ -221,11 +226,11 @@ public class User implements Serializable {
         this.avatar = avatar;
     }
 
-    public Date getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -268,6 +273,20 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.vvmntl.pojo.User[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
     
 }

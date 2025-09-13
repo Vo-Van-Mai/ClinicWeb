@@ -5,6 +5,7 @@
 package com.vvmntl.services;
 
 import com.vvmntl.pojo.Doctor;
+import com.vvmntl.pojo.User;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,10 @@ public interface DoctorService {
     List<Doctor> list();
     List<Doctor> getDoctor(Map <String, String> params);
     List<Doctor> getDoctorBySpecializeId(int id);
-    Doctor addOrUpdateDoctor(Doctor d);
+    Doctor addDoctor(User user, Doctor d);
+    Doctor updateDoctor(Doctor d);
     boolean deleteDoctor(int id);
     Doctor getDoctorById(int id);
+    long countDoctor(Map<String, String> params);
+
 }

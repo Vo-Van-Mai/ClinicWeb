@@ -6,8 +6,10 @@ package com.vvmntl.repositories.impl;
 
 import com.vvmntl.pojo.Doctor;
 import com.vvmntl.pojo.DoctorSpecialize;
+import com.vvmntl.pojo.Role;
 import com.vvmntl.pojo.Specialize;
 import com.vvmntl.repositories.DoctorRepository;
+import com.vvmntl.services.UserService;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -30,10 +32,14 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class DoctorRepositoryImpl implements DoctorRepository{
+public class DoctorRepositoryImpl implements DoctorRepository {
+
     private static final int PAGE_SIZE = 10;
     @Autowired
     private LocalSessionFactoryBean factory;
+    @Autowired
+    private UserService userService;
+
     @Override
     public List<Doctor> list() {
         Session s = this.factory.getObject().getCurrentSession();
@@ -50,26 +56,26 @@ public class DoctorRepositoryImpl implements DoctorRepository{
         r.fetch("doctorSpecializeSet", JoinType.LEFT);
 
         query.select(r).distinct(true);
-        
-        if (params != null){
+
+        if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
-            
+
             String kw = params.get("kw");
-            if(kw != null && !kw.isEmpty()){
+            if (kw != null && !kw.isEmpty()) {
                 predicates.add(b.like(r.get("user").get("firstName"), String.format("%%%s%%", kw)));
             }
             query.where(predicates);
         }
         Query q = s.createQuery(query);
-        
+
         if (params != null && !params.isEmpty()) {
             String p = params.getOrDefault("page", "1");
             int page = Integer.parseInt(p);
-            int start = (page-1) * PAGE_SIZE;
+            int start = (page - 1) * PAGE_SIZE;
             q.setMaxResults(PAGE_SIZE);
             q.setFirstResult(start);
         }
-        
+
         return q.getResultList();
     }
 
@@ -79,33 +85,20 @@ public class DoctorRepositoryImpl implements DoctorRepository{
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Doctor> query = b.createQuery(Doctor.class);
         Root<Doctor> r = query.from(Doctor.class);
-        Join<Doctor, DoctorSpecialize> dsJoin = r.join("doctorSpecializeSet" );
+        Join<Doctor, DoctorSpecialize> dsJoin = r.join("doctorSpecializeSet");
         Join<DoctorSpecialize, Specialize> sJoin = dsJoin.join("specializeId");
-        
+
         query.select(r).where(b.equal(sJoin.get("id"), id));
-        
+
         Query q = s.createQuery(query);
         return q.getResultList();
-    }
-
-    @Override
-    public Doctor addOrUpdateDoctor(Doctor d) {
-        Session s = this.factory.getObject().getCurrentSession();
-        if(d.getId()==null){
-            s.persist(d);
-            return d;
-        }
-        else{
-            s.merge(d);
-            return s.merge(d);
-        }
     }
 
     @Override
     public boolean deleteDoctor(int id) {
         Session s = this.factory.getObject().getCurrentSession();
         Doctor d = this.getDoctorById(id);
-        if (d!=null){
+        if (d != null) {
             s.remove(d);
             return true;
         }
@@ -117,5 +110,68 @@ public class DoctorRepositoryImpl implements DoctorRepository{
         Session s = this.factory.getObject().getCurrentSession();
         return s.find(Doctor.class, id);
     }
-    
+
+    @Override
+    public Doctor addDoctor(Doctor d) {
+        Session s = this.factory.getObject().getCurrentSession();
+        if (d.getUser() == null) {
+            throw new RuntimeException("Không tìm thấy");
+        }
+        if (d.getUser().getId() == null) {
+            d.getUser().setRole(Role.DOCTOR);
+            this.userService.addUser(d.getUser());
+        }
+
+        s.persist(d);
+        return d;
+    }
+
+    @Override
+    public Doctor updateDoctor(Doctor d) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            Doctor existingDoctor = this.getDoctorById(d.getId());
+            if (existingDoctor == null) {
+                throw new RuntimeException("Doctor with ID " + d.getId() + " not found");
+            }
+            if (d.getUser() == null) {
+                throw new RuntimeException("User information is required for a Doctor");
+            }
+            if (d.getUser().getId() != d.getId()) {
+                throw new RuntimeException("User ID and Doctor ID do not match");
+            }
+
+            if (d.getIsVerified() == null) {
+                d.setIsVerified(existingDoctor.getIsVerified());
+            }
+            s.merge(d.getUser());
+            Doctor updatedDoctor = (Doctor) s.merge(d);
+            s.flush();
+            return updatedDoctor;
+        } catch (Exception e) {
+            throw new RuntimeException("Error updating doctor: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public long countDoctor(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Long> query = b.createQuery(Long.class);
+        Root<Doctor> r = query.from(Doctor.class);
+
+        query.select(b.countDistinct(r));
+
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+            String kw = params.get("kw");
+            if (kw != null && !kw.isEmpty()) {
+                predicates.add(b.like(r.get("user").get("firstName"), String.format("%%%s%%", kw)));
+            }
+            query.where(predicates.toArray(new Predicate[0]));
+        }
+
+        return s.createQuery(query).getSingleResult();
+    }
+
 }

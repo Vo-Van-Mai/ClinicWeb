@@ -30,13 +30,12 @@ public class UserValidator implements Validator{
         User u = (User) target;
         if (u.getUsername()==null || u.getUsername().isBlank())
             errors.rejectValue("username", "user.username.nullErr");
-        if (u.getUsername() != null && userService.getUserByUsername(u.getUsername())!=null)
+        else if (this.userService.getUserByUsername(u.getUsername())!=null)
             errors.rejectValue("username", "user.username.duplicate");
         
         if (u.getEmail() == null || u.getEmail().isBlank()) {
             errors.rejectValue("email", "user.email.nullErr");
         } else {
-            // Regex kiểm tra định dạng email
             String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
             if (!u.getEmail().matches(emailRegex)) {
                 errors.rejectValue("email", "user.email.invalidFormat");
@@ -45,22 +44,28 @@ public class UserValidator implements Validator{
             }
         }
 
-        // Validate password
         if (u.getPassword() == null || u.getPassword().isBlank()) {
             errors.rejectValue("password", "user.password.nullErr");
         } else if (u.getPassword().length() < 6) {
             errors.rejectValue("password", "user.password.tooShort");
         }
 
-        // Validate first name
         if (u.getFirstName() == null || u.getFirstName().isBlank()) {
             errors.rejectValue("firstName", "user.firstName.nullErr");
         }
 
-        // Validate last name
         if (u.getLastName() == null || u.getLastName().isBlank()) {
             errors.rejectValue("lastName", "user.lastName.nullErr");
         }
+        
+        if (u.getRole()== null || u.getRole().name().isBlank()) {
+            errors.rejectValue("role", "user.role.nullErr");
+        }
+        
+        if (u.getFile()== null || u.getFile().isEmpty()){
+            errors.rejectValue("file", "user.avatar.nullErr");
+        }
+        
     }
    
 }

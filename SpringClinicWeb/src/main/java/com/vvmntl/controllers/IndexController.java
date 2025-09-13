@@ -4,8 +4,10 @@
  */
 package com.vvmntl.controllers;
 
+import com.vvmntl.pojo.Doctor;
 import com.vvmntl.services.CategoryService;
 import com.vvmntl.services.DoctorService;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,8 +30,13 @@ public class IndexController {
     
     @GetMapping("/")
     public String index(Model model, @RequestParam Map<String, String> params){
-        params.put("page", "1");
-        model.addAttribute("doctors", this.doctorService.getDoctor(params));
+        List<Doctor> doctors = this.doctorService.getDoctor(params);
+        model.addAttribute("doctors",doctors);
+        int currentPage = Integer.parseInt(params.getOrDefault("page", "1"));
+        model.addAttribute("currentPage", currentPage);
+        long totalDoctors = this.doctorService.countDoctor(params);
+        int totalPages = (int) Math.ceil((double) totalDoctors /10);
+        model.addAttribute("totalPages", totalPages);
         return "index";
     }
     

@@ -12,6 +12,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @author BRAVO15
  */
 public interface UserRepository{
+    User getUserById(int id);
     User getUserByUsername(String username);
     User getUserByEmail(String email);
+    User addUser(User u);
+    User updateUser(User user);
+    boolean deleteUser(int id);
 }

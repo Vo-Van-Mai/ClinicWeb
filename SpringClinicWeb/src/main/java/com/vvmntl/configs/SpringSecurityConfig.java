@@ -53,7 +53,7 @@ public class SpringSecurityConfig {
         return new HandlerMappingIntrospector();
     }
 
-   @Bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
             Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
