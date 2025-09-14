@@ -10,6 +10,7 @@ import Login from "./component/user/Login";
 import { MyUserContext } from "./configs/MyContext";
 import { MyUserReducer } from "./reducer/MyUserReducer";
 import { useReducer } from "react";
+import AddDoctorProfile from "./component/user/AddDoctorProfile";
 const App = () => {
   const [user, dispatch] = useReducer(MyUserReducer, null);
 
@@ -21,10 +22,11 @@ const App = () => {
         <Container>
 
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<AddDoctorProfile />} />
           <Route path="/service" element={<ListService />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/addDoctorProfile" element={<AddDoctorProfile />} />
         </Routes>
         </Container>
 

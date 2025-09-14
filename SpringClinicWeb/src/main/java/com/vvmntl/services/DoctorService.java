@@ -5,6 +5,7 @@
 package com.vvmntl.services;
 
 import com.vvmntl.pojo.Doctor;
+import com.vvmntl.pojo.Specialize;
 import com.vvmntl.pojo.User;
 import java.util.List;
 import java.util.Map;

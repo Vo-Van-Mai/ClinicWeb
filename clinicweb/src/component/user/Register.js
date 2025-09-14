@@ -54,6 +54,8 @@ const Register = () => {
     const [msg, setMsg] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const nav = useNavigate();
+    const [checkDoctorRole, setCheckDoctorRole] = useState(false);
+    
     
     const setState = (value, field) => {
         setUser({ ...user, [field]: value });
@@ -152,7 +154,12 @@ const Register = () => {
             if(res.status === 201){
                 setMsg("Đăng ký thành công!");
                 setIsLoading(false);
-                nav("/login");
+                if(checkDoctorRole){
+                    nav("/addDoctorProfile");
+                }
+                else{
+                    nav("/login");
+                }
             }
             else{
                 setMsg("Có lỗi xảy ra khi đăng ký." + res.message);
@@ -174,7 +181,7 @@ const Register = () => {
                 <div className="col-md-8 col-lg-6">
                     <div className="card shadow">
                         <div className="card-body p-4">
-                            <h1 className="text-center text-success mb-4">Đăng ký người dùng</h1>
+                            <h1 className="text-center text-suc cess mb-4">Đăng ký người dùng</h1>
                             
                             <Form onSubmit={register}>
                                 <div className="row">
@@ -194,11 +201,18 @@ const Register = () => {
 
                                 <div className="row">
                                     <div className="col-md-6 mb-3">
-                                        <Form.Select 
-                                            aria-label="Vai trò người dùng"
-                                            value={user.role || 'null'}
-                                            onChange={(e) => setState(e.target.value, 'role')}
-                                        >
+                                            <Form.Select 
+                                                aria-label="Vai trò người dùng"
+                                                value={user.role || 'null'}
+                                                onChange={(e) => {
+                                                    setState(e.target.value, 'role');
+                                                    if(e.target.value === "DOCTOR"){
+                                                        setCheckDoctorRole(true);
+                                                    } else{
+                                                        setCheckDoctorRole(false);
+                                                    }
+                                                }}
+                                            >
                                             <option value="null">Chọn vai trò người dùng</option>
                                             <option value="PATIENT">Bệnh nhân</option>
                                             <option value="DOCTOR">Bác sĩ</option>

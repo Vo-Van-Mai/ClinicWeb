@@ -68,15 +68,10 @@ public class DoctorController {
         }
         try {
             User u = this.userService.getUserById(doctor.getUser().getId());
-            System.out.println("Try Doctor submit: " + doctor);
-            System.out.println(" Try User info: " + u.getUsername());
             this.doctorService.addDoctor(u, doctor);
-            
         
             return "redirect:/";
         } catch (Exception e) {
-            System.out.println("Doctor submit: " + doctor);
-            System.out.println("User info: " + doctor.getUser());
             model.addAttribute("errorMessage", "Có lỗi xảy ra: " + e.getMessage());
             return "add_doctor";
         }

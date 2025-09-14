@@ -4,6 +4,7 @@
  */
 package com.vvmntl.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -19,6 +20,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -40,8 +42,8 @@ public class DoctorSpecialize implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Column(name = "join_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date joinDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime joinDate;
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
     @ManyToOne
     @JsonIgnoreProperties("doctorSpecializeSet")
@@ -66,11 +68,11 @@ public class DoctorSpecialize implements Serializable {
         this.id = id;
     }
 
-    public Date getJoinDate() {
+    public LocalDateTime getJoinDate() {
         return joinDate;
     }
 
-    public void setJoinDate(Date joinDate) {
+    public void setJoinDate(LocalDateTime joinDate) {
         this.joinDate = joinDate;
     }
 

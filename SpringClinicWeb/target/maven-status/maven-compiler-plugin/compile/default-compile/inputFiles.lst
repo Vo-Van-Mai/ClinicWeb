@@ -46,9 +46,11 @@ D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Worksche
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\AppointmentRepository.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\CategoryRepository.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\DoctorRepository.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\DoctorSpecializeRepository.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\impl\AppointmentRepositoryImpl.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\impl\CategoryRepositoryImpl.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\impl\DoctorRepositoryImpl.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\impl\DoctorSpecializeRepositoryImpl.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\impl\ServiceRepositoryImpl.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\impl\SpecializeRepositoryImpl.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\impl\StatsRepositoryImpl.java
@@ -60,9 +62,11 @@ D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\AppointmentService.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\CategoryService.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\DoctorService.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\DoctorSpecializeService.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\impl\AppointmentServiceImpl.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\impl\CategoryServiceImpl.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\impl\DoctorServiceImpl.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\impl\DoctorSpecializeServiceImpl.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\impl\ServiceSeviceImpl.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\impl\SpecializeServiceImpl.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\impl\StatsServicesImpl.java

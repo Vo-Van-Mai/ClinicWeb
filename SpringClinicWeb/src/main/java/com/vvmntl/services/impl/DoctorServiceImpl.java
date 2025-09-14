@@ -7,6 +7,7 @@ package com.vvmntl.services.impl;
 import com.vvmntl.exception.ResourceNotFoundException;
 import com.vvmntl.pojo.Doctor;
 import com.vvmntl.pojo.Role;
+import com.vvmntl.pojo.Specialize;
 import com.vvmntl.pojo.User;
 import com.vvmntl.repositories.DoctorRepository;
 import com.vvmntl.services.DoctorService;
