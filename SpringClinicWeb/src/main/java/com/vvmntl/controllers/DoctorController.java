@@ -49,7 +49,13 @@ public class DoctorController {
     public String addView(Model model, @PathVariable(value="userId") int id){
         Doctor doctor = new Doctor();
         User u = this.userService.getUserById(id);
+        System.out.println(" Get User info: " + u);        
+        System.out.println(" Get User info: " + u.getId());
+
         doctor.setUser(u);
+        
+        System.out.println(" Get doctor info: " + doctor.getUser());        
+
         model.addAttribute("doctor", doctor);
         return "add_doctor";
     }
@@ -61,12 +67,16 @@ public class DoctorController {
             return "add_doctor";
         }
         try {
-            this.doctorService.addDoctor(doctor.getUser(), doctor);
-            System.out.println("Doctor submit: " + doctor);
-            System.out.println("User info: " + doctor.getUser());
+            User u = this.userService.getUserById(doctor.getUser().getId());
+            System.out.println("Try Doctor submit: " + doctor);
+            System.out.println(" Try User info: " + u.getUsername());
+            this.doctorService.addDoctor(u, doctor);
+            
         
             return "redirect:/";
         } catch (Exception e) {
+            System.out.println("Doctor submit: " + doctor);
+            System.out.println("User info: " + doctor.getUser());
             model.addAttribute("errorMessage", "Có lỗi xảy ra: " + e.getMessage());
             return "add_doctor";
         }

@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Alert, Button, FloatingLabel, Form } from "react-bootstrap";
 import Apis, { endpoints } from "../../configs/Apis";
-import { Navigate, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 const Register = () => {
     const info = [{

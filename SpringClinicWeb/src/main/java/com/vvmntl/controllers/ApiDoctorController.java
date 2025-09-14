@@ -28,8 +28,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApiDoctorController {
     @Autowired
     private DoctorService docService;
+    
     @GetMapping("/doctors")
     public ResponseEntity<List<Doctor>> list(@RequestParam Map <String, String> params){
         return new ResponseEntity<>(this.docService.getDoctor(params), HttpStatus.OK);
     }
+    
+    
+    
 }

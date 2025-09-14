@@ -4,6 +4,7 @@
  */
 package com.vvmntl.repositories.impl;
 
+import com.vvmntl.exception.ResourceNotFoundException;
 import com.vvmntl.pojo.Doctor;
 import com.vvmntl.pojo.DoctorSpecialize;
 import com.vvmntl.pojo.Role;
@@ -145,11 +146,12 @@ public class DoctorRepositoryImpl implements DoctorRepository {
     }
 
     @Override
-    public Doctor addDoctor(Doctor d) {
+    public Doctor addDoctor(User u, Doctor d) {
         Session s = this.factory.getObject().getCurrentSession();
         if (d.getUser() == null) {
-            throw new RuntimeException("Không tìm thấy");
+            throw new ResourceNotFoundException("Không tìm thấy người dùng");
         }
+        d.setId(u.getId());
         s.persist(d);
         return d;
     }

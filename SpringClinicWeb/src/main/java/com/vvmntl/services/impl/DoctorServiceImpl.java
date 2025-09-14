@@ -73,7 +73,9 @@ public class DoctorServiceImpl implements DoctorService{
     public Doctor addDoctor(User user, Doctor d) {
         if (user!=null){
             d.setUser(user);
-            return this.doctorRepo.addDoctor(d);
+            if(d.getLicenseNumber()==null || d.getLicenseNumber().isEmpty())
+                throw new ResourceNotFoundException("Không tìm thấy mã bác sĩ!");
+            return this.doctorRepo.addDoctor(user, d);
         } else{
             throw new ResourceNotFoundException("Không tìm thấy người dùng! Vui lòng kiểm tra lại hoặc đăng kí người dùng mới!");
         }
