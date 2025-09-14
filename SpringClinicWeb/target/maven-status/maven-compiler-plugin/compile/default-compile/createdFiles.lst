@@ -51,6 +51,7 @@ com\vvmntl\configs\WebAppContextConfigs.class
 com\vvmntl\repositories\impl\ServiceRepositoryImpl.class
 com\vvmntl\validator\ServiceValidator.class
 com\vvmntl\services\impl\UserServiceImpl.class
+com\vvmntl\fiters\JwtFilter.class
 com\vvmntl\configs\SecurityWebApplicationInitializer.class
 com\vvmntl\repositories\AppointmentRepository.class
 com\vvmntl\services\impl\ServiceSeviceImpl.class
@@ -73,6 +74,7 @@ com\vvmntl\pojo\Appointmentslot.class
 com\vvmntl\pojo\Medicine.class
 com\vvmntl\configs\SpringSecurityConfig.class
 com\vvmntl\pojo\Notification.class
+com\vvmntl\utils\JwtUtils.class
 com\vvmntl\services\impl\StatsServicesImpl.class
 com\vvmntl\configs\ThymeleafConfig.class
 com\vvmntl\springclinicweb\resources\JakartaEE11Resource.class

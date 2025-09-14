@@ -32,7 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author BRAVO15
  */
-@Service
+@Service("userDetailService")
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -155,6 +155,11 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new ResourceNotFoundException("Không tim thấy người dùng!");
         }
+    }
+
+    @Override
+    public boolean authenticate(String username, String password) {
+        return this.userRepo.authenticate(username, password);
     }
 
 }

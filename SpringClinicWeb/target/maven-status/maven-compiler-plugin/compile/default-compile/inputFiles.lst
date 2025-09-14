@@ -16,6 +16,7 @@ D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\S
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\StatsController.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\controllers\UserController.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\exception\ResourceNotFoundException.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\fiters\JwtFilter.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\formatters\CategoryFormatter.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\formatters\SpecializeFormatters.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Appointment.java
@@ -72,6 +73,7 @@ D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\Stat
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\services\UserService.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\springclinicweb\JakartaRestConfiguration.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\springclinicweb\resources\JakartaEE11Resource.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\utils\JwtUtils.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\validator\DoctorValidator.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\validator\ServiceValidator.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\validator\UserValidator.java
