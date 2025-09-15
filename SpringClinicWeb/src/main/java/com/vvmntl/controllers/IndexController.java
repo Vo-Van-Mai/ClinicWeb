@@ -7,6 +7,7 @@ package com.vvmntl.controllers;
 import com.vvmntl.pojo.Doctor;
 import com.vvmntl.services.CategoryService;
 import com.vvmntl.services.DoctorService;
+import com.vvmntl.services.MedicineServices;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class IndexController {
     @Autowired
     private DoctorService doctorService;
     
+    @Autowired
+    private MedicineServices mediService;
+    
     @GetMapping("/")
     public String index(Model model, @RequestParam Map<String, String> params){
         List<Doctor> doctors = this.doctorService.getDoctor(params);
@@ -37,6 +41,8 @@ public class IndexController {
         long totalDoctors = this.doctorService.countDoctor(params);
         int totalPages = (int) Math.ceil((double) totalDoctors /10);
         model.addAttribute("totalPages", totalPages);
+        
+        model.addAttribute("medicines", this.mediService.getMedicines(params));
         return "index";
     }
     

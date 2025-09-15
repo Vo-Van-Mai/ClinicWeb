@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+com/vvmntl/configs/JacksonConfig.class
+com/vvmntl/repositories/CategoryMedicineRepository.class
+com/vvmntl/repositories/impl/CategoryMedicineRepositoryImpl.class
+com/vvmntl/services/impl/CategoryMedicineServicesImpl.class
+com/vvmntl/services/impl/MedicineServicesImpl.class
+com/vvmntl/services/CategoryMedicineServices.class
+com/vvmntl/controllers/MedicineController.class
+com/vvmntl/controllers/ApiUserController.class
+com/vvmntl/services/MedicineServices.class
+com/vvmntl/controllers/ApiDoctorController.class
+com/vvmntl/repositories/MedicineRepository.class
+com/vvmntl/repositories/impl/MedicineRepositoryImpl.class
+=======
 com\vvmntl\pojo\Workschedule.class
 com\vvmntl\pojo\Pharmacy.class
 com\vvmntl\controllers\ApiSpecializeController.class
@@ -82,3 +96,4 @@ com\vvmntl\formatters\CategoryFormatter.class
 com\vvmntl\services\SpecializeService.class
 com\vvmntl\pojo\Medicine.class
 com\vvmntl\utils\JwtUtils.class
+>>>>>>> 0c6d9b728aeea421aa7bc7c19e63e1bb31fb8d38

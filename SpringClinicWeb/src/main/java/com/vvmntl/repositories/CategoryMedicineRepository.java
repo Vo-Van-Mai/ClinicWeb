@@ -4,14 +4,13 @@
  */
 package com.vvmntl.repositories;
 
-import com.vvmntl.pojo.Category;
-import java.util.List;
+import com.vvmntl.pojo.CategoryMedicine;
 
 /**
  *
- * @author BRAVO15
+ * @author locnguyen
  */
-public interface CategoryRepository {
-    Category getCategoryById(int id);
-    List<Category> getCates();
+public interface CategoryMedicineRepository {
+    void addOrUpdate(CategoryMedicine cm);
+    public CategoryMedicine getCateMediById(int id);
 }

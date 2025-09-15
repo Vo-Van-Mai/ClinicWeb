@@ -7,6 +7,7 @@ package com.vvmntl.services.impl;
 import com.vvmntl.services.CategoryService;
 import com.vvmntl.pojo.Category;
 import com.vvmntl.repositories.CategoryRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +23,10 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     public Category getCategoryById(int id) {
         return this.cateRepo.getCategoryById(id);
+    }
+
+    @Override
+    public List<Category> getCates() {
+        return this.cateRepo.getCates();
     }
 }

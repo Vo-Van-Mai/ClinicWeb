@@ -4,39 +4,37 @@
  */
 package com.vvmntl.repositories.impl;
 
-import com.vvmntl.pojo.Category;
-import com.vvmntl.repositories.CategoryRepository;
-import java.util.List;
+import com.vvmntl.pojo.CategoryMedicine;
+import com.vvmntl.repositories.CategoryMedicineRepository;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-
 /**
  *
- * @author BRAVO15
+ * @author locnguyen
  */
 @Repository
 @Transactional
-public class CategoryRepositoryImpl implements CategoryRepository{
-    
+public class CategoryMedicineRepositoryImpl implements CategoryMedicineRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
-    
+
     @Override
-    public Category getCategoryById(int id) {
+    public void addOrUpdate(CategoryMedicine cm) {
         Session s = this.factory.getObject().getCurrentSession();
-        return s.find(Category.class, id);
+        if (cm.getId() != null) {
+            s.merge(cm);
+        } else {
+            s.persist(cm);
+        }
     }
 
     @Override
-    public List<Category> getCates() {
+    public CategoryMedicine getCateMediById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM Category", Category.class);
-        return q.getResultList();
+        return s.find(CategoryMedicine.class, id);
     }
-    
 }
