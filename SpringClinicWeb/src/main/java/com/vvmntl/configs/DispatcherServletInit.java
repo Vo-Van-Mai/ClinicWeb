@@ -4,6 +4,8 @@
  */
 package com.vvmntl.configs;
 
+import com.vvmntl.fiters.JwtFilter;
+import jakarta.servlet.Filter;
 import jakarta.servlet.MultipartConfigElement;
 import jakarta.servlet.ServletRegistration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -44,4 +46,10 @@ public class DispatcherServletInit extends AbstractAnnotationConfigDispatcherSer
 
         registration.setMultipartConfig(new MultipartConfigElement(location, maxFileSize, maxRequestSize, fileSizeThreshold));
     }
+    
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[] { new JwtFilter() }; // Filter sẽ áp dụng cho mọi request
+    }
+    
 }

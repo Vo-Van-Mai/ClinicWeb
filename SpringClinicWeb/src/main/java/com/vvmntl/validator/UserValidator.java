@@ -6,6 +6,7 @@ package com.vvmntl.validator;
 
 import com.vvmntl.pojo.User;
 import com.vvmntl.services.UserService;
+import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -64,6 +65,14 @@ public class UserValidator implements Validator{
         
         if (u.getFile()== null || u.getFile().isEmpty()){
             errors.rejectValue("file", "user.avatar.nullErr");
+        }
+        
+        if (u.getDateOfBirth() == null) {
+            errors.rejectValue("dateOfBirth", "user.dateOfBirth.nullErr");
+        } else {
+            if (u.getDateOfBirth().isAfter(LocalDate.now())) {
+                errors.rejectValue("dateOfBirth", "user.dateOfBirth.format");
+            }
         }
         
     }

@@ -6,23 +6,33 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container } from "react-bootstrap";
 import ListService from "./component/service/ListService";
 import Register from "./component/user/Register";
+import Login from "./component/user/Login";
+import { MyUserContext } from "./configs/MyContext";
+import { MyUserReducer } from "./reducer/MyUserReducer";
+import { useReducer } from "react";
+import AddDoctorProfile from "./component/user/AddDoctorProfile";
 const App = () => {
+  const [user, dispatch] = useReducer(MyUserReducer, null);
 
   return (
-    <BrowserRouter>
-      <Header />
-      <Container>
+    <MyUserContext.Provider value={[user, dispatch]}>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/service" element={<ListService />} />
-        <Route path="/login" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
-      </Container>
+      <BrowserRouter>
+        <Header />
+        <Container>
 
-      <Footer />
-    </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<AddDoctorProfile />} />
+          <Route path="/service" element={<ListService />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/addDoctorProfile" element={<AddDoctorProfile />} />
+        </Routes>
+        </Container>
+
+        <Footer />
+      </BrowserRouter>
+    </MyUserContext.Provider>
   );
 }
 

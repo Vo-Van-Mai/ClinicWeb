@@ -49,7 +49,7 @@ public class UserController {
         return "add_user";
     }
     
-    
+    //add_doctor
     @PostMapping("/user/add")
     public String add(@ModelAttribute(value="user") @Valid User u, BindingResult result){
         if (!result.hasErrors()){
@@ -63,8 +63,9 @@ public class UserController {
             params.put("gender",u.getGender() != null ? u.getGender().name() : null);
             params.put("role",u.getRole() != null ? u.getRole().name() : null);
             params.put("isAdmin", String.valueOf(u.getIsAdmin()));
-             this.userService.addUser(params, u.getFile());
-             return "redirect:/";
+            params.put("password", u.getPassword());
+            User newUser = this.userService.addUser(params, u.getFile());
+            return "redirect:/doctor/add-doctor/" + newUser.getId();
         }
             
         else{

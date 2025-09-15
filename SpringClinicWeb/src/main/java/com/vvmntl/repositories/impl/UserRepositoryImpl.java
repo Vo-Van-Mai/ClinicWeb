@@ -1,4 +1,4 @@
-/*
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public User getUserByUsername(String username) {
@@ -54,7 +58,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public boolean deleteUser(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return false;
     }
 
     @Override
@@ -79,7 +83,14 @@ public class UserRepositoryImpl implements UserRepository {
     public User addUser(User u) {
         Session s = this.factory.getObject().getCurrentSession();
         s.persist(u);
+        s.flush();
         return u;
+    }
+    
+    @Override
+    public boolean authenticate(String username, String password){
+        User u = this.getUserByUsername(username);
+        return this.passwordEncoder.matches(password,u.getPassword());
     }
    
 }

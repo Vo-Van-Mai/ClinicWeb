@@ -15,7 +15,10 @@ import com.vvmntl.services.UserService;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -32,7 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author BRAVO15
  */
-@Service
+@Service("userDetailService")
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -80,9 +83,9 @@ public class UserServiceImpl implements UserService {
         
         if (params.get("dateOfBirth") != null && !params.get("dateOfBirth").isBlank()) {
             try {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                u.setDateOfBirth(sdf.parse(params.get("dateOfBirth")));
-            } catch (ParseException e) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                u.setDateOfBirth(LocalDate.parse(params.get("dateOfBirth"), formatter));
+            } catch (DateTimeParseException e) {
                 throw new RuntimeException("Sai định dạng ngày sinh! Phải là yyyy-MM-dd");
             }
         }
@@ -155,6 +158,11 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new ResourceNotFoundException("Không tim thấy người dùng!");
         }
+    }
+
+    @Override
+    public boolean authenticate(String username, String password) {
+        return this.userRepo.authenticate(username, password);
     }
 
 }

@@ -13,7 +13,7 @@
 
         <form th:action="@{/doctor/add}" th:method="POST" th:object="${doctor}" enctype="multipart/form-data">
 
-            
+            <input type="hidden" th:field="*{user.id}" />
 
             <div class="mb-3">
                 <label for="experience" class="form-label">Kinh nghiệm (trình bày lĩnh vực):</label>

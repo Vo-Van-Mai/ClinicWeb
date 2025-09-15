@@ -5,6 +5,7 @@
 package com.vvmntl.repositories;
 
 import com.vvmntl.pojo.Doctor;
+import com.vvmntl.pojo.User;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public interface DoctorRepository {
     List<Doctor> list();
     List<Doctor> getDoctor(Map<String, String> params);
     List<Doctor> getDoctorBySpecializeId(int id);
-    Doctor addDoctor(Doctor d);
+    Doctor addDoctor(User u, Doctor d);
     Doctor updateDoctor(Doctor d);
     boolean deleteDoctor(int id);
     Doctor getDoctorById(int id);
