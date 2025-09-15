@@ -81,7 +81,7 @@ public class ApiDoctorController {
             Doctor doctor = this.docService.getDoctorById(doctorId);
             if (doctor == null) {
                 return new ResponseEntity<>("Không tìm thấy bác sĩ!", HttpStatus.NOT_FOUND);
-            }
+            }       
 
             List<Integer> specializeIds = payload.get("specializeIds");
             if (specializeIds == null || specializeIds.isEmpty()) {

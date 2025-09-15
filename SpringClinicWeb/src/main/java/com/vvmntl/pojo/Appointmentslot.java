@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -55,8 +56,8 @@ public class Appointmentslot implements Serializable {
     private Date endTime;
     @Column(name = "is_booked")
     private Boolean isBooked;
-    @OneToMany(mappedBy = "appointmentSlot")
-    private Set<Appointment> appointmentSet;
+    @OneToOne(mappedBy = "appointmentSlot")
+    private Appointment appointment;
     @JoinColumn(name = "schedule_id", referencedColumnName = "id")
     @ManyToOne
     private Workschedule scheduleId;
@@ -106,13 +107,6 @@ public class Appointmentslot implements Serializable {
         this.isBooked = isBooked;
     }
 
-    public Set<Appointment> getAppointmentSet() {
-        return appointmentSet;
-    }
-
-    public void setAppointmentSet(Set<Appointment> appointmentSet) {
-        this.appointmentSet = appointmentSet;
-    }
 
     public Workschedule getScheduleId() {
         return scheduleId;
@@ -145,6 +139,20 @@ public class Appointmentslot implements Serializable {
     @Override
     public String toString() {
         return "com.vvmntl.pojo.Appointmentslot[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the appointment
+     */
+    public Appointment getAppointment() {
+        return appointment;
+    }
+
+    /**
+     * @param appointment the appointment to set
+     */
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
     }
     
 }

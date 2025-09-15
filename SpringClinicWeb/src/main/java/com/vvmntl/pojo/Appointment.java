@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -63,8 +64,8 @@ public class Appointment implements Serializable {
     private Boolean paymentForPrescription;
     @OneToMany(mappedBy = "appointmentId")
     private Set<Medicalrecord> medicalrecordSet;
-    @JoinColumn(name = "appointment_slot", referencedColumnName = "id")
-    @ManyToOne
+    @JoinColumn(name = "appointment_slot", referencedColumnName = "id", unique = true)
+    @OneToOne
     private Appointmentslot appointmentSlot;
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
     @ManyToOne
