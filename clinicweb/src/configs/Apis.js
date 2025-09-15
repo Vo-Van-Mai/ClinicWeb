@@ -11,6 +11,8 @@ export const endpoints = {
 
     //doctor
     "doctors": "/doctors",
+    "addDoctorProfile": (userId) => `/doctors/${userId}/add-profile`,
+    "choiceSpecialize": (userId) => `/doctors/${userId}/specializes`,
 
     //user
     "users": "/users",

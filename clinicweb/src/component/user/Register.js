@@ -155,7 +155,7 @@ const Register = () => {
                 setMsg("Đăng ký thành công!");
                 setIsLoading(false);
                 if(checkDoctorRole){
-                    nav("/addDoctorProfile");
+                    nav(`/addDoctorProfile/${res.data.id}`);
                 }
                 else{
                     nav("/login");

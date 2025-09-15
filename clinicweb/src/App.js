@@ -22,11 +22,11 @@ const App = () => {
         <Container>
 
         <Routes>
-          <Route path="/" element={<AddDoctorProfile />} />
+          <Route path="/" element={<Home />} />
           <Route path="/service" element={<ListService />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/addDoctorProfile" element={<AddDoctorProfile />} />
+          <Route path="/addDoctorProfile/:userId" element={<AddDoctorProfile />} />
         </Routes>
         </Container>
 
