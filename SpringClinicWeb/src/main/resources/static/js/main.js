@@ -30,3 +30,16 @@ function deleteService(endpoint, id) {
                 .catch(err => alert("Lỗi mạng: " + err.message));
     }
 }
+
+function deleteMedicine(endpoint) {
+    if (confirm("Ban co chac muon xoa")===true) {
+        fetch(endpoint, {
+            method: "delete"
+        }).then(res => {
+            if (res.status === 204)
+                location.reload();
+            else
+                alert("He thong co loi!");
+        });
+    }
+}

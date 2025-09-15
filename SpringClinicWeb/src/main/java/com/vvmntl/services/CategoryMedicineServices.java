@@ -4,14 +4,13 @@
  */
 package com.vvmntl.services;
 
-import com.vvmntl.pojo.Category;
-import java.util.List;
+import com.vvmntl.pojo.CategoryMedicine;
 
 /**
  *
- * @author BRAVO15
+ * @author locnguyen
  */
-public interface CategoryService {
-    Category getCategoryById(int id);
-    List<Category> getCates();
+public interface CategoryMedicineServices {
+    void addOrUpdate(CategoryMedicine cm);
+    CategoryMedicine getCateMediById(int id);
 }

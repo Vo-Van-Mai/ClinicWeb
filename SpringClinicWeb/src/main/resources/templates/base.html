@@ -1,5 +1,4 @@
-
-<!<!doctype html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
     <head>
@@ -28,7 +27,7 @@
                     <a class="nav-link text-white" href="#">Bệnh nhân</a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item ">
-                    <a class="nav-link text-white" href="#">Thuốc</a>
+                    <a class="nav-link text-white" th:href="@{/medicines}">Thuốc</a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item ">
                     <a class="nav-link text-white" href="#">Lịch hẹn</a>
