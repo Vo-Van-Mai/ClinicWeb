@@ -6,10 +6,17 @@ package com.vvmntl.repositories.impl;
 
 import com.vvmntl.exception.ResourceNotFoundException;
 import com.vvmntl.pojo.Appointment;
+import com.vvmntl.pojo.Appointmentslot;
+import com.vvmntl.pojo.Patient;
+import com.vvmntl.pojo.Service;
 import com.vvmntl.repositories.AppointmentRepository;
+import com.vvmntl.repositories.AppointmentSlotRepository;
+import com.vvmntl.repositories.PatientRepository;
+import com.vvmntl.repositories.ServiceRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -28,6 +35,13 @@ public class AppointmentRepositoryImpl implements AppointmentRepository{
     
     @Autowired
     private LocalSessionFactoryBean factory;
+    
+    @Autowired
+    private AppointmentSlotRepository slotRepo;
+    @Autowired
+    private PatientRepository patientRepo;
+    @Autowired
+    private ServiceRepository serviceRepo;
 
     @Override
     public List<Appointment> list() {
@@ -61,6 +75,44 @@ public class AppointmentRepositoryImpl implements AppointmentRepository{
         Query q = s.createQuery(query);
         
         return q.getResultList();
+    }
+
+    @Override
+    public Appointment addAppointment(Appointment appointment) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.persist(appointment);
+        return appointment;
+    }
+
+    @Override
+    public Appointment bookAppointment(int patientId, int serviceId, int slotId) {
+        Session s = this.factory.getObject().getCurrentSession();
+
+        Appointmentslot slot = this.slotRepo.getSlotById(slotId);
+        if (slot == null || Boolean.TRUE.equals(slot.getIsBooked())) {
+            throw new IllegalStateException("Slot không tồn tại hoặc đã được đặt!");
+        }
+
+        Patient patient = this.patientRepo.getPatientById(patientId);
+        Service service = this.serviceRepo.getServiceById(serviceId);
+        if (patient == null || service == null) {
+            throw new IllegalArgumentException("Bệnh nhân hoặc dịch vụ không hợp lệ!");
+        }
+
+        Appointment appointment = new Appointment();
+        appointment.setPatientId(patient);
+        appointment.setServiceId(service);
+        appointment.setAppointmentSlot(slot);
+        appointment.setCreatedDate(new Date());
+        appointment.setStatus("PENDING");
+        appointment.setPaymentForService(false);
+
+        s.persist(appointment);
+
+        slot.setIsBooked(true);
+        s.merge(slot);
+
+        return appointment;
     }
    
 }

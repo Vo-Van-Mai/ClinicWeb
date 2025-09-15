@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Apis, { endpoints } from "../configs/Apis";
 import { useSearchParams } from "react-router-dom";
 import { Alert, Button, Card, Col, Row, Spinner } from "react-bootstrap";
+import cookie from 'react-cookies'
 
 const Home = () => {
   const [doctos, setDoctors] = useState([]);
@@ -37,6 +38,17 @@ const Home = () => {
   useEffect(() => {
     loadDoctor();
   }, [q, page]);
+
+  const order = (s) => {
+    let cart = cookie.load("cart") || null;
+    if (cart === null) {
+      cart = {}
+    }
+    if (s.id in cart) {
+    }
+    else {
+    }
+  }
 
 
   return (

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Container, Dropdown, Nav, Navbar } from "react-bootstrap";
+import { Badge, Container, Dropdown, Nav, Navbar } from "react-bootstrap";
 import Apis, { endpoints } from "../../configs/Apis";
 import { Link } from "react-router-dom";
 import { MyUserContext } from "../../configs/MyContext";
@@ -26,7 +26,7 @@ const Header = () => {
         <Container>
           <Navbar.Brand >Clinic Website </Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/">Trang chủ</Nav.Link>
+            <Link className="nav-link" to="/">Trang chủ</Link>
             <Dropdown>
               <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                 Danh sách khoa
@@ -34,25 +34,26 @@ const Header = () => {
 
               <Dropdown.Menu>
                 {specialize.map(s => (
-                  <Link className="dropdown-item" to={`/service?specializeName=${s.name}`} key={s.id} >
+                  <Link className="nav-link dropdown-item" to={`/service?specializeName=${s.name}`} key={s.id} >
                     {s.name}
                   </Link>
                 ))}
               </Dropdown.Menu>
             </Dropdown>
-            <Nav.Link href="#features">Bác sĩ</Nav.Link>
-            <Nav.Link href="#pricing">Khoa</Nav.Link>
+            <Link className="nav-link" to="#features">Bác sĩ</Link>
+            <Link className="nav-link" to="#pricing">Khoa</Link>
             {user === null ? (
               <>
-                <Nav.Link href="login" className="text-warning" >Đăng nhập</Nav.Link>
-                <Nav.Link href="register" className="text-danger">Đăng kí</Nav.Link>
+                <Link to="login" className="nav-link text-warning" >Đăng nhập</Link>
+                <Link to="register" className="nav-link text-danger">Đăng kí</Link>
               </>
             ) : (
               <>
-                <Nav.Link href="#" className="text-info" >Chào {user.username}</Nav.Link>
-                <Nav.Link href="#" className="text-danger" onClick={() => dispatch({ "type": "logout" })}>Đăng xuất</Nav.Link>
+                <Link to="#" className="nav-link text-info" >Chào {user.username}</Link>
+                <Link to="#" className="nav-link text-danger" onClick={() => dispatch({ "type": "logout" })}>Đăng xuất</Link>
               </>
             )}
+            <Link to="/cart" className="nav-link text-success" >Lich da dat<Badge className="bg-danger" variant="danger">0</Badge></Link>
           </Nav>
         </Container>
       </Navbar>

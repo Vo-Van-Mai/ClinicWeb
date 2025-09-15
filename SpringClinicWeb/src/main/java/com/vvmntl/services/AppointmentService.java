@@ -16,4 +16,6 @@ public interface AppointmentService {
     Appointment getAppointmentById(int id);
     boolean deleteAppointment(int id);
     List<Appointment> getAppointmentByServiceId(int id);
+    Appointment bookAppointment(int patientId, int serviceId, int slotId);
+    Appointment addAppointment(Appointment appointment);
 }

@@ -18,6 +18,10 @@ export const endpoints = {
     "users": "/users",
     "login": "/login",
     "profile": "/secure/profile",
+
+    //appointment
+    "available-slots": "/api/available-slots",
+    "appointments": "/api/appointments"
 };
 
 export const authApis = () => {

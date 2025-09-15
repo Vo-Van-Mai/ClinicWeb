@@ -16,9 +16,9 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -43,14 +43,11 @@ public class Workschedule implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Column(name = "date_work")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateWork;
+    private LocalDate dateWork;
     @Column(name = "start_time")
-    @Temporal(TemporalType.TIME)
-    private Date startTime;
+    private LocalTime startTime;
     @Column(name = "end_time")
-    @Temporal(TemporalType.TIME)
-    private Date endTime;
+    private LocalTime endTime;
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
     @ManyToOne
     private Doctor doctorId;
@@ -72,27 +69,27 @@ public class Workschedule implements Serializable {
         this.id = id;
     }
 
-    public Date getDateWork() {
+    public LocalDate getDateWork() {
         return dateWork;
     }
 
-    public void setDateWork(Date dateWork) {
+    public void setDateWork(LocalDate dateWork) {
         this.dateWork = dateWork;
     }
 
-    public Date getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 

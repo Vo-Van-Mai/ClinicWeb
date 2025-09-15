@@ -4,7 +4,6 @@
  */
 package com.vvmntl.services.impl;
 
-import com.vvmntl.exception.ResourceNotFoundException;
 import com.vvmntl.pojo.Appointment;
 import com.vvmntl.repositories.AppointmentRepository;
 import com.vvmntl.services.AppointmentService;
@@ -41,6 +40,15 @@ public class AppointmentServiceImpl implements AppointmentService{
     public List<Appointment> getAppointmentByServiceId(int id) {
        return this.AppRepo.getAppointmentByServiceId(id);
     }
-    
+
+    @Override
+    public Appointment bookAppointment(int patientId, int serviceId, int slotId) {
+        return this.AppRepo.bookAppointment(patientId, serviceId, slotId);
+    }
+
+    @Override
+    public Appointment addAppointment(Appointment appointment) {
+        return this.AppRepo.addAppointment(appointment);
+    }
     
 }
