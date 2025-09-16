@@ -18,17 +18,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class AppointmentServiceImpl implements AppointmentService{
 
-    @Autowired()
-    private AppointmentRepository AppRepo;
+    @Autowired
+    private AppointmentRepository appRepo;
     
     @Override
     public List<Appointment> list() {
-        return this.AppRepo.list();
+        return this.appRepo.list();
     }
 
     @Override
     public Appointment getAppointmentById(int id) {
-        return this.AppRepo.getAppointmentById(id);
+        return this.appRepo.getAppointmentById(id);
     }
 
     @Override
@@ -38,17 +38,17 @@ public class AppointmentServiceImpl implements AppointmentService{
 
     @Override
     public List<Appointment> getAppointmentByServiceId(int id) {
-       return this.AppRepo.getAppointmentByServiceId(id);
+       return this.appRepo.getAppointmentByServiceId(id);
     }
 
     @Override
     public Appointment bookAppointment(int patientId, int serviceId, int slotId) {
-        return this.AppRepo.bookAppointment(patientId, serviceId, slotId);
+        return this.appRepo.bookAppointment(patientId, serviceId, slotId);
     }
 
     @Override
     public Appointment addAppointment(Appointment appointment) {
-        return this.AppRepo.addAppointment(appointment);
+        return this.appRepo.addAppointment(appointment);
     }
     
 }

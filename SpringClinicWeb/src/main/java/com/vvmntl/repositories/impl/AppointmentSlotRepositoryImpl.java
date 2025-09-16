@@ -7,6 +7,7 @@ package com.vvmntl.repositories.impl;
 import com.vvmntl.exception.ResourceNotFoundException;
 import com.vvmntl.pojo.Appointmentslot;
 import com.vvmntl.repositories.AppointmentSlotRepository;
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -30,14 +31,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class AppointmentSlotRepositoryImpl implements AppointmentSlotRepository {
-    
+
     @Autowired
     private LocalSessionFactoryBean factory;
 
     @Override
     public Appointmentslot getSlotById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createNamedQuery( "Appointmentslot.findById", Appointmentslot.class);
+        Query q = s.createNamedQuery("Appointmentslot.findById", Appointmentslot.class);
         q.setParameter("id", id);
         try {
             return (Appointmentslot) q.getSingleResult();
@@ -58,32 +59,38 @@ public class AppointmentSlotRepositoryImpl implements AppointmentSlotRepository 
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Appointmentslot> query = b.createQuery(Appointmentslot.class);
         Root<Appointmentslot> r = query.from(Appointmentslot.class);
-        
+
         List<Predicate> predicates = new ArrayList<>();
-        
+
         predicates.add(b.equal(r.get("isBooked"), false));
-        
+
         String doctorId = params.get("doctorId");
         if (doctorId != null && !doctorId.isEmpty()) {
             predicates.add(b.equal(r.get("scheduleId").get("doctorId").get("id"), Integer.parseInt(doctorId)));
         }
-        
+
         String dateStr = params.get("date");
         if (dateStr != null && !dateStr.isEmpty()) {
             try {
-                LocalDate parsedDate = LocalDate.parse(dateStr); 
+                LocalDate parsedDate = LocalDate.parse(dateStr);
                 predicates.add(b.equal(r.get("scheduleId").get("dateWork"), parsedDate));
             } catch (DateTimeParseException e) {
                 System.err.println("Invalid date format provided: " + dateStr);
                 return new ArrayList<>();
             }
         }
-        
+
         query.where(predicates.toArray(new Predicate[0]));
         query.orderBy(b.asc(r.get("startTime")));
-        
+
         Query q = s.createQuery(query);
         return q.getResultList();
     }
-    
+
+    @Override
+    public Appointmentslot getSlotByIdForUpdate(int id) {
+        Session s = factory.getObject().getCurrentSession();
+        return s.find(Appointmentslot.class, id, LockModeType.PESSIMISTIC_WRITE);
+    }
+
 }

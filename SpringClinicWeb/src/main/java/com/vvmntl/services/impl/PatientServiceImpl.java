@@ -36,11 +36,6 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Patient getPatientByUserId(int userId) {
-        return this.getPatientByUserId(userId);
-    }
-
-    @Override
     public void add(int userId, Patient p) {
         User u = this.userService.getUserById(userId);
         if (u==null) {

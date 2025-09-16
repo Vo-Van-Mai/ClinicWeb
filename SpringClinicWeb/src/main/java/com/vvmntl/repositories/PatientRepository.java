@@ -12,6 +12,5 @@ import com.vvmntl.pojo.Patient;
  */
 public interface PatientRepository {
     Patient getPatientById(int id);
-    Patient getPatientByUserId(int userId);
     void add(Patient p);
 }

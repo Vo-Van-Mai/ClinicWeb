@@ -55,8 +55,8 @@ public class Service implements Serializable {
     @Min(value=5000, message = "{service.price.minErr}")
     @Column(name = "price")
     private BigDecimal price;
-    @JsonIgnore
     @OneToMany(mappedBy = "serviceId")
+    @JsonIgnore
     private Set<Appointment> appointmentSet;
     @JoinColumn(name = "specialize_id", referencedColumnName = "id")
     @ManyToOne
