@@ -30,7 +30,7 @@
                     <th>Họ và tên</th>
                     <th>Số năm kinh nghiệm</th>                
                     <th>Mã số bác sĩ</th>
-                    <th>Khoa</th>
+                    <!--<th>Khoa</th>-->
                 </tr>
             </thead>
             <tbody>
@@ -42,12 +42,12 @@
                     <td th:text="${d.user.lastName} + ' ' + ${d.user.firstName}"></td>
                     <td th:text="${d.yearOfExperience}"></td>
                     <td th:text="${d.licenseNumber}"></td>                
-                    <td>
+<!--                    <td>
                         <ul>
                             <li th:each="speci: ${d.doctorSpecializeSet}" th:text="${speci.specializeId.name}">
                             </li>
                         </ul>
-                    </td>
+                    </td>-->
                 </tr>
             </tbody>
         </table>

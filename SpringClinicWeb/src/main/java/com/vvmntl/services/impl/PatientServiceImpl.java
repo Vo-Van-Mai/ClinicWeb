@@ -6,8 +6,10 @@ package com.vvmntl.services.impl;
 
 import com.vvmntl.exception.ResourceNotFoundException;
 import com.vvmntl.pojo.Patient;
+import com.vvmntl.pojo.User;
 import com.vvmntl.repositories.PatientRepository;
 import com.vvmntl.services.PatientService;
+import com.vvmntl.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,8 @@ import org.springframework.stereotype.Service;
 public class PatientServiceImpl implements PatientService {
     @Autowired
     private PatientRepository patientRepo;
+    @Autowired
+    private UserService userService;
 
     @Override
     public Patient getPatientById(int id) {
@@ -34,6 +38,16 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient getPatientByUserId(int userId) {
         return this.getPatientByUserId(userId);
+    }
+
+    @Override
+    public void add(int userId, Patient p) {
+        User u = this.userService.getUserById(userId);
+        if (u==null) {
+            throw new ResourceNotFoundException("không tìm thấy người dùng!");
+        }
+        
+        this.patientRepo.add(p);
     }
     
 }

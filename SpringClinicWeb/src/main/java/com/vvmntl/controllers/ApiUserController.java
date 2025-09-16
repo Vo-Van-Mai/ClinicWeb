@@ -4,7 +4,9 @@
  */
 package com.vvmntl.controllers;
 
+import com.vvmntl.pojo.Patient;
 import com.vvmntl.pojo.User;
+import com.vvmntl.services.PatientService;
 import com.vvmntl.services.UserService;
 import com.vvmntl.utils.JwtUtils;
 import java.security.Principal;
@@ -34,6 +36,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class ApiUserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private PatientService patientService;
     
     @PostMapping(path= "/users", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
@@ -74,6 +78,14 @@ public class ApiUserController {
             }
 
             User user = userService.addUser(params, avatar);
+            if(user!=null && user.getRole().name()=="PATIENT"){
+                String insurance = params.get("insurance");
+                Patient p = new Patient();
+                p.setId(user.getId());
+                p.setUser(user);
+                p.setInsurance(insurance);
+                this.patientService.add(user.getId(), p);
+            }
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message",e.getMessage()));

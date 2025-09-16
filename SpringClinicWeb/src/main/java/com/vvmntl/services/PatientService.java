@@ -5,6 +5,7 @@
 package com.vvmntl.services;
 
 import com.vvmntl.pojo.Patient;
+import com.vvmntl.pojo.User;
 
 /**
  *
@@ -13,4 +14,5 @@ import com.vvmntl.pojo.Patient;
 public interface PatientService {
     public Patient getPatientById(int id);
     Patient getPatientByUserId(int userId);
+    void add(int userId, Patient p);
 }

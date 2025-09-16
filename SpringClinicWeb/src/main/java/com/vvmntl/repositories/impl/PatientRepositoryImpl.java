@@ -48,4 +48,10 @@ public class PatientRepositoryImpl implements PatientRepository {
             return null;
         }
     }
+
+    @Override
+    public void add(Patient p) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.persist(p);
+    }
 }
