@@ -4,6 +4,7 @@
  */
 package com.vvmntl.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,6 +17,10 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -42,11 +47,18 @@ public class Workschedule implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @NotNull(message = "{workschadule.dateWord.nullErr}")
+    @FutureOrPresent(message = "{wordschedule.dateWork.timeErr}")
     @Column(name = "date_work")
-    private LocalDate dateWork;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateWork; 
+    @NotNull(message = "{workschedule.startTime.nullErr}")
     @Column(name = "start_time")
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
+    @NotNull(message = "{workschedule.endTime.nullErr}")
     @Column(name = "end_time")
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime endTime;
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
     @ManyToOne
@@ -118,7 +130,6 @@ public class Workschedule implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Workschedule)) {
             return false;
         }

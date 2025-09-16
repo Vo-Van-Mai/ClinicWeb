@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,10 +39,11 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
     "com.vvmntl.validator",
     "com.vvmntl.formattor"
 })
+@EnableMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfig {
 
     @Autowired
-    private UserDetailsService userDeatailServive;
+    private UserDetailsService userDetailService;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -59,7 +61,9 @@ public class SpringSecurityConfig {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(c -> c.disable()).authorizeHttpRequests(requests
                 -> requests.requestMatchers("/","/home", "/doctor", "/stats").hasRole("ADMIN")
-                        .requestMatchers("/api/**" ).permitAll()
+                        .requestMatchers("/api/secure/workschedule").hasRole("DOCTOR")
+                        .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/api/secure").authenticated()
                         .requestMatchers(HttpMethod.GET, "/specialize").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login")
