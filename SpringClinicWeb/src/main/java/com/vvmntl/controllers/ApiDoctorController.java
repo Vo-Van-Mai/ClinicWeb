@@ -4,15 +4,19 @@
  */
 package com.vvmntl.controllers;
 
+import com.vvmntl.exception.ResourceNotFoundException;
 import com.vvmntl.pojo.Doctor;
 import com.vvmntl.pojo.DoctorSpecialize;
 import com.vvmntl.pojo.Specialize;
 import com.vvmntl.pojo.User;
+import com.vvmntl.pojo.Workschedule;
 import com.vvmntl.services.DoctorService;
 import com.vvmntl.services.DoctorSpecializeService;
 import com.vvmntl.services.SpecializeService;
 import com.vvmntl.services.UserService;
+import com.vvmntl.services.WorkScheduleService;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +43,10 @@ public class ApiDoctorController {
     private DoctorService docService;
     @Autowired
     private UserService userService;
-    
     @Autowired
     private SpecializeService specService;
+    @Autowired
+    private WorkScheduleService workScheduleService;
     
     @Autowired
     private DoctorSpecializeService docSpeciService;
@@ -50,6 +55,24 @@ public class ApiDoctorController {
     public ResponseEntity<List<Doctor>> list(@RequestParam Map <String, String> params){
         return new ResponseEntity<>(this.docService.getDoctor(params), HttpStatus.OK);
     }
+    
+    
+    @GetMapping("/doctors/{doctorId}")
+    public ResponseEntity<?> retrieve(@PathVariable(value = "doctorId") int id){
+        try {
+            Doctor doctor = this.docService.getDoctorById(id);
+
+            List<Specialize> specializes = this.docSpeciService.getSpecializesByDoctorId(id);
+            Map<String, Object> response = new HashMap<>();
+            response.put("doctor", doctor);
+            response.put("specializes", specializes);
+
+            return ResponseEntity.ok(response);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìm thấy bác sĩ ");
+        }
+    }
+    
     
     @PostMapping("/doctors/{userId}/add-profile")
     public ResponseEntity<?> create(@RequestBody Doctor doctor, @PathVariable(value="userId") int id){
@@ -104,7 +127,29 @@ public class ApiDoctorController {
             return new ResponseEntity<>("Lỗi: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
+    
+    @PostMapping("/admin/{doctorId}/verified")
+    public ResponseEntity<?> verifiedDoctor(@PathVariable(value="doctorId") int id){
+        try {
+            Doctor d = this.docService.getDoctorById(id);
+            this.docService.verifiedDoctor(d);
+            return ResponseEntity.ok(d);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
         
+    }
+    
+    @PostMapping("/admin/{doctorId}/cancel")
+    public ResponseEntity<?> cancelDoctor(@PathVariable(value="doctorId") int id){
+        try {
+            Doctor d = this.docService.getDoctorById(id);
+            this.docService.cancelDoctor(d);
+            return ResponseEntity.ok(d);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        
+    }
     
 }

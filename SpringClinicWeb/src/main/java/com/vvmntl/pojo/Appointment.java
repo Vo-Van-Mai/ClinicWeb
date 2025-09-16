@@ -23,6 +23,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -51,8 +52,7 @@ public class Appointment implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private LocalDate createdDate;
     @Size(max = 9)
     @Column(name = "status")
     private String status;
@@ -95,11 +95,11 @@ public class Appointment implements Serializable {
         this.id = id;
     }
 
-    public Date getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 

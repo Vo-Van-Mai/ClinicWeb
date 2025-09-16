@@ -204,4 +204,35 @@ public class DoctorRepositoryImpl implements DoctorRepository {
         return s.createQuery(query).getSingleResult();
     }
 
+    @Override
+    public boolean verifiedDoctor(Doctor d) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Doctor doctor = this.getDoctorById(d.getId());
+        if(doctor == null){
+            throw new ResourceNotFoundException("Không tìm thấy bác sĩ!");
+        }
+        else{
+            if (doctor.getLicenseNumber()==null || doctor.getLicenseNumber().isEmpty()){
+                throw new ResourceNotFoundException("Bác sĩ chưa cung cấp mã!");
+            }
+            doctor.setIsVerified(true);
+            return true;
+        }
+    }
+
+    @Override
+    public boolean cancelDoctor(Doctor d) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Doctor doctor = this.getDoctorById(d.getId());
+        if (doctor == null) {
+            throw new ResourceNotFoundException("Không tìm thấy bác sĩ!");
+        } else {
+            if (doctor.getLicenseNumber() == null || doctor.getLicenseNumber().isEmpty()) {
+                throw new ResourceNotFoundException("Bác sĩ chưa cung cấp mã!");
+            }
+            doctor.setIsVerified(false);
+            return true;
+        }
+    }
+
 }

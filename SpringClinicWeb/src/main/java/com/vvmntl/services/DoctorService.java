@@ -23,5 +23,6 @@ public interface DoctorService {
     boolean deleteDoctor(int id);
     Doctor getDoctorById(int id);
     long countDoctor(Map<String, String> params);
-
+    boolean verifiedDoctor(Doctor d);    
+    boolean cancelDoctor(Doctor d);
 }

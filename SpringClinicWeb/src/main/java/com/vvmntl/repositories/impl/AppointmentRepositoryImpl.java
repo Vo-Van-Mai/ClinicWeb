@@ -16,6 +16,7 @@ import com.vvmntl.repositories.ServiceRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Session;
@@ -111,7 +112,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository{
         appointment.setPatientId(patient);
         appointment.setServiceId(service);
         appointment.setAppointmentSlot(slot);
-        appointment.setCreatedDate(new Date());
+        appointment.setCreatedDate(LocalDate.now());
         appointment.setStatus("PENDING");
         appointment.setPaymentForService(false);
 

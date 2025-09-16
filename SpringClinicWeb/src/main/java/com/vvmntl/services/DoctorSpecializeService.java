@@ -7,6 +7,7 @@ package com.vvmntl.services;
 import com.vvmntl.pojo.Doctor;
 import com.vvmntl.pojo.DoctorSpecialize;
 import com.vvmntl.pojo.Specialize;
+import java.util.List;
 
 /**
  *
@@ -14,4 +15,5 @@ import com.vvmntl.pojo.Specialize;
  */
 public interface DoctorSpecializeService {
     DoctorSpecialize add(Doctor doctor, Specialize specialize, DoctorSpecialize docSpeci);
+    List<Specialize> getSpecializesByDoctorId(int doctorId);
 }

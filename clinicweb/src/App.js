@@ -13,6 +13,9 @@ import { useReducer } from "react";
 import AddDoctorProfile from "./component/user/AddDoctorProfile";
 import { MyCartContext } from "./configs/MyCartContext";
 import { MyCartReducer } from "./reducer/MyCartReducer";
+import DoctorView from "./component/doctor/DoctorView";
+import CreateWorkSchedule from "./component/doctor/CreateWorkSchedule";
+import ListWorkSchedule from "./component/doctor/ListWorkSchedule";
 
 const App = () => {
   const [user, dispatch] = useReducer(MyUserReducer, null);
@@ -31,6 +34,8 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/addDoctorProfile/:userId" element={<AddDoctorProfile />} />
+            <Route path="/doctorView/:doctorId" element={<DoctorView />} />
+            <Route path="/listWorkSchedule/:doctorId" element={<ListWorkSchedule />} />
           </Routes>
           </Container>
 

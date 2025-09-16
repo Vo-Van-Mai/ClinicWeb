@@ -139,4 +139,16 @@ public class DoctorServiceImpl implements DoctorService{
     public long countDoctor(Map<String, String> params) {
         return this.doctorRepo.countDoctor(params);
     }
+
+    @Override
+    public boolean verifiedDoctor(Doctor d) {
+        Doctor doctor = this.getDoctorById(d.getId());
+        return this.doctorRepo.verifiedDoctor(doctor);
+    }
+
+    @Override
+    public boolean cancelDoctor(Doctor d) {
+        Doctor doctor = this.getDoctorById(d.getId());
+        return this.doctorRepo.cancelDoctor(doctor);
+    }
 }

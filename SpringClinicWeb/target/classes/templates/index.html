@@ -31,6 +31,7 @@
                     <th>Số năm kinh nghiệm</th>                
                     <th>Mã số bác sĩ</th>
                     <!--<th>Khoa</th>-->
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -41,13 +42,26 @@
                     </td>
                     <td th:text="${d.user.lastName} + ' ' + ${d.user.firstName}"></td>
                     <td th:text="${d.yearOfExperience}"></td>
-                    <td th:text="${d.licenseNumber}"></td>                
+                        <td th:text="${d.licenseNumber}"></td>                
 <!--                    <td>
                         <ul>
                             <li th:each="speci: ${d.doctorSpecializeSet}" th:text="${speci.specializeId.name}">
                             </li>
                         </ul>
                     </td>-->
+                <td>
+                    <button th:if="${d.isVerified == false}" 
+                            th:onclick="'handleVerified(\'' + @{/api/admin/} + ${d.id} + '\', \'/verified\')'" 
+                            th:text="'Xác thực'" 
+                            class="btn btn-success">
+                    </button>
+
+                    <button th:unless="${d.isVerified == false}" 
+                            th:onclick="'handleVerified(\'' + @{/api/admin/} + ${d.id} + '\', \'/cancel\')'" 
+                            th:text="'Hủy quyền'" 
+                            class="btn btn-danger">
+                    </button>
+                </td>
                 </tr>
             </tbody>
         </table>

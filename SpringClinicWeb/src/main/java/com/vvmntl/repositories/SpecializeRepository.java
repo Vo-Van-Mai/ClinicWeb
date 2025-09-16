@@ -1,5 +1,6 @@
 package com.vvmntl.repositories;
 
+import com.vvmntl.pojo.Doctor;
 import com.vvmntl.pojo.Specialize;
 import java.util.List;
 import java.util.Map;
@@ -20,5 +21,4 @@ public interface SpecializeRepository {
     Specialize addOrUpdateSpecialize(Specialize s);
     boolean delSpecialize(int id);
     Specialize getSpecializerByName(String name);
-    
 }

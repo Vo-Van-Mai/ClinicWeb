@@ -15,4 +15,6 @@ import java.util.List;
  */
 public interface DoctorSpecializeRepository {
     DoctorSpecialize add(DoctorSpecialize doctorSpecialize);
+    List<Specialize> getSpecializesByDoctorId(int id);
+
 }

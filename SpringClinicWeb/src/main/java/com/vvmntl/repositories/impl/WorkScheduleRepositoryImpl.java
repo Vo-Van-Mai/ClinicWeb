@@ -88,7 +88,7 @@ public class WorkScheduleRepositoryImpl implements WorkScheduleRepository {
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Workschedule> query = b.createQuery(Workschedule.class);
         Root<Workschedule> r = query.from(Workschedule.class);
-        query.select(r).where(b.equal(r.get("doctorId"), id));
+        query.select(r).where(b.equal(r.get("doctorId").get("id"), id));
         Query q = s.createQuery(query);
         return q.getResultList();
     }

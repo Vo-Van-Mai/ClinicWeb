@@ -101,5 +101,4 @@ public class SpecializeRepositoryImpl implements SpecializeRepository {
         Query q = session.createNamedQuery("Specialize.findAll", Specialize.class);
         return q.getResultList();
     }
-
 }

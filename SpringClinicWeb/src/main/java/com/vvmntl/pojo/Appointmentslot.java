@@ -24,6 +24,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -51,13 +52,11 @@ public class Appointmentslot implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "start_time")
-    @Temporal(TemporalType.TIME)
-    private Date startTime;
+    private LocalTime startTime;
     @Basic(optional = false)
     @NotNull
     @Column(name = "end_time")
-    @Temporal(TemporalType.TIME)
-    private Date endTime;
+    private LocalTime endTime;
     @Column(name = "is_booked")
     private Boolean isBooked;
     @OneToOne(mappedBy = "appointmentSlot")
@@ -74,7 +73,7 @@ public class Appointmentslot implements Serializable {
         this.id = id;
     }
 
-    public Appointmentslot(Integer id, Date startTime, Date endTime) {
+    public Appointmentslot(Integer id, LocalTime startTime, LocalTime endTime) {
         this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -88,19 +87,19 @@ public class Appointmentslot implements Serializable {
         this.id = id;
     }
 
-    public Date getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 

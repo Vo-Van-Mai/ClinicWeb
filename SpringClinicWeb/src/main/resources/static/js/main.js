@@ -43,3 +43,24 @@ function deleteMedicine(endpoint) {
         });
     }
 }
+
+function handleVerified(endpoint, action) {
+    let msg = action === '/verified' ? "Bạn muốn xác nhận bác sĩ này?" : "Bạn muốn hủy quyền bác sĩ này?";
+
+    if (confirm(msg)) {
+        fetch(endpoint + action, {method: 'POST'})
+                .then(res => res.text().then(text => ({ok: res.ok, text})))
+                .then(({ ok, text }) => {
+                    if (!ok) {
+                        alert("Lỗi: " + text);
+                    } else {
+                        alert("Thực hiện thành công!");
+                        location.reload();
+                }
+                })
+                .catch(err => alert("Lỗi mạng: " + err.message));
+    }
+}
+
+
+

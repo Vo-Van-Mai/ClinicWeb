@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Badge, Container, Dropdown, Nav, Navbar } from "react-bootstrap";
+import { Badge, Container, Dropdown, Nav, Navbar, Button, NavDropdown } from "react-bootstrap";
 import Apis, { endpoints } from "../../configs/Apis";
 import { Link } from "react-router-dom";
 import { MyUserContext } from "../../configs/MyContext";
@@ -22,46 +22,69 @@ const Header = () => {
   useEffect(() => {
     loadSpecialize();
   }, []);
+
   return (
-    <>
-      <Navbar bg="dark" data-bs-theme="dark">
-        <Container>
-          <Navbar.Brand >Clinic Website </Navbar.Brand>
+    <Navbar bg="dark" variant="dark" expand="lg" className="shadow-sm mb-3">
+      <Container>
+        <Navbar.Brand as={Link} to="/">🏥 Clinic Website</Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbar-nav" />
+        <Navbar.Collapse id="navbar-nav">
           <Nav className="me-auto">
-            <Link className="nav-link" to="/">Trang chủ</Link>
-            <Link className="nav-link" to="#features">Bác sĩ</Link>
-            <Link className="nav-link" to="#pricing">Khoa</Link>
+            <Nav.Link as={Link} to="/">Trang chủ</Nav.Link>
+            <Nav.Link as={Link} to="#doctors">Bác sĩ</Nav.Link>
+            <Nav.Link as={Link} to="#specializes">Khoa</Nav.Link>
 
-            <Dropdown>
-              <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                Danh sách khoa
-              </Dropdown.Toggle>
+            <NavDropdown title="Danh sách khoa" id="nav-dropdown">
+              {specialize.length > 0 ? specialize.map(s => (
+                <NavDropdown.Item
+                  as={Link}
+                  to={`/service?specializeName=${s.name}`}
+                  key={s.id}
+                >
+                  {s.name}
+                </NavDropdown.Item>
+              )) : <NavDropdown.Item disabled>Đang tải...</NavDropdown.Item>}
+            </NavDropdown>
+          </Nav>
 
-              <Dropdown.Menu>
-                {specialize.map(s => (
-                  <Link className="nav-link dropdown-item" to={`/service?specializeName=${s.name}`} key={s.id} >
-                    {s.name}
-                  </Link>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-
+          <Nav className="ms-auto align-items-center">
             {user === null ? (
               <>
-                <Link to="login" className="nav-link text-warning" >Đăng nhập</Link>
-                <Link to="register" className="nav-link text-danger">Đăng kí</Link>
+                <Button as={Link} to="/login" variant="outline-warning" className="me-2">
+                  Đăng nhập
+                </Button>
+                <Button as={Link} to="/register" variant="outline-danger">
+                  Đăng ký
+                </Button>
               </>
             ) : (
               <>
-                <Link to="#" className="nav-link text-info" >Chào {user.username}</Link>
-                <Link to="#" className="nav-link text-danger" onClick={() => dispatch({ "type": "logout" })}>Đăng xuất</Link>
+                <span className="text-info me-3">Chào {user.username}</span>
+                {user?.role === "DOCTOR" && (
+                  <Button as={Link} to={`/listWorkSchedule/${user?.id}`} variant="outline-success" className="me-2">
+                    Tạo lịch làm
+                  </Button>
+                )}
+                <Button variant="outline-danger" onClick={() => dispatch({ type: "logout" })}>
+                  Đăng xuất
+                </Button>
               </>
             )}
-            <Link to="/cart" className="nav-link text-success" >Lịch đã đặt <Badge className="bg-danger" variant="danger">{cart.length}</Badge></Link>
+            <Button as={Link} to="/cart" variant="success" className="ms-3 position-relative">
+              Lịch đã đặt
+              <Badge
+                bg="danger"
+                pill
+                className="position-absolute top-0 start-100 translate-middle"
+              >
+                {cart.length}
+              </Badge>
+            </Button>
           </Nav>
-        </Container>
-      </Navbar>
-    </>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
-}
+};
+
 export default Header;

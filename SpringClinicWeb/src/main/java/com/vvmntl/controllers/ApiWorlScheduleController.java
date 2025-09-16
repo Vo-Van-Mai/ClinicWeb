@@ -4,22 +4,28 @@
  */
 package com.vvmntl.controllers;
 
+import com.vvmntl.pojo.Appointmentslot;
 import com.vvmntl.pojo.Doctor;
 import com.vvmntl.pojo.User;
 import com.vvmntl.pojo.Workschedule;
+import com.vvmntl.services.AppointmentService;
+import com.vvmntl.services.AppointmentSlotService;
 import com.vvmntl.services.DoctorService;
 import com.vvmntl.services.UserService;
 import com.vvmntl.services.WorkScheduleService;
 import jakarta.validation.Valid;
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,9 +47,20 @@ public class ApiWorlScheduleController {
     private DoctorService doctorService;
     @Autowired
     private UserService userDetailService;
+    @Autowired
+    private AppointmentSlotService appointmentSlotService;
     
-    @PreAuthorize("hasRole('DOCTOR')")
-    @PostMapping("/secure/workschedule")
+    @GetMapping("/workschedules/{doctorId}")
+    public ResponseEntity<?> list(@PathVariable(value = "doctorId") int id){
+        try {
+            List<Workschedule> ws = this.workScheduleService.getListWorkScheduleByDoctorId(id);
+            return ResponseEntity.ok(ws);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìm thấy lịch ");
+        }
+    }
+    
+    @PostMapping("/secure/workschedules")
     public ResponseEntity<?> addWordSchedule(@Valid @RequestBody Workschedule ws, BindingResult result, Principal principal){
         
         if (result.hasErrors()) {
@@ -66,8 +83,18 @@ public class ApiWorlScheduleController {
             if(doctor==null){
                 return ResponseEntity.badRequest().body("Khong tìm thấy bác sĩ");
             }
-        ws.setDoctorId(doctor);
-        Workschedule saved = workScheduleService.add(ws);
-        return ResponseEntity.ok(saved);
+        try {
+            ws.setDoctorId(doctor);
+            Workschedule workScheduleSave = workScheduleService.add(ws);
+            
+            List<Appointmentslot> slots = this.appointmentSlotService.add(workScheduleSave);
+            Map<String, Object> response = new HashMap<>();
+            response.put("workSchedule", workScheduleSave);
+            response.put("slots", slots);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

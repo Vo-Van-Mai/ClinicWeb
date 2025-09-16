@@ -13,6 +13,7 @@ import com.vvmntl.services.DoctorService;
 import com.vvmntl.services.DoctorSpecializeService;
 import com.vvmntl.services.SpecializeService;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +50,11 @@ public class DoctorSpecializeServiceImpl implements DoctorSpecializeService{
             System.out.printf("Xãy ra lỗi %s", e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public List<Specialize> getSpecializesByDoctorId(int doctorId) {
+        return this.doctorSpeciRepo.getSpecializesByDoctorId(doctorId);
     }
     
 }

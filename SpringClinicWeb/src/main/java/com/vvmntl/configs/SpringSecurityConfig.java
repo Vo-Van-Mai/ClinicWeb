@@ -60,10 +60,9 @@ public class SpringSecurityConfig {
             Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(c -> c.disable()).authorizeHttpRequests(requests
-                -> requests.requestMatchers("/","/home", "/doctor", "/stats").hasRole("ADMIN")
-                        .requestMatchers("/api/secure/workschedule").hasRole("DOCTOR")
+                -> requests.requestMatchers("/home", "/doctor", "/stats", "/api/admin/**").hasRole("ADMIN")
+//                        .requestMatchers("/api/secure/workschedule").hasRole("DOCTOR")
                         .requestMatchers("/api/**").permitAll()
-                        .requestMatchers("/api/secure").authenticated()
                         .requestMatchers(HttpMethod.GET, "/specialize").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login")
@@ -91,8 +90,8 @@ public class SpringSecurityConfig {
         return source;
     }
 
-@Bean
-public Cloudinary cloudinary() {
+    @Bean
+    public Cloudinary cloudinary() {
         Cloudinary cloudinary
                 = new Cloudinary(ObjectUtils.asMap(
                         "cloud_name", "disqxvj3s",
@@ -101,5 +100,5 @@ public Cloudinary cloudinary() {
                         "secure", true));
         return cloudinary;
     }
-
+    
 }

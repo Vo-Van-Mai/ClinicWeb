@@ -85,5 +85,16 @@ public class AppointmentSlotRepositoryImpl implements AppointmentSlotRepository 
         Query q = s.createQuery(query);
         return q.getResultList();
     }
+
+    @Override
+    public List<Appointmentslot> add(List<Appointmentslot> slots) {
+        Session s = this.factory.getObject().getCurrentSession();
+        List<Appointmentslot> saved = new ArrayList<>();
+        for (Appointmentslot slot : slots) {
+            s.persist(slot);
+            saved.add(slot);
+        }
+        return saved;
+    }
     
 }

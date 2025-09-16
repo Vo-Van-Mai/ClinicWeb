@@ -5,6 +5,7 @@
 package com.vvmntl.services;
 
 import com.vvmntl.pojo.Appointmentslot;
+import com.vvmntl.pojo.Workschedule;
 import java.util.List;
 import java.util.Map;
 
@@ -19,4 +20,5 @@ public interface AppointmentSlotService {
     Appointmentslot updateSlot(Appointmentslot slot);
 
     List<Appointmentslot> getAvailableSlots(Map<String, String> params);
+    List<Appointmentslot> add(Workschedule ws);
 }

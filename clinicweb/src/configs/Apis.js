@@ -11,6 +11,7 @@ export const endpoints = {
 
     //doctor
     "doctors": "/doctors",
+    "doctorsDetail": (userId) => `/doctors/${userId}`,
     "addDoctorProfile": (userId) => `/doctors/${userId}/add-profile`,
     "choiceSpecialize": (userId) => `/doctors/${userId}/specializes`,
 
@@ -22,6 +23,10 @@ export const endpoints = {
     //appointment
     "available-slots": "/available-slots",
     "appointments": "/appointments",
+
+    //workschedule
+    "workschedules":(doctorId) => `/workschedules/${doctorId}`,
+    "createWorkSchedules": "/secure/workschedules",
 };
 
 export const authApis = () => {

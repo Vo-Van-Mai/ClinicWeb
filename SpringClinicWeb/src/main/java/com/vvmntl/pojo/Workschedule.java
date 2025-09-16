@@ -5,6 +5,7 @@
 package com.vvmntl.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -63,6 +64,7 @@ public class Workschedule implements Serializable {
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
     @ManyToOne
     private Doctor doctorId;
+    @JsonIgnore
     @OneToMany(mappedBy = "scheduleId")
     private Set<Appointmentslot> appointmentslotSet;
 

@@ -5,8 +5,11 @@
 package com.vvmntl.services.impl;
 
 import com.vvmntl.pojo.Appointmentslot;
+import com.vvmntl.pojo.Workschedule;
 import com.vvmntl.repositories.AppointmentSlotRepository;
 import com.vvmntl.services.AppointmentSlotService;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +39,31 @@ public class AppointmentSlotServiceImpl implements AppointmentSlotService {
     public List<Appointmentslot> getAvailableSlots(Map<String, String> params) {
         return this.slotRepo.getAvailableSlots(params);
     }
+
+    @Override
+    public List<Appointmentslot> add(Workschedule ws) {
+        List<Appointmentslot> slots = new ArrayList<>();
+
+        LocalTime start = ws.getStartTime();
+        LocalTime end = ws.getEndTime();
+        int slotMinutes = 30;
+
+        while (start.plusMinutes(slotMinutes).compareTo(end) <= 0) {
+            LocalTime slotEnd = start.plusMinutes(slotMinutes);
+
+            Appointmentslot slot = new Appointmentslot();
+            slot.setScheduleId(ws);
+            slot.setStartTime(start);
+            slot.setEndTime(slotEnd);
+            slot.setIsBooked(false);
+
+            slots.add(slot);
+            start = slotEnd;
+        }
+
+        return this.slotRepo.add(slots);
+    }
+    
+    
     
 }
