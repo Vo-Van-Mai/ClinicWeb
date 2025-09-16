@@ -4,8 +4,6 @@
  */
 package com.vvmntl.pojo;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -18,7 +16,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -59,9 +56,8 @@ public class Appointmentslot implements Serializable {
     private LocalTime endTime;
     @Column(name = "is_booked")
     private Boolean isBooked;
-    @OneToOne(mappedBy = "appointmentSlot")
-    @JsonBackReference
-    private Appointment appointment;
+    @OneToMany(mappedBy = "appointmentSlot")
+    private Set<Appointment> appointmentSet;
     @JoinColumn(name = "schedule_id", referencedColumnName = "id")
     @ManyToOne
     private Workschedule scheduleId;
@@ -119,6 +115,14 @@ public class Appointmentslot implements Serializable {
     public void setScheduleId(Workschedule scheduleId) {
         this.scheduleId = scheduleId;
     }
+    
+    public Set<Appointment> getAppointmentSet() {
+        return appointmentSet;
+    }
+
+    public void setAppointmentSet(Set<Appointment> appointmentSet) {
+        this.appointmentSet = appointmentSet;
+    }
 
     @Override
     public int hashCode() {
@@ -143,20 +147,6 @@ public class Appointmentslot implements Serializable {
     @Override
     public String toString() {
         return "com.vvmntl.pojo.Appointmentslot[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the appointment
-     */
-    public Appointment getAppointment() {
-        return appointment;
-    }
-
-    /**
-     * @param appointment the appointment to set
-     */
-    public void setAppointment(Appointment appointment) {
-        this.appointment = appointment;
     }
     
 }

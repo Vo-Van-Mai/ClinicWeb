@@ -65,5 +65,8 @@ public class AppointmentSlotServiceImpl implements AppointmentSlotService {
     }
     
     
+    public Appointmentslot getSlotByIdForUpdate(int id) {
+        return this.slotRepo.getSlotByIdForUpdate(id);
+    }
     
 }

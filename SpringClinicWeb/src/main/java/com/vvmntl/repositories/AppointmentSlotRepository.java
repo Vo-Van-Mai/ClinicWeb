@@ -17,4 +17,5 @@ public interface AppointmentSlotRepository {
     Appointmentslot updateSlot(Appointmentslot slot);
     List<Appointmentslot> getAvailableSlots(Map<String, String> params);
     List<Appointmentslot> add(List<Appointmentslot> slots);
+    Appointmentslot getSlotByIdForUpdate(int id);
 }

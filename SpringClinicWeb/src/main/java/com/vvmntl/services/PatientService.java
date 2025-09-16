@@ -13,6 +13,5 @@ import com.vvmntl.pojo.User;
  */
 public interface PatientService {
     public Patient getPatientById(int id);
-    Patient getPatientByUserId(int userId);
     void add(int userId, Patient p);
 }

@@ -5,7 +5,6 @@
 package com.vvmntl.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +16,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -67,9 +65,8 @@ public class Appointment implements Serializable {
     private Boolean paymentForPrescription;
     @OneToMany(mappedBy = "appointmentId")
     private Set<Medicalrecord> medicalrecordSet;
-    @JoinColumn(name = "appointment_slot", referencedColumnName = "id", unique = true)
-    @OneToOne
-    @JsonManagedReference
+    @JoinColumn(name = "appointment_slot", referencedColumnName = "id")
+    @ManyToOne
     private Appointmentslot appointmentSlot;
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
     @ManyToOne

@@ -6,8 +6,13 @@ package com.vvmntl.controllers;
 
 import com.vvmntl.pojo.Appointment;
 import com.vvmntl.pojo.Appointmentslot;
+import com.vvmntl.pojo.Patient;
+import com.vvmntl.pojo.User;
 import com.vvmntl.services.AppointmentService;
 import com.vvmntl.services.AppointmentSlotService;
+import com.vvmntl.services.PatientService;
+import com.vvmntl.services.UserService;
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +40,13 @@ public class ApiAppointmentController {
 
     @Autowired
     private AppointmentSlotService slotService;
-    
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private PatientService patientService;
+
     @GetMapping("/available-slots")
     public ResponseEntity<List<Appointmentslot>> getAvailableSlots(@RequestParam Map<String, String> params) {
         try {
@@ -45,21 +56,20 @@ public class ApiAppointmentController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
-    @PostMapping("/appointments")
-    public ResponseEntity<?> createAppointment(@RequestBody Map<String, Integer> payload) {
-        try {
-            Integer patientId = payload.get("patientId");
-            Integer serviceId = payload.get("serviceId");
-            Integer slotId = payload.get("slotId");
 
-            if (patientId == null || serviceId == null || slotId == null) {
-                return ResponseEntity.badRequest().body("Thiếu thông tin patientId, serviceId hoặc slotId.");
+    @PostMapping("/secure/appointments/{slotId}")
+    public ResponseEntity<?> bookAppointment(@PathVariable("slotId") int slotId, @RequestBody Map<String, Integer> payload, Principal principal) {
+        try {
+            Integer serviceId = payload.get("serviceId");
+            if (serviceId == null) {
+                return ResponseEntity.badRequest().body("Thiếu serviceId");
             }
-            
-            Appointment appointment = this.appointmentService.bookAppointment(patientId, serviceId, slotId);
-            return new ResponseEntity<>(appointment, HttpStatus.CREATED);
-            
+
+            User user = userService.getUserByUsername(principal.getName());
+            Patient patient = this.patientService.getPatientById(user.getId());
+
+            Appointment appt = appointmentService.bookAppointment(patient.getId(), serviceId, slotId);
+            return ResponseEntity.status(HttpStatus.CREATED).body(appt);
         } catch (IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         } catch (IllegalArgumentException e) {
@@ -68,9 +78,9 @@ public class ApiAppointmentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
-    
-    @GetMapping("/appointments/{appointmentId}")
-    public ResponseEntity<Appointment> getAppointmentDetails(@PathVariable(value = "appointmentId") int appointmentId) {
+
+    @GetMapping("/secure/appointments/{appointmentId}")
+    public ResponseEntity<Appointment> getAppointmentDetails(@PathVariable("appointmentId") int appointmentId) {
         try {
             Appointment appointment = this.appointmentService.getAppointmentById(appointmentId);
             return new ResponseEntity<>(appointment, HttpStatus.OK);

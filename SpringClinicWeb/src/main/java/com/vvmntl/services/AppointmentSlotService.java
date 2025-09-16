@@ -21,4 +21,6 @@ public interface AppointmentSlotService {
 
     List<Appointmentslot> getAvailableSlots(Map<String, String> params);
     List<Appointmentslot> add(Workschedule ws);
+    
+    Appointmentslot getSlotByIdForUpdate(int id);
 }

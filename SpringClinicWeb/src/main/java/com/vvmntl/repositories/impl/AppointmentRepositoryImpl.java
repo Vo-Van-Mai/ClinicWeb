@@ -32,11 +32,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class AppointmentRepositoryImpl implements AppointmentRepository{
-    
+public class AppointmentRepositoryImpl implements AppointmentRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
-    
     @Autowired
     private AppointmentSlotRepository slotRepo;
     @Autowired
@@ -54,7 +52,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository{
     @Override
     public Appointment getAppointmentById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createNamedQuery( "Appointment.findById", Appointment.class);
+        Query q = s.createNamedQuery("Appointment.findById", Appointment.class);
         q.setParameter("id", id);
         try {
             return (Appointment) q.getSingleResult();
@@ -82,7 +80,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository{
         Root<Appointment> r = query.from(Appointment.class);
         query.select(r).where(b.equal(r.get("serviceId").get("id"), id));
         Query q = s.createQuery(query);
-        
+
         return q.getResultList();
     }
 
@@ -97,13 +95,15 @@ public class AppointmentRepositoryImpl implements AppointmentRepository{
     public Appointment bookAppointment(int patientId, int serviceId, int slotId) {
         Session s = this.factory.getObject().getCurrentSession();
 
-        Appointmentslot slot = this.slotRepo.getSlotById(slotId);
+        Appointmentslot slot = this.slotRepo.getSlotByIdForUpdate(slotId);
+
         if (slot == null || Boolean.TRUE.equals(slot.getIsBooked())) {
             throw new IllegalStateException("Slot không tồn tại hoặc đã được đặt!");
         }
-
+        
         Patient patient = this.patientRepo.getPatientById(patientId);
         Service service = this.serviceRepo.getServiceById(serviceId);
+        
         if (patient == null || service == null) {
             throw new IllegalArgumentException("Bệnh nhân hoặc dịch vụ không hợp lệ!");
         }
@@ -123,5 +123,5 @@ public class AppointmentRepositoryImpl implements AppointmentRepository{
 
         return appointment;
     }
-   
+
 }
