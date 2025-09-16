@@ -5,9 +5,11 @@
 package com.vvmntl.services.impl;
 
 import com.vvmntl.pojo.Appointment;
+import com.vvmntl.pojo.Appointmentslot;
 import com.vvmntl.repositories.AppointmentRepository;
 import com.vvmntl.services.AppointmentService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +51,12 @@ public class AppointmentServiceImpl implements AppointmentService{
     @Override
     public Appointment addAppointment(Appointment appointment) {
         return this.appRepo.addAppointment(appointment);
+    }
+
+
+    @Override
+    public List<Appointment> loadAppointments(Map<String, String> params) {
+        return this.appRepo.loadAppointmets(params);
     }
     
 }

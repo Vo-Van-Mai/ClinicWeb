@@ -5,9 +5,11 @@
 package com.vvmntl.services.impl;
 
 import com.vvmntl.pojo.Appointmentslot;
+import com.vvmntl.pojo.Doctor;
 import com.vvmntl.pojo.Workschedule;
 import com.vvmntl.repositories.AppointmentSlotRepository;
 import com.vvmntl.services.AppointmentSlotService;
+import com.vvmntl.services.DoctorService;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,8 @@ public class AppointmentSlotServiceImpl implements AppointmentSlotService {
     
     @Autowired
     private AppointmentSlotRepository slotRepo;
+    @Autowired
+    private DoctorService doctorService;
 
     @Override
     public Appointmentslot getSlotById(int id) {
@@ -67,6 +71,15 @@ public class AppointmentSlotServiceImpl implements AppointmentSlotService {
     
     public Appointmentslot getSlotByIdForUpdate(int id) {
         return this.slotRepo.getSlotByIdForUpdate(id);
+    }
+    @Override
+    public List<Appointmentslot> getListAppointmentSlotByDoctorId(Doctor doctorId) {
+        return this.slotRepo.getListAppointmentSlotByDoctorId(doctorId);
+    }
+
+    @Override
+    public List<Appointmentslot> getAppointmentSlots(Map<String, String> params) {
+        return this.slotRepo.getAppointmentSlots(params);
     }
     
 }

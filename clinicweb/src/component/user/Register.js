@@ -54,7 +54,7 @@ const Register = () => {
     const [msg, setMsg] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const nav = useNavigate();
-    const [checkDoctorRole, setCheckDoctorRole] = useState(false);
+    const [checkDoctorRole, setCheckDoctorRole] = useState(null);
     
     
     const setState = (value, field) => {
@@ -162,13 +162,13 @@ const Register = () => {
                 }
             }
             else{
-                setMsg("Có lỗi xảy ra khi đăng ký." + res.message);
+                setMsg("Có lỗi xảy ra khi đăng ký." + res.data.message);
                 setIsLoading(false);
             }
            
             
         } catch (error) {
-            setMsg("Có lỗi xảy ra khi đăng ký." + error.response.data.message);
+            setMsg("Có lỗi xảy ra khi đăng ký rồi." + error.response.data.message);
             setIsLoading(false);
         }
     }
@@ -243,6 +243,15 @@ const Register = () => {
                                         Chọn ảnh đại diện (JPG, PNG, GIF)
                                     </Form.Text>
                                 </Form.Group>
+
+                                {checkDoctorRole===false && <FloatingLabel className="mb-2" label={"Nhập mã bảo hiểm y tế (nếu có):"}>
+                                                <Form.Control 
+                                                    type="text" 
+                                                    placeholder="" 
+                                                    value={user["insurance"] || ''}
+                                                    onChange={e => setState(e.target.value, "insurance")} 
+                                                />
+                                            </FloatingLabel>}
 
                                 {msg && (
                                     <Alert 

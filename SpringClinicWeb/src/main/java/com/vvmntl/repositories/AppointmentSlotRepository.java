@@ -5,6 +5,7 @@
 package com.vvmntl.repositories;
 
 import com.vvmntl.pojo.Appointmentslot;
+import com.vvmntl.pojo.Doctor;
 import java.util.List;
 import java.util.Map;
 
@@ -18,4 +19,6 @@ public interface AppointmentSlotRepository {
     List<Appointmentslot> getAvailableSlots(Map<String, String> params);
     List<Appointmentslot> add(List<Appointmentslot> slots);
     Appointmentslot getSlotByIdForUpdate(int id);
+    List<Appointmentslot> getListAppointmentSlotByDoctorId(Doctor doctor);
+    List<Appointmentslot> getAppointmentSlots(Map<String, String> params);
 }

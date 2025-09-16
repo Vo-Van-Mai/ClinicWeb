@@ -88,7 +88,7 @@ public class WorkScheduleRepositoryImpl implements WorkScheduleRepository {
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Workschedule> query = b.createQuery(Workschedule.class);
         Root<Workschedule> r = query.from(Workschedule.class);
-        query.select(r).where(b.equal(r.get("doctorId").get("id"), id));
+        query.select(r).where(b.equal(r.get("doctorId").get("id"), id)).orderBy(b.asc(r.get("dateWork")), b.asc(r.get("startTime")));
         Query q = s.createQuery(query);
         return q.getResultList();
     }
@@ -118,7 +118,7 @@ public class WorkScheduleRepositoryImpl implements WorkScheduleRepository {
         );
         predicates.add(overlap);
 
-        cq.where(predicates.toArray(new Predicate[0]));
+        cq.where(predicates.toArray(Predicate[]::new));
 
         Long count = s.createQuery(cq).getSingleResult();
 

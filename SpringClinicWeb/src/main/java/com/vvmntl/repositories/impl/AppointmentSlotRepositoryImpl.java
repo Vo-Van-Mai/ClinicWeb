@@ -6,13 +6,18 @@ package com.vvmntl.repositories.impl;
 
 import com.vvmntl.exception.ResourceNotFoundException;
 import com.vvmntl.pojo.Appointmentslot;
+import com.vvmntl.pojo.Doctor;
+import com.vvmntl.pojo.Workschedule;
 import com.vvmntl.repositories.AppointmentSlotRepository;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +106,63 @@ public class AppointmentSlotRepositoryImpl implements AppointmentSlotRepository 
     public Appointmentslot getSlotByIdForUpdate(int id) {
         Session s = factory.getObject().getCurrentSession();
         return s.find(Appointmentslot.class, id, LockModeType.PESSIMISTIC_WRITE);
+    }
+
+    @Override
+    public List<Appointmentslot> getListAppointmentSlotByDoctorId(Doctor doctor) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder cb = s.getCriteriaBuilder();
+        CriteriaQuery<Appointmentslot> cq = cb.createQuery(Appointmentslot.class);
+        Root<Appointmentslot> root = cq.from(Appointmentslot.class);
+
+        Join<Appointmentslot, Workschedule> scheduleJoin = root.join("scheduleId");
+
+        cq.select(root).where(cb.equal(scheduleJoin.get("doctorId"), doctor));
+
+        Query<Appointmentslot> query = s.createQuery(cq);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Appointmentslot> getAppointmentSlots(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder cb = s.getCriteriaBuilder();
+        CriteriaQuery<Appointmentslot> query = cb.createQuery(Appointmentslot.class);
+        Root<Appointmentslot> root = query.from(Appointmentslot.class);
+
+        query.select(root).distinct(true);
+
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+
+            String scheduleId = params.get("scheduleId");
+            if (scheduleId != null && !scheduleId.isEmpty()) {
+                Join<Appointmentslot, Workschedule> scheduleJoin = root.join("scheduleId", JoinType.LEFT);
+                predicates.add(cb.equal(scheduleJoin.get("id"), Integer.valueOf(scheduleId)));
+            }
+
+            String isBooked = params.get("isBooked");
+            if (isBooked != null && !isBooked.isEmpty()) {
+                predicates.add(cb.equal(root.get("isBooked"), Boolean.valueOf(isBooked)));
+            }
+
+            String startTime = params.get("startTime");
+            if (startTime != null && !startTime.isEmpty()) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("startTime"), LocalTime.parse(startTime)));
+            }
+
+            String endTime = params.get("endTime");
+            if (endTime != null && !endTime.isEmpty()) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("endTime"), LocalTime.parse(endTime)));
+            }
+
+            if (!predicates.isEmpty()) {
+                query.where(cb.and(predicates.toArray(Predicate[]::new)));
+            }
+        }
+
+        Query q = s.createQuery(query);
+        return q.getResultList();
     }
 
 }

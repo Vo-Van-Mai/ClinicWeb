@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Alert, Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { authApis, endpoints } from "../../configs/Apis";
 
-const CreateWorkSchedule = () => {
+const CreateWorkSchedule = ({onCreated}) => {
   const [date, setDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -42,6 +42,13 @@ const CreateWorkSchedule = () => {
                 "endTime": endTime
             })
             console.log(res.data);
+            if(res.status===200){
+                if(onCreated) onCreated();
+                setDate("");
+                setEndTime("");
+                setStartTime("");
+
+            }
            
 
         } catch (error) {
@@ -91,9 +98,9 @@ const CreateWorkSchedule = () => {
                 </Form.Group>
 
                 <div className="d-grid">
-                  <Button type="submit" variant="primary" size="lg">
-                    Lưu lịch làm
-                  </Button>
+                  <Button type="submit" variant="primary" size="lg" disabled={loading}>
+                {loading ? "Đang lưu..." : "Lưu lịch làm"}
+              </Button>
                 </div>
               </Form>
             </Card.Body>

@@ -9,6 +9,7 @@ const Header = () => {
   const [user, dispatch] = useContext(MyUserContext);
   const [cart] = useContext(MyCartContext);
   const [specialize, setSpecialize] = useState([]);
+  const [doctor, setDoctor] = useState({});
 
   const loadSpecialize = async () => {
     try {
@@ -19,9 +20,27 @@ const Header = () => {
     }
   };
 
+  const loadDoctor = async () => {
+    try {
+      console.log("user load doctor", user)
+      if(user && user?.role==="DOCTOR"){
+        let url = endpoints["doctorsDetail"](user?.id);
+        const res = await Apis.get(url);
+        console.log("doctor load: ", res.data);
+        setDoctor(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     loadSpecialize();
   }, []);
+
+  useEffect(() => {
+    loadDoctor();
+  }, [user]);
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg" className="shadow-sm mb-3">
@@ -61,9 +80,9 @@ const Header = () => {
               <>
                 <span className="text-info me-3">Chào {user.username}</span>
                 {user?.role === "DOCTOR" && (
-                  <Button as={Link} to={`/listWorkSchedule/${user?.id}`} variant="outline-success" className="me-2">
-                    Tạo lịch làm
-                  </Button>
+                  doctor.doctor?.isVerified ===true ? <Button as={Link} to={`/listWorkSchedule/${user?.id}`} variant="outline-success" className="me-2">
+                    Quản lý lịch làm
+                  </Button> : <span className="text-warning me-3">Đang chờ xác nhận</span>
                 )}
                 <Button variant="outline-danger" onClick={() => dispatch({ type: "logout" })}>
                   Đăng xuất

@@ -23,6 +23,7 @@ export const endpoints = {
     //appointment
     "available-slots": "/available-slots",
     "appointments": "/appointments",
+    "appointmentslots": (doctorId) => `/appoimentslots/${doctorId}`,
 
     //workschedule
     "workschedules":(doctorId) => `/workschedules/${doctorId}`,
