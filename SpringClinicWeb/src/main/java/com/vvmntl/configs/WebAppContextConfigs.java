@@ -41,7 +41,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
     "com.vvmntl.controllers",
     "com.vvmntl.services",
     "com.vvmntl.repositories",
-    "com.vvmntl.formattor",
+    "com.vvmntl.formatters",
     "com.vvmntl.validator",})
 @EnableTransactionManagement
 public class WebAppContextConfigs implements WebMvcConfigurer {

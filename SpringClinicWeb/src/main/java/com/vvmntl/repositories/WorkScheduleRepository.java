@@ -13,6 +13,5 @@ import java.util.Map;
  * @author BRAVO15
  */
 public interface WorkScheduleRepository {
-    List<Workschedule> list(Map<String, String> params);
-    Workschedule getWorksScheduleById(int id);
+    
 }

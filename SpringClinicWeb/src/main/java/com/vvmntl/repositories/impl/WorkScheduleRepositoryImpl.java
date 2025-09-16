@@ -25,22 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class WorkScheduleRepositoryImpl implements WorkScheduleRepository{
-    @Autowired
-    private LocalSessionFactoryBean factory;
-    @Override
-    public List<Workschedule> list(Map<String, String> params) {
-        Session s = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Workschedule> query = b.createQuery(Workschedule.class);
-        Root<Workschedule> r = query.from(Workschedule.class);
-        
-        Query q = s.createQuery(query);
-        return q.getResultList();
-    }
-
-    @Override
-    public Workschedule getWorksScheduleById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
     
 }

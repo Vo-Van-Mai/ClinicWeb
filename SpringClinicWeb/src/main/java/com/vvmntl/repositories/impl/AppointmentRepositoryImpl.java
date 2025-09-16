@@ -45,7 +45,9 @@ public class AppointmentRepositoryImpl implements AppointmentRepository{
 
     @Override
     public List<Appointment> list() {
-        return null;
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createNamedQuery("Doctor.findAll", Appointment.class);
+        return q.getResultList();
     }
 
     @Override
@@ -62,7 +64,13 @@ public class AppointmentRepositoryImpl implements AppointmentRepository{
 
     @Override
     public boolean deleteAppointment(int id) {
-        return true;
+        Session s = this.factory.getObject().getCurrentSession();
+        Appointment a = this.getAppointmentById(id);
+        if (a != null) {
+            s.remove(a);
+            return true;
+        }
+        return false;
     }
 
     @Override

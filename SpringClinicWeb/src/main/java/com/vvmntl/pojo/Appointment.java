@@ -4,6 +4,8 @@
  */
 package com.vvmntl.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,6 +41,7 @@ import java.util.Set;
     @NamedQuery(name = "Appointment.findByRoomUrl", query = "SELECT a FROM Appointment a WHERE a.roomUrl = :roomUrl"),
     @NamedQuery(name = "Appointment.findByPaymentForService", query = "SELECT a FROM Appointment a WHERE a.paymentForService = :paymentForService"),
     @NamedQuery(name = "Appointment.findByPaymentForPrescription", query = "SELECT a FROM Appointment a WHERE a.paymentForPrescription = :paymentForPrescription")})
+@JsonIgnoreProperties(value = {"medicalrecordSet", "patientId", "serviceId", "paymentSet"})
 public class Appointment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -66,6 +69,7 @@ public class Appointment implements Serializable {
     private Set<Medicalrecord> medicalrecordSet;
     @JoinColumn(name = "appointment_slot", referencedColumnName = "id", unique = true)
     @OneToOne
+    @JsonManagedReference
     private Appointmentslot appointmentSlot;
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
     @ManyToOne

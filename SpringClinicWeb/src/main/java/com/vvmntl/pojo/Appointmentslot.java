@@ -4,6 +4,9 @@
  */
 package com.vvmntl.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,6 +39,7 @@ import java.util.Set;
     @NamedQuery(name = "Appointmentslot.findByStartTime", query = "SELECT a FROM Appointmentslot a WHERE a.startTime = :startTime"),
     @NamedQuery(name = "Appointmentslot.findByEndTime", query = "SELECT a FROM Appointmentslot a WHERE a.endTime = :endTime"),
     @NamedQuery(name = "Appointmentslot.findByIsBooked", query = "SELECT a FROM Appointmentslot a WHERE a.isBooked = :isBooked")})
+@JsonIgnoreProperties(value = {"scheduleId"})
 public class Appointmentslot implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,6 +61,7 @@ public class Appointmentslot implements Serializable {
     @Column(name = "is_booked")
     private Boolean isBooked;
     @OneToOne(mappedBy = "appointmentSlot")
+    @JsonBackReference
     private Appointment appointment;
     @JoinColumn(name = "schedule_id", referencedColumnName = "id")
     @ManyToOne

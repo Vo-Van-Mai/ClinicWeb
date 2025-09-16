@@ -1,3 +1,6 @@
+com/vvmntl/services/impl/AppointmentSlotServiceImpl.class
+com/vvmntl/services/impl/PatientServiceImpl.class
+com/vvmntl/controllers/ApiAppointmentController.class
 com/vvmntl/configs/JacksonConfig.class
 com/vvmntl/repositories/CategoryMedicineRepository.class
 com/vvmntl/repositories/impl/CategoryMedicineRepositoryImpl.class
@@ -5,9 +8,16 @@ com/vvmntl/services/DoctorSpecializeService.class
 com/vvmntl/services/impl/CategoryMedicineServicesImpl.class
 com/vvmntl/services/impl/MedicineServicesImpl.class
 com/vvmntl/services/CategoryMedicineServices.class
+com/vvmntl/services/AppointmentSlotService.class
+com/vvmntl/repositories/impl/AppointmentSlotRepositoryImpl.class
+com/vvmntl/services/PatientService.class
 com/vvmntl/controllers/MedicineController.class
+com/vvmntl/repositories/impl/WorkScheduleRepositoryImpl.class
+com/vvmntl/repositories/PatientRepository.class
 com/vvmntl/controllers/ApiUserController.class
+com/vvmntl/repositories/AppointmentSlotRepository.class
 com/vvmntl/services/MedicineServices.class
+com/vvmntl/repositories/WorkScheduleRepository.class
 com/vvmntl/controllers/ApiDoctorController.class
 com/vvmntl/services/impl/DoctorSpecializeServiceImpl.class
 com/vvmntl/repositories/impl/DoctorSpecializeRepositoryImpl.class
@@ -15,4 +25,5 @@ com/vvmntl/utils/JwtUtils.class
 com/vvmntl/repositories/MedicineRepository.class
 com/vvmntl/fiters/JwtFilter.class
 com/vvmntl/repositories/impl/MedicineRepositoryImpl.class
+com/vvmntl/repositories/impl/PatientRepositoryImpl.class
 com/vvmntl/repositories/DoctorSpecializeRepository.class

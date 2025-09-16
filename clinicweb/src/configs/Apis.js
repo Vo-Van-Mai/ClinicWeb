@@ -20,8 +20,8 @@ export const endpoints = {
     "profile": "/secure/profile",
 
     //appointment
-    "available-slots": "/api/available-slots",
-    "appointments": "/api/appointments"
+    "available-slots": "/available-slots",
+    "appointments": "/appointments",
 };
 
 export const authApis = () => {

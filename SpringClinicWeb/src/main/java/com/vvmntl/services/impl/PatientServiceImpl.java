@@ -30,5 +30,10 @@ public class PatientServiceImpl implements PatientService {
             throw new ResourceNotFoundException(String.format("Khong tim thay benh nhan voi ma %d !", id ));
         }
     }
+
+    @Override
+    public Patient getPatientByUserId(int userId) {
+        return this.getPatientByUserId(userId);
+    }
     
 }

@@ -11,27 +11,32 @@ import { MyUserContext } from "./configs/MyContext";
 import { MyUserReducer } from "./reducer/MyUserReducer";
 import { useReducer } from "react";
 import AddDoctorProfile from "./component/user/AddDoctorProfile";
+import { MyCartContext } from "./configs/MyCartContext";
+import { MyCartReducer } from "./reducer/MyCartReducer";
+
 const App = () => {
   const [user, dispatch] = useReducer(MyUserReducer, null);
+  const [cart, cartDispatch] = useReducer(MyCartReducer, []); 
 
   return (
     <MyUserContext.Provider value={[user, dispatch]}>
+      <MyCartContext.Provider value={[cart, cartDispatch]}>
+        <BrowserRouter>
+          <Header />
+          <Container>
 
-      <BrowserRouter>
-        <Header />
-        <Container>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/service" element={<ListService />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/addDoctorProfile/:userId" element={<AddDoctorProfile />} />
+          </Routes>
+          </Container>
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/service" element={<ListService />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/addDoctorProfile/:userId" element={<AddDoctorProfile />} />
-        </Routes>
-        </Container>
-
-        <Footer />
-      </BrowserRouter>
+          <Footer />
+        </BrowserRouter>
+      </MyCartContext.Provider>
     </MyUserContext.Provider>
   );
 }

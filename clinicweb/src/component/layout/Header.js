@@ -3,9 +3,11 @@ import { Badge, Container, Dropdown, Nav, Navbar } from "react-bootstrap";
 import Apis, { endpoints } from "../../configs/Apis";
 import { Link } from "react-router-dom";
 import { MyUserContext } from "../../configs/MyContext";
+import { MyCartContext } from "../../configs/MyCartContext";
 
 const Header = () => {
   const [user, dispatch] = useContext(MyUserContext);
+  const [cart] = useContext(MyCartContext);
   const [specialize, setSpecialize] = useState([]);
 
   const loadSpecialize = async () => {
@@ -27,6 +29,9 @@ const Header = () => {
           <Navbar.Brand >Clinic Website </Navbar.Brand>
           <Nav className="me-auto">
             <Link className="nav-link" to="/">Trang chủ</Link>
+            <Link className="nav-link" to="#features">Bác sĩ</Link>
+            <Link className="nav-link" to="#pricing">Khoa</Link>
+
             <Dropdown>
               <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                 Danh sách khoa
@@ -40,8 +45,7 @@ const Header = () => {
                 ))}
               </Dropdown.Menu>
             </Dropdown>
-            <Link className="nav-link" to="#features">Bác sĩ</Link>
-            <Link className="nav-link" to="#pricing">Khoa</Link>
+
             {user === null ? (
               <>
                 <Link to="login" className="nav-link text-warning" >Đăng nhập</Link>
@@ -53,7 +57,7 @@ const Header = () => {
                 <Link to="#" className="nav-link text-danger" onClick={() => dispatch({ "type": "logout" })}>Đăng xuất</Link>
               </>
             )}
-            <Link to="/cart" className="nav-link text-success" >Lich da dat<Badge className="bg-danger" variant="danger">0</Badge></Link>
+            <Link to="/cart" className="nav-link text-success" >Lịch đã đặt <Badge className="bg-danger" variant="danger">{cart.length}</Badge></Link>
           </Nav>
         </Container>
       </Navbar>
