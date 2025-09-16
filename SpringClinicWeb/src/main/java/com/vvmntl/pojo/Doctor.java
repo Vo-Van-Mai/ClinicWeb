@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
@@ -65,8 +66,8 @@ public class Doctor implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "doctorId")
     private Set<Chat> chatSet;
-    @JsonIgnoreProperties("doctorId")
-    @OneToMany(mappedBy = "doctorId")
+    @JsonIgnore
+    @OneToMany(mappedBy = "doctorId", fetch = FetchType.LAZY)
     private Set<DoctorSpecialize> doctorSpecializeSet;
     @JsonIgnore
     @OneToMany(mappedBy = "doctorId")

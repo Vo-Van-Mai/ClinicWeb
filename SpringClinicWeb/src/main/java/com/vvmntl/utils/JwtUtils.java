@@ -30,7 +30,6 @@ public class JwtUtils {
 
         JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                 .subject(username)
-                
                 .expirationTime(new Date(System.currentTimeMillis() + EXPIRATION_MS))
                 .issueTime(new Date())
                 .build();

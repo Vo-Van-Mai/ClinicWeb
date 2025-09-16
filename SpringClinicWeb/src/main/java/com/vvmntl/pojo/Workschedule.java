@@ -4,6 +4,7 @@
  */
 package com.vvmntl.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,7 +19,11 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -42,15 +47,19 @@ public class Workschedule implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @NotNull(message = "{workschadule.dateWord.nullErr}")
+    @FutureOrPresent(message = "{wordschedule.dateWork.timeErr}")
     @Column(name = "date_work")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateWork;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateWork; 
+    @NotNull(message = "{workschedule.startTime.nullErr}")
     @Column(name = "start_time")
-    @Temporal(TemporalType.TIME)
-    private Date startTime;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime startTime;
+    @NotNull(message = "{workschedule.endTime.nullErr}")
     @Column(name = "end_time")
-    @Temporal(TemporalType.TIME)
-    private Date endTime;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime endTime;
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
     @ManyToOne
     private Doctor doctorId;
@@ -72,27 +81,27 @@ public class Workschedule implements Serializable {
         this.id = id;
     }
 
-    public Date getDateWork() {
+    public LocalDate getDateWork() {
         return dateWork;
     }
 
-    public void setDateWork(Date dateWork) {
+    public void setDateWork(LocalDate dateWork) {
         this.dateWork = dateWork;
     }
 
-    public Date getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 

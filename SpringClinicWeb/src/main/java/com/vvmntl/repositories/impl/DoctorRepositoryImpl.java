@@ -55,7 +55,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Doctor> query = b.createQuery(Doctor.class);
         Root<Doctor> r = query.from(Doctor.class);
-        r.fetch("doctorSpecializeSet", JoinType.LEFT);
+//        r.fetch("doctorSpecializeSet", JoinType.LEFT);
 
         query.select(r).distinct(true);
 
@@ -70,14 +70,14 @@ public class DoctorRepositoryImpl implements DoctorRepository {
             String expYear = params.get("minYear");
             if (expYear != null && !expYear.isEmpty()) {
                 predicates.add(
-                    b.greaterThanOrEqualTo(r.get("yearOfExperience"), Integer.parseInt(expYear))
+                    b.greaterThanOrEqualTo(r.get("yearOfExperience"), Integer.valueOf(expYear))
                 );
             }
 
             String verified = params.get("isVerified");
             if (verified != null && !verified.isEmpty()) {
                 predicates.add(
-                    b.equal(r.get("isVerified"), Boolean.parseBoolean(verified))
+                    b.equal(r.get("isVerified"), Boolean.valueOf(verified))
                 );
             }
 
@@ -97,7 +97,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
             }
             
             if (!predicates.isEmpty()) {
-                query.where(b.and(predicates.toArray(new Predicate[0])));
+                query.where(b.and(predicates.toArray(Predicate[]::new)));
             }
         }
         Query q = s.createQuery(query);
