@@ -23,4 +23,6 @@ public interface AppointmentSlotService {
     List<Appointmentslot> add(Workschedule ws);
     
     Appointmentslot getSlotByIdForUpdate(int id);
+    
+//    List<Appointmentslot> getSlotsByScheduleId(int scheduleId);
 }

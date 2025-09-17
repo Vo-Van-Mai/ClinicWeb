@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PatientServiceImpl implements PatientService {
+
     @Autowired
     private PatientRepository patientRepo;
     @Autowired
@@ -27,22 +28,21 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient getPatientById(int id) {
         Patient d = this.patientRepo.getPatientById(id);
-        if(d!=null){
+        if (d != null) {
             return d;
-        }
-        else{
-            throw new ResourceNotFoundException(String.format("Khong tim thay benh nhan voi ma %d !", id ));
+        } else {
+            throw new ResourceNotFoundException(String.format("Khong tim thay benh nhan voi ma %d !", id));
         }
     }
 
     @Override
     public void add(int userId, Patient p) {
         User u = this.userService.getUserById(userId);
-        if (u==null) {
+        if (u == null) {
             throw new ResourceNotFoundException("không tìm thấy người dùng!");
         }
-        
+
         this.patientRepo.add(p);
     }
-    
+
 }

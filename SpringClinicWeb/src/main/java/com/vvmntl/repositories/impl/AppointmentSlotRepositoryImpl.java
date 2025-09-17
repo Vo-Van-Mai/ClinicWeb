@@ -58,7 +58,7 @@ public class AppointmentSlotRepositoryImpl implements AppointmentSlotRepository 
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Appointmentslot> query = b.createQuery(Appointmentslot.class);
-        Root<Appointmentslot> r = query.from(Appointmentslot.class);
+        Root r = query.from(Appointmentslot.class);
 
         List<Predicate> predicates = new ArrayList<>();
 
@@ -102,5 +102,20 @@ public class AppointmentSlotRepositoryImpl implements AppointmentSlotRepository 
         Session s = factory.getObject().getCurrentSession();
         return s.find(Appointmentslot.class, id, LockModeType.PESSIMISTIC_WRITE);
     }
+
+//    @Override
+//    public List<Appointmentslot> getSlotsByScheduleId(int scheduleId) {
+//        Session s = this.factory.getObject().getCurrentSession();
+//        CriteriaBuilder b = s.getCriteriaBuilder();
+//        CriteriaQuery<Appointmentslot> query = b.createQuery(Appointmentslot.class);
+//        Root r = query.from(Appointmentslot.class);
+//        
+//        query.select(r).where(b.equal(r.get("scheduleId"), scheduleId));
+//        
+//        query.orderBy(b.asc(r.get("startTime")));
+//
+//        Query<Appointmentslot> q = s.createQuery(query);
+//        return q.getResultList();
+//    }
 
 }

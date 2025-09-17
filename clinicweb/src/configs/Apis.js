@@ -24,9 +24,13 @@ export const endpoints = {
     "available-slots": "/available-slots",
     "appointments": "/appointments",
 
+    //appointment slot
+    "slotsBySchedule": (scheduleId) => `/workschedules/${scheduleId}/slots`,
+
     //workschedule
     "workschedules":(doctorId) => `/workschedules/${doctorId}`,
     "createWorkSchedules": "/secure/workschedules",
+
 };
 
 export const authApis = () => {

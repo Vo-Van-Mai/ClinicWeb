@@ -33,7 +33,7 @@ public class AppointmentServiceImpl implements AppointmentService{
 
     @Override
     public boolean deleteAppointment(int id) {
-        return false;
+        return this.appRepo.deleteAppointment(id);
     }
 
     @Override

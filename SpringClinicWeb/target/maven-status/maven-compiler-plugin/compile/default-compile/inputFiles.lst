@@ -6,6 +6,7 @@
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/configs/ThymeleafConfig.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/configs/WebAppContextConfigs.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/ApiAppointmentController.java
+/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/ApiAppointmentSlotContrller.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/ApiDoctorController.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/ApiServiceController.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/ApiSpecializeController.java

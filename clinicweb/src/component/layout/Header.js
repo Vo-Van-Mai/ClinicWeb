@@ -30,9 +30,9 @@ const Header = () => {
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">Trang chủ</Nav.Link>
-            <Nav.Link as={Link} to="#doctors">Bác sĩ</Nav.Link>
-            <Nav.Link as={Link} to="#specializes">Khoa</Nav.Link>
+            <Link className="nav-link" to="/">Trang chủ</Link>
+            <Link className="nav-link"  to="#doctors">Bác sĩ</Link>
+            <Link className="nav-link"  to="#specializes">Khoa</Link>
 
             <NavDropdown title="Danh sách khoa" id="nav-dropdown">
               {specialize.length > 0 ? specialize.map(s => (

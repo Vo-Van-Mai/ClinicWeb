@@ -17,12 +17,9 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -37,7 +34,7 @@ import java.util.Set;
     @NamedQuery(name = "Appointmentslot.findByStartTime", query = "SELECT a FROM Appointmentslot a WHERE a.startTime = :startTime"),
     @NamedQuery(name = "Appointmentslot.findByEndTime", query = "SELECT a FROM Appointmentslot a WHERE a.endTime = :endTime"),
     @NamedQuery(name = "Appointmentslot.findByIsBooked", query = "SELECT a FROM Appointmentslot a WHERE a.isBooked = :isBooked")})
-@JsonIgnoreProperties(value = {"scheduleId"})
+@JsonIgnoreProperties(value = {"scheduleId", "appointmentSet"})
 public class Appointmentslot implements Serializable {
 
     private static final long serialVersionUID = 1L;

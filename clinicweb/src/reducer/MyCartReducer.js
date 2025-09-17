@@ -1,7 +1,7 @@
 export const MyCartReducer = (state, action) => {
     switch (action.type) {
         case "add":
-            if (state.some(item => item.slotId === action.payload.slotId)) {
+            if (state.some(item => item.appointmentSlot.id === action.payload.appointmentSlot.id)) {
                 return state;
             }
             return [...state, action.payload];
@@ -9,4 +9,3 @@ export const MyCartReducer = (state, action) => {
             return state;
     }
 }
-

@@ -6,6 +6,7 @@ package com.vvmntl.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,14 +19,11 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -40,6 +38,7 @@ import java.util.Set;
     @NamedQuery(name = "Workschedule.findByDateWork", query = "SELECT w FROM Workschedule w WHERE w.dateWork = :dateWork"),
     @NamedQuery(name = "Workschedule.findByStartTime", query = "SELECT w FROM Workschedule w WHERE w.startTime = :startTime"),
     @NamedQuery(name = "Workschedule.findByEndTime", query = "SELECT w FROM Workschedule w WHERE w.endTime = :endTime")})
+@JsonIgnoreProperties(value = {"doctorId", "appointmentslotSet"})
 public class Workschedule implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,9 +61,7 @@ public class Workschedule implements Serializable {
     @JsonFormat(pattern = "HH:mm")
     private LocalTime endTime;
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
-    @ManyToOne
     private Doctor doctorId;
-    @JsonIgnore
     @OneToMany(mappedBy = "scheduleId")
     private Set<Appointmentslot> appointmentslotSet;
 

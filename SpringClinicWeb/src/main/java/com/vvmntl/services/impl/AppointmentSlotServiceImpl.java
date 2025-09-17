@@ -68,5 +68,10 @@ public class AppointmentSlotServiceImpl implements AppointmentSlotService {
     public Appointmentslot getSlotByIdForUpdate(int id) {
         return this.slotRepo.getSlotByIdForUpdate(id);
     }
+
+//    @Override
+//    public List<Appointmentslot> getSlotsByScheduleId(int scheduleId) {
+//        return this.slotRepo.getSlotsByScheduleId(scheduleId);
+//    }
     
 }

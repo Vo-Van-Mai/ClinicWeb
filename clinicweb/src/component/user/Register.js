@@ -68,7 +68,6 @@ const Register = () => {
         const phoneRegex = /^\d{10}$/;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         
-        // Kiểm tra các trường bắt buộc
         if (!user.username || !usernameRegex.test(user.username)) {
             setMsg("Tên đăng nhập phải từ 3-30 ký tự, chỉ chứa chữ, số hoặc dấu gạch dưới.");
             return false;

@@ -7,12 +7,15 @@ import { Container } from "react-bootstrap";
 import ListService from "./component/service/ListService";
 import Register from "./component/user/Register";
 import Login from "./component/user/Login";
+
+import AddDoctorProfile from "./component/user/AddDoctorProfile";
+
+import { useReducer } from "react";
 import { MyUserContext } from "./configs/MyContext";
 import { MyUserReducer } from "./reducer/MyUserReducer";
-import { useReducer } from "react";
-import AddDoctorProfile from "./component/user/AddDoctorProfile";
 import { MyCartContext } from "./configs/MyCartContext";
 import { MyCartReducer } from "./reducer/MyCartReducer";
+
 import DoctorView from "./component/doctor/DoctorView";
 import CreateWorkSchedule from "./component/doctor/CreateWorkSchedule";
 import ListWorkSchedule from "./component/doctor/ListWorkSchedule";
