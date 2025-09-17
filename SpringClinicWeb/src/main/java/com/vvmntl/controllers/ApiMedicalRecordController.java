@@ -4,12 +4,21 @@
  */
 package com.vvmntl.controllers;
 
+import com.vvmntl.exception.ResourceNotFoundException;
 import com.vvmntl.pojo.Appointment;
+import com.vvmntl.pojo.Doctor;
 import com.vvmntl.pojo.Medicalrecord;
+import com.vvmntl.pojo.Patient;
+import com.vvmntl.pojo.User;
 import com.vvmntl.repositories.MedicalRecordRepository;
 import com.vvmntl.services.AppointmentService;
+import com.vvmntl.services.DoctorService;
 import com.vvmntl.services.EmailService;
 import com.vvmntl.services.MedicalRecordService;
+import com.vvmntl.services.PatientService;
+import com.vvmntl.services.UserService;
+import java.security.Principal;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +45,13 @@ public class ApiMedicalRecordController {
     private AppointmentService AppointmentService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private UserService userDetailService;
+    @Autowired
+    private DoctorService doctorService;
+    
+    @Autowired
+    private PatientService patientService;
     
     @GetMapping("/medicalrecords/{medicalId}")
     public ResponseEntity<?> detail (@PathVariable(value = "medicalId") int id){
@@ -105,6 +121,28 @@ public class ApiMedicalRecordController {
             return ResponseEntity.ok(this.medicalRecordService.update(medicalRecord));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    
+    @GetMapping("/patients/medicalRecords")
+    public ResponseEntity<?> getListByUser(Principal pricipal){
+        try {
+            String username = pricipal.getName();
+            User user = this.userDetailService.getUserByUsername(username);
+            List<Medicalrecord> mdrecord = this.medicalRecordService.getMedicalRecordByUserId(user.getId());
+            return ResponseEntity.ok(mdrecord);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    
+    @GetMapping("/doctors/medicalrecords")
+    public ResponseEntity<?> getListMedicalRecordByDoctor(Principal principal){
+        try {
+            User user = this.userDetailService.getUserByUsername(principal.getName());
+            return ResponseEntity.ok(this.medicalRecordService.getMedidalRecordBYDoctorId(user.getId()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Xãy ra lỗi: " + e.getMessage());
         }
     }
 }

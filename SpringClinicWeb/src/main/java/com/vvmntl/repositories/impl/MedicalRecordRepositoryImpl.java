@@ -5,9 +5,21 @@
 package com.vvmntl.repositories.impl;
 
 import com.vvmntl.exception.ResourceNotFoundException;
+import com.vvmntl.pojo.Appointment;
+import com.vvmntl.pojo.Appointmentslot;
+import com.vvmntl.pojo.Doctor;
 import com.vvmntl.pojo.Medicalrecord;
+import com.vvmntl.pojo.Patient;
+import com.vvmntl.pojo.User;
+import com.vvmntl.pojo.Workschedule;
 import com.vvmntl.repositories.MedicalRecordRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Root;
+import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
@@ -44,8 +56,46 @@ public class MedicalRecordRepositoryImpl implements MedicalRecordRepository{
     @Override
     public Medicalrecord update(Medicalrecord medicalRecord) {
         Session s = this.factory.getObject().getCurrentSession();
-        Medicalrecord mr = this.getMedicalRecordById(medicalRecord.getId());
-        return s.merge(medicalRecord);
+        try {
+            Medicalrecord mr = this.getMedicalRecordById(medicalRecord.getId());
+            if (mr!=null)
+                return s.merge(medicalRecord);
+        } catch (Exception e) {
+            throw new ResourceNotFoundException(("Không tìm thấy hồ sơ bệnh án!"));
+        }
+        return null;
+    }
+
+    @Override
+    public List<Medicalrecord> getMedicalRecordByUserId(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder cb = s.getCriteriaBuilder();
+        CriteriaQuery<Medicalrecord> query = cb.createQuery(Medicalrecord.class);
+        Root<Medicalrecord> r = query.from(Medicalrecord.class);
+        Join<Medicalrecord, Appointment> appointmentJoin = r.join("appointmentId");
+        Join<Appointment, Patient> patientJoin = appointmentJoin.join("patientId");
+        query.select(r).where(cb.equal(patientJoin.get("user").get("id"), id));
+        Query q = s.createQuery(query);
+        return q.getResultList();
+        
+    }
+
+    @Override
+    public List<Medicalrecord> getMedidalRecordBYDoctorId(int doctorId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder cb = s.getCriteriaBuilder();
+        CriteriaQuery<Medicalrecord> query = cb.createQuery(Medicalrecord.class);
+
+        Root<Medicalrecord> mrRoot = query.from(Medicalrecord.class);
+
+        Join<Medicalrecord, Appointment> appointmentJoin = mrRoot.join("appointmentId");
+        Join<Appointment, Appointmentslot> slotJoin = appointmentJoin.join("appointmentSlot");
+        Join<Appointmentslot, Workschedule> wsJoin = slotJoin.join("scheduleId");
+        Join<Workschedule, Doctor> doctorJoin = wsJoin.join("doctorId");
+
+        query.select(mrRoot).where(cb.equal(doctorJoin.get("id"), doctorId));
+
+        return s.createQuery(query).getResultList();
     }
     
 }

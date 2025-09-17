@@ -9,6 +9,7 @@ import com.vvmntl.pojo.Appointment;
 import com.vvmntl.pojo.Appointmentslot;
 import com.vvmntl.pojo.Patient;
 import com.vvmntl.pojo.Service;
+import com.vvmntl.pojo.StatusEnum;
 import com.vvmntl.repositories.AppointmentRepository;
 import com.vvmntl.repositories.AppointmentSlotRepository;
 import com.vvmntl.repositories.PatientRepository;
@@ -124,7 +125,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         appointment.setServiceId(service);
         appointment.setAppointmentSlot(slot);
         appointment.setCreatedDate(LocalDate.now());
-        appointment.setStatus("PENDING");
+        appointment.setStatus(StatusEnum.PENDING);
         appointment.setPaymentForService(false);
 
         s.persist(appointment);

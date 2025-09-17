@@ -41,7 +41,6 @@ public class IndexController {
         long totalDoctors = this.doctorService.countDoctor(params);
         int totalPages = (int) Math.ceil((double) totalDoctors /10);
         model.addAttribute("totalPages", totalPages);
-        
         model.addAttribute("medicines", this.mediService.getMedicines(params));
         return "index";
     }

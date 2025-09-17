@@ -22,7 +22,7 @@ export const endpoints = {
 
     //appointment
     "available-slots": "/available-slots",
-    "bookAppointment": (slotId) => `/secure/appointments/${slotId}`,
+    "bookAppointment": (slotId) => `/secure/patients/appointments/${slotId}`,
     "myAppointments": "/secure/appointments",
     "deleteAppointment": (appointmentId) => `/secure/appointments/${appointmentId}`,
     "appointmentslots": (doctorId) => `/appoimentslots/${doctorId}`,

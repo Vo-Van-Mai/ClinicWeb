@@ -78,6 +78,8 @@ public class SpringSecurityConfig {
                 .csrf(c -> c.disable()).authorizeHttpRequests(requests
                 -> requests.requestMatchers("/home", "/doctor", "/stats", "/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/secure/workschedules/**").access(new DoctorAuthorizationManager())
+                        .requestMatchers("/api/secure/patients/**").hasRole("PATIENT")
+                        .requestMatchers("/api/secure/doctors/**").hasRole("DOCTOR")
                         .requestMatchers("/api/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/specialize").hasRole("ADMIN")
                         .anyRequest().authenticated())

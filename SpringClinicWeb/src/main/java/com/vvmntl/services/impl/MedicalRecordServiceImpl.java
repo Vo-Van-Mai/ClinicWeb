@@ -5,10 +5,17 @@
 package com.vvmntl.services.impl;
 
 import com.vvmntl.exception.ResourceNotFoundException;
+import com.vvmntl.pojo.Doctor;
 import com.vvmntl.pojo.Medicalrecord;
+import com.vvmntl.pojo.Patient;
+import com.vvmntl.pojo.User;
 import com.vvmntl.repositories.MedicalRecordRepository;
+import com.vvmntl.services.DoctorService;
 import com.vvmntl.services.MedicalRecordService;
+import com.vvmntl.services.PatientService;
+import com.vvmntl.services.UserService;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +27,11 @@ import org.springframework.stereotype.Service;
 public class MedicalRecordServiceImpl implements MedicalRecordService{
     @Autowired
     private MedicalRecordRepository medicalReRecordRepo;
+    
+    @Autowired
+    private PatientService patientService;
+    @Autowired
+    private DoctorService doctorService;
     
 
     @Override
@@ -92,5 +104,24 @@ public class MedicalRecordServiceImpl implements MedicalRecordService{
         existing.setUpdatedDate(new Date());
         return this.medicalReRecordRepo.update(medicalRecord);
     }   
+
+    @Override
+    public List<Medicalrecord> getMedicalRecordByUserId(int patientId) {
+        Patient patient = this.patientService.getPatientById(patientId);
+        if(patient==null){
+            throw new ResourceNotFoundException("Không tìm thấy người dùng!");
+        }
+        return this.medicalReRecordRepo.getMedicalRecordByUserId(patientId);
+    }
+
+    @Override
+    public List<Medicalrecord> getMedidalRecordBYDoctorId(int doctorId) {
+        Doctor doctor = this.doctorService.getDoctorById(doctorId);
+        if(doctor == null){
+            throw new ResourceNotFoundException("Không tìm thấy bác sĩ!");
+        }
+        List<Medicalrecord> listMedical =  this.medicalReRecordRepo.getMedidalRecordBYDoctorId(doctorId);
+        return listMedical;
+    }
     
 }

@@ -5,6 +5,7 @@
 package com.vvmntl.repositories;
 
 import com.vvmntl.pojo.Medicalrecord;
+import java.util.List;
 
 /**
  *
@@ -14,4 +15,6 @@ public interface MedicalRecordRepository {
     Medicalrecord getMedicalRecordById(int id);
     Medicalrecord add(Medicalrecord medicalRecord);
     Medicalrecord update(Medicalrecord medicalRecord);
+    List<Medicalrecord> getMedicalRecordByUserId(int id);
+    List<Medicalrecord> getMedidalRecordBYDoctorId(int id);
 }

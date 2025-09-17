@@ -95,9 +95,7 @@ public class ApiDoctorController {
     
     
     @PostMapping("/doctors/{doctorId}/specializes")
-    public ResponseEntity<?> addSpecializes(
-            @PathVariable(value = "doctorId") int doctorId,
-            @RequestBody Map<String, List<Integer>> payload) {
+    public ResponseEntity<?> addSpecializes(@PathVariable(value = "doctorId") int doctorId, @RequestBody Map<String, List<Integer>> payload) {
         try {
             Doctor doctor = this.docService.getDoctorById(doctorId);
             if (doctor == null) {

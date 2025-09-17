@@ -1,5 +1,6 @@
 com\vvmntl\pojo\Workschedule.class
 com\vvmntl\pojo\Pharmacy.class
+com\vvmntl\pojo\StatusEnum.class
 com\vvmntl\repositories\WorkScheduleRepository.class
 com\vvmntl\controllers\ApiSpecializeController.class
 com\vvmntl\services\impl\DoctorSpecializeServiceImpl.class

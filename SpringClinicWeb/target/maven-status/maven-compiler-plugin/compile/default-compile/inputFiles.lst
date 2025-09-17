@@ -46,6 +46,7 @@ D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Rating.j
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Role.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Service.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Specialize.java
+D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\StatusEnum.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\User.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\pojo\Workschedule.java
 D:\Code\PTHTWEB\ClinicWeb\SpringClinicWeb\src\main\java\com\vvmntl\repositories\AppointmentRepository.java
