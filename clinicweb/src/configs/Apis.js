@@ -22,8 +22,11 @@ export const endpoints = {
 
     //appointment
     "available-slots": "/available-slots",
-    "appointments": "/appointments",
+    "bookAppointment": (slotId) => `/secure/appointments/${slotId}`,
+    "myAppointments": "/secure/appointments",
+    "deleteAppointment": (appointmentId) => `/secure/appointments/${appointmentId}`,
     "appointmentslots": (doctorId) => `/appoimentslots/${doctorId}`,
+    "appointmentslotsBySchedule": (scheduleId) => `/appointmentslots?scheduleId=${scheduleId}`,
 
     //workschedule
     "workschedules":(doctorId) => `/workschedules/${doctorId}`,

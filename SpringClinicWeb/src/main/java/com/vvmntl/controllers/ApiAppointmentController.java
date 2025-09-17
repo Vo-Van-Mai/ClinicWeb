@@ -17,10 +17,12 @@ import com.vvmntl.services.UserService;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +52,32 @@ public class ApiAppointmentController {
     private PatientService patientService;
     @Autowired
     private DoctorService doctorService;
+    
+    @DeleteMapping("/secure/appointments/{appointmentId}")
+    public ResponseEntity<?> cancelAppointment(@PathVariable("appointmentId") int appointmentId, Principal principal) {
+        try {
+            User currentUser = this.userService.getUserByUsername(principal.getName());
+            Appointment appointment = this.appointmentService.getAppointmentById(appointmentId);
+
+            if (!Objects.equals(appointment.getPatientId().getId(), currentUser.getId())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Bạn không có quyền thực hiện hành động này.");
+            }
+            
+            if (!"PENDING".equals(appointment.getStatus())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Chỉ có thể hủy lịch hẹn đang ở trạng thái chờ.");
+            }
+
+            boolean isDeleted = this.appointmentService.deleteAppointment(appointmentId);
+            if (isDeleted) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìm thấy lịch hẹn để xóa.");
+            }
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi server: " + e.getMessage());
+        }
+    }
 
     @GetMapping("/available-slots")
     public ResponseEntity<List<Appointmentslot>> getAvailableSlots(@RequestParam Map<String, String> params) {

@@ -11,39 +11,36 @@ import { MyUserContext } from "./configs/MyContext";
 import { MyUserReducer } from "./reducer/MyUserReducer";
 import { useReducer } from "react";
 import AddDoctorProfile from "./component/user/AddDoctorProfile";
-import { MyCartContext } from "./configs/MyCartContext";
-import { MyCartReducer } from "./reducer/MyCartReducer";
 import DoctorView from "./component/doctor/DoctorView";
 import CreateWorkSchedule from "./component/doctor/CreateWorkSchedule";
 import ListWorkSchedule from "./component/doctor/ListWorkSchedule";
 import AppointmentSlots from "./component/AppointmentSlot/AppointmentSlots";
+import MyBookings from "./component/booking/MyBookings";
 
 const App = () => {
   const [user, dispatch] = useReducer(MyUserReducer, null);
-  const [cart, cartDispatch] = useReducer(MyCartReducer, []); 
 
   return (
     <MyUserContext.Provider value={[user, dispatch]}>
-      <MyCartContext.Provider value={[cart, cartDispatch]}>
-        <BrowserRouter>
-          <Header />
-          <Container>
+      <BrowserRouter>
+        <Header />
+        <Container>
 
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/service" element={<ListService />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/addDoctorProfile/:userId" element={<AddDoctorProfile />} />
-            <Route path="/doctorView/:doctorId" element={<DoctorView />} />
-            <Route path="/listWorkSchedule/:doctorId" element={<ListWorkSchedule />} />
-            <Route path="/appointmentSlots/:doctorId" element={<AppointmentSlots />} />
-          </Routes>
-          </Container>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/service" element={<ListService />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/addDoctorProfile/:userId" element={<AddDoctorProfile />} />
+          <Route path="/doctorView/:doctorId" element={<DoctorView />} />
+          <Route path="/listWorkSchedule/:doctorId" element={<ListWorkSchedule />} />
+          <Route path="/appointmentSlots/:doctorId" element={<AppointmentSlots />} />
+          <Route path="/my-bookings" element={<MyBookings />} />
+        </Routes>
+        </Container>
 
-          <Footer />
-        </BrowserRouter>
-      </MyCartContext.Provider>
+        <Footer />
+      </BrowserRouter>
     </MyUserContext.Provider>
   );
 }

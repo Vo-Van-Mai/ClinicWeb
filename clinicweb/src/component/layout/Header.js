@@ -1,13 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { Badge, Container, Dropdown, Nav, Navbar, Button, NavDropdown } from "react-bootstrap";
+import { Container, Nav, Navbar, Button, NavDropdown } from "react-bootstrap";
 import Apis, { endpoints } from "../../configs/Apis";
 import { Link } from "react-router-dom";
 import { MyUserContext } from "../../configs/MyContext";
-import { MyCartContext } from "../../configs/MyCartContext";
 
 const Header = () => {
   const [user, dispatch] = useContext(MyUserContext);
-  const [cart] = useContext(MyCartContext);
   const [specialize, setSpecialize] = useState([]);
   const [doctor, setDoctor] = useState({});
 
@@ -84,21 +82,16 @@ const Header = () => {
                     Quản lý lịch làm
                   </Button> : <span className="text-warning me-3">Đang chờ xác nhận</span>
                 )}
+                {user.role === "PATIENT" && (
+                    <Button as={Link} to="/my-bookings" variant="success" className="ms-3 me-3">
+                        Lịch đã đặt
+                    </Button>
+                )}
                 <Button variant="outline-danger" onClick={() => dispatch({ type: "logout" })}>
                   Đăng xuất
                 </Button>
               </>
             )}
-            <Button as={Link} to="/cart" variant="success" className="ms-3 position-relative">
-              Lịch đã đặt
-              <Badge
-                bg="danger"
-                pill
-                className="position-absolute top-0 start-100 translate-middle"
-              >
-                {cart.length}
-              </Badge>
-            </Button>
           </Nav>
         </Navbar.Collapse>
       </Container>
