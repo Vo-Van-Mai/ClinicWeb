@@ -20,4 +20,5 @@ public interface WorkScheduleService {
     List<Workschedule> getListWorkScheduleByDoctorId(int id);
     Workschedule add(Workschedule ws);
     boolean checkSchedule (int doctorId, LocalDate dateWork, LocalTime startTime, LocalTime endTime);
+    boolean deleteWorkSchedule(int id);
 }

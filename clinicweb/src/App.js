@@ -16,6 +16,7 @@ import { MyCartReducer } from "./reducer/MyCartReducer";
 import DoctorView from "./component/doctor/DoctorView";
 import CreateWorkSchedule from "./component/doctor/CreateWorkSchedule";
 import ListWorkSchedule from "./component/doctor/ListWorkSchedule";
+import AppointmentSlots from "./component/AppointmentSlot/AppointmentSlots";
 
 const App = () => {
   const [user, dispatch] = useReducer(MyUserReducer, null);
@@ -36,6 +37,7 @@ const App = () => {
             <Route path="/addDoctorProfile/:userId" element={<AddDoctorProfile />} />
             <Route path="/doctorView/:doctorId" element={<DoctorView />} />
             <Route path="/listWorkSchedule/:doctorId" element={<ListWorkSchedule />} />
+            <Route path="/appointmentSlots/:doctorId" element={<AppointmentSlots />} />
           </Routes>
           </Container>
 

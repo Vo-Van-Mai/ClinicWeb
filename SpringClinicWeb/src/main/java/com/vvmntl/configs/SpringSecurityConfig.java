@@ -75,7 +75,7 @@ public class SpringSecurityConfig {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(c -> c.disable()).authorizeHttpRequests(requests
                 -> requests.requestMatchers("/home", "/doctor", "/stats", "/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/secure/workschedules").hasRole("DOCTOR")
+                        .requestMatchers("/api/secure/workschedules/**").hasRole("DOCTOR")
                         .requestMatchers("/api/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/specialize").hasRole("ADMIN")
                         .anyRequest().authenticated())

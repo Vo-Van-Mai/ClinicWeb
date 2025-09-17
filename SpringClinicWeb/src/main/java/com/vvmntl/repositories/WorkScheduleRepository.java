@@ -20,4 +20,5 @@ public interface WorkScheduleRepository {
     List<Workschedule> getListWorkScheduleByDoctorId(int id);
     Workschedule add(Workschedule ws);
     boolean checkSchedule(int doctorId, LocalDate dateWork, LocalTime startTime, LocalTime endTIme);
+    boolean delete(int wsId);
 }

@@ -126,4 +126,20 @@ public class WorkScheduleRepositoryImpl implements WorkScheduleRepository {
         
     }
 
+    @Override
+    public boolean delete(int wsId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Workschedule ws = this.getWorksScheduleById(wsId);
+        if (ws == null) {
+            throw new RuntimeException("Workschedule không tồn tại với id: " + wsId);
+        }
+        try {
+            s.remove(ws);
+            return true;
+        } catch (Exception e) {
+            throw new RuntimeException("Có lõi xáy ra trong quá trình xóa: " + e.getMessage());
+        }
+        
+    }
+
 }

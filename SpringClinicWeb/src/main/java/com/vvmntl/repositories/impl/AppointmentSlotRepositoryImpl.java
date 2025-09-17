@@ -117,7 +117,7 @@ public class AppointmentSlotRepositoryImpl implements AppointmentSlotRepository 
 
         Join<Appointmentslot, Workschedule> scheduleJoin = root.join("scheduleId");
 
-        cq.select(root).where(cb.equal(scheduleJoin.get("doctorId"), doctor));
+        cq.select(root).where(cb.equal(scheduleJoin.get("doctorId"), doctor)).orderBy(cb.asc(scheduleJoin.get("dateWork")), cb.asc(root.get("startTime")));
 
         Query<Appointmentslot> query = s.createQuery(cq);
         return query.getResultList();

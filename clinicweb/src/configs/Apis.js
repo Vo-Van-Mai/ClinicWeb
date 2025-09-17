@@ -28,6 +28,8 @@ export const endpoints = {
     //workschedule
     "workschedules":(doctorId) => `/workschedules/${doctorId}`,
     "createWorkSchedules": "/secure/workschedules",
+    "deleteWorkSchedules": (wsId) => `/secure/workschedules/delele/${wsId}`
+
 };
 
 export const authApis = () => {
