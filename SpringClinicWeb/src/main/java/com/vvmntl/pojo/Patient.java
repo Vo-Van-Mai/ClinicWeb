@@ -4,6 +4,7 @@
  */
 package com.vvmntl.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -41,10 +42,13 @@ public class Patient implements Serializable {
     @Size(max = 45)
     @Column(name = "insurance")
     private String insurance;
+    @JsonIgnore
     @OneToMany(mappedBy = "patientId")
     private Set<Rating> ratingSet;
+    @JsonIgnore
     @OneToMany(mappedBy = "patientId")
     private Set<Appointment> appointmentSet;
+    @JsonIgnore
     @OneToMany(mappedBy = "patientId")
     private Set<Chat> chatSet;
     @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)

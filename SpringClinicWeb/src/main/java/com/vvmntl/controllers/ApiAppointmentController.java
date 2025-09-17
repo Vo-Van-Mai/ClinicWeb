@@ -95,13 +95,12 @@ public class ApiAppointmentController {
     
     @GetMapping("/appoimentslots/{doctorId}")
     public ResponseEntity<?> list(@PathVariable(value = "doctorId") int id){
-            try {
-                Doctor doctor = this.doctorService.getDoctorById(id);
-                return ResponseEntity.ok(this.slotService.getListAppointmentSlotByDoctorId(doctor));
-            } catch (Exception e) {
-                return ResponseEntity.badRequest().body(e.getMessage());
-            }
-        
+        try {
+            Doctor doctor = this.doctorService.getDoctorById(id);
+            return ResponseEntity.ok(this.slotService.getListAppointmentSlotByDoctorId(doctor));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     
     @GetMapping("/secure/appointments")

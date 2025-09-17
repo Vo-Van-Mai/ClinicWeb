@@ -41,7 +41,7 @@ import java.util.Set;
     @NamedQuery(name = "Appointment.findByRoomUrl", query = "SELECT a FROM Appointment a WHERE a.roomUrl = :roomUrl"),
     @NamedQuery(name = "Appointment.findByPaymentForService", query = "SELECT a FROM Appointment a WHERE a.paymentForService = :paymentForService"),
     @NamedQuery(name = "Appointment.findByPaymentForPrescription", query = "SELECT a FROM Appointment a WHERE a.paymentForPrescription = :paymentForPrescription")})
-@JsonIgnoreProperties(value = {"medicalrecordSet", "patientId", "paymentSet"})
+@JsonIgnoreProperties(value = {"medicalrecordSet", "paymentSet"})
 public class Appointment implements Serializable {
 
     private static final long serialVersionUID = 1L;

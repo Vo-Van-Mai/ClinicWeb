@@ -4,6 +4,7 @@
  */
 package com.vvmntl.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,6 +24,7 @@ import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -64,6 +66,7 @@ public class Medicalrecord implements Serializable {
     @JoinColumn(name = "appointment_id", referencedColumnName = "id")
     @ManyToOne
     private Appointment appointmentId;
+    @JsonIgnore
     @OneToMany(mappedBy = "medicalrecordId")
     private Set<Prescription> prescriptionSet;
 
