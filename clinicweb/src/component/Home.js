@@ -1,19 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Apis, { endpoints } from "../configs/Apis";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Alert, Button, Card, Col, Container, Row, Spinner } from "react-bootstrap";
-import BookingModal from "./booking/BookingModal";
-import { MyUserContext } from "../configs/MyContext";
 
 const Home = () => {
   const [doctos, setDoctors] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [q] = useSearchParams();
-
-  const [user] = useContext(MyUserContext);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedDoctor, setSelectedDoctor] = useState(null);
   const nav = useNavigate();
 
   const loadDoctor = async () => {
@@ -41,16 +35,6 @@ const Home = () => {
     loadDoctor();
     // eslint-disable-next-line
   }, [q, page]);
-
-  const handleShowModal = (doctor) => {
-    setSelectedDoctor(doctor);
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-    setSelectedDoctor(null);
-  };
 
   return (
     <Container className="mt-4">
@@ -91,19 +75,8 @@ const Home = () => {
                     onClick={() => nav(`/doctorView/${d.id}`)}
                     variant="outline-primary"
                   >
-                    Xem
+                    Xem chi tiet
                   </Button>
-                  {user ? (
-                    user?.role === "PATIENT" && (
-                      <Button variant="success" onClick={() => handleShowModal(d)}>
-                        Đặt lịch
-                      </Button>
-                    )
-                  ) : (
-                    <Link to="/login" className="btn btn-secondary">
-                      Đăng nhập
-                    </Link>
-                  )}
                 </div>
               </Card.Body>
             </Card>
@@ -124,7 +97,6 @@ const Home = () => {
         )}
       </div>
 
-      <BookingModal show={showModal} onHide={handleCloseModal} doctor={selectedDoctor} />
     </Container>
   );
 };

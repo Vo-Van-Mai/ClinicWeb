@@ -72,6 +72,11 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         Session s = this.factory.getObject().getCurrentSession();
         Appointment a = this.getAppointmentById(id);
         if (a != null) {
+            Appointmentslot slot = a.getAppointmentSlot();
+            if (slot != null) {
+                slot.setIsBooked(false);
+                s.merge(slot);
+            }
             s.remove(a);
             return true;
         }
