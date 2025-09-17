@@ -56,7 +56,7 @@ public class ApiWorlScheduleController {
             List<Workschedule> ws = this.workScheduleService.getListWorkScheduleByDoctorId(id);
             return ResponseEntity.ok(ws);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìm thấy lịch ");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Xảy ra lỗi" + e.getMessage());
         }
     }
     
