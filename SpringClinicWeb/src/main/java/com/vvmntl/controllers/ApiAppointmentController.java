@@ -6,10 +6,12 @@ package com.vvmntl.controllers;
 
 import com.vvmntl.pojo.Appointment;
 import com.vvmntl.pojo.Appointmentslot;
+import com.vvmntl.pojo.Doctor;
 import com.vvmntl.pojo.Patient;
 import com.vvmntl.pojo.User;
 import com.vvmntl.services.AppointmentService;
 import com.vvmntl.services.AppointmentSlotService;
+import com.vvmntl.services.DoctorService;
 import com.vvmntl.services.PatientService;
 import com.vvmntl.services.UserService;
 import java.security.Principal;
@@ -46,6 +48,8 @@ public class ApiAppointmentController {
 
     @Autowired
     private PatientService patientService;
+    @Autowired
+    private DoctorService doctorService;
 
     @GetMapping("/available-slots")
     public ResponseEntity<List<Appointmentslot>> getAvailableSlots(@RequestParam Map<String, String> params) {
@@ -87,5 +91,22 @@ public class ApiAppointmentController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+    
+    @GetMapping("/appoimentslots/{doctorId}")
+    public ResponseEntity<?> list(@PathVariable(value = "doctorId") int id){
+            try {
+                Doctor doctor = this.doctorService.getDoctorById(id);
+                return ResponseEntity.ok(this.slotService.getListAppointmentSlotByDoctorId(doctor));
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
+        
+    }
+    
+    @GetMapping("/secure/appointments")
+    public ResponseEntity<List<Appointment>> loadAppointments(@RequestParam Map <String, String> params){
+        
+        return ResponseEntity.ok(this.appointmentService.loadAppointments(params));
     }
 }

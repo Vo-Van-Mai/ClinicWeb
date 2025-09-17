@@ -55,8 +55,8 @@ public class Doctor implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "license_number")
     private String licenseNumber;
-    @Column(name = "is_verified")
-    private Boolean isVerified;
+    @Column(name = "is_verified",columnDefinition = "boolean default true")
+    private Boolean isVerified = false;
     @JsonIgnore
     @OneToMany(mappedBy = "doctorId")
     private Set<Rating> ratingSet;

@@ -15,10 +15,16 @@ import com.vvmntl.repositories.PatientRepository;
 import com.vvmntl.repositories.ServiceRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,5 +129,52 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
 
         return appointment;
     }
+    
+    
+    @Override
+    public List<Appointment> loadAppointmets(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder cb = s.getCriteriaBuilder();
+        CriteriaQuery<Appointment> cq = cb.createQuery(Appointment.class);
+        Root<Appointment> root = cq.from(Appointment.class);
+        Join<Appointment, Appointmentslot> slotJoin = root.join("appointmentSlot", JoinType.LEFT);
+        cq.select(root).distinct(true);
+
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+
+            String status = params.get("status");
+            if (status != null && !status.isEmpty()) {
+                predicates.add(cb.equal(root.get("status"), status));
+            }
+            String patientId = params.get("patientId");
+            if (patientId != null && !patientId.isEmpty()) {
+                predicates.add(cb.equal(root.get("patientId").get("id"), Integer.valueOf(patientId)));
+            }
+            
+            String slotStart = params.get("slotStart");
+            if (slotStart != null && !slotStart.isEmpty()) {
+                predicates.add(cb.equal(slotJoin.get("startTime"), LocalTime.parse(slotStart)));
+            }
+            
+            String slotEnd = params.get("slotEnd");
+            if (slotEnd != null && !slotEnd.isEmpty()) {
+                predicates.add(cb.equal(slotJoin.get("endTime"), LocalTime.parse(slotEnd)));
+            }
+
+            String scheduleId = params.get("scheduleId");
+            if (scheduleId != null && !scheduleId.isEmpty()) {
+                predicates.add(cb.equal(slotJoin.get("scheduleId").get("id"), Integer.valueOf(scheduleId)));
+            }
+
+            if (!predicates.isEmpty()) {
+                cq.where(cb.and(predicates.toArray(Predicate[]::new)));
+            }
+        }
+
+        Query<Appointment> q = s.createQuery(cq);
+        return q.getResultList();
+    }
+
 
 }

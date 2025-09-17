@@ -41,21 +41,28 @@ const ListService = () => {
         <Row>
             {services.map(s =>
           <Col className="p-1" key={s.id} md={3} xs={6}>
-                      <Card border="info"  style={{ width: '18rem' }}>
-                          <Card.Img variant="top" src="/serviceimg.jpg" />
-                          <Card.Body>
-                            <Card.Title className="text-truncate">{s.name}</Card.Title>
+                      <Card className="h-100 shadow-sm border-0 m-1">
+                        <Card.Img
+                                    variant="top"
+                                    src="/serviceimg.jpg"
+                                    alt="Doctor Avatar"
+                                    style={{ height: "220px", objectFit: "cover", borderRadius: "10px" }}
+                                  />
+                          <Card.Body className="d-flex flex-column">
+                            <Card.Title  className="text-truncate text-center fw-bold">{s.name}</Card.Title>
                             <Card.Text>
                               Giá khám tham khảo: {s.price} VNĐ
                             </Card.Text>
-                            <Button variant="primary">Xem</Button>
+                            <Button
+                                variant="outline-primary"
+                              >
+                                Xem
+                              </Button>
                           </Card.Body>
                         </Card>
                     </Col>)
                     }
                     </Row>
-
-        
     </>
   );
 }

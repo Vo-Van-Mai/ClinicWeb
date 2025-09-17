@@ -39,7 +39,7 @@ public class DispatcherServletInit extends AbstractAnnotationConfigDispatcherSer
     
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
-        String location = "/tmp";
+        String location = "/";
         long maxFileSize = 5242880;
         long maxRequestSize = 20971520;
         int fileSizeThreshold = 0;
@@ -49,7 +49,7 @@ public class DispatcherServletInit extends AbstractAnnotationConfigDispatcherSer
     
     @Override
     protected Filter[] getServletFilters() {
-        return new Filter[] { new JwtFilter() };
+        return new Filter[] {};
     }
     
 }

@@ -78,9 +78,10 @@ public class ApiWorlScheduleController {
         
         
         Doctor doctor = this.doctorService.getDoctorById(user.getId());
-            if(doctor==null){
-                return ResponseEntity.badRequest().body("Khong tìm thấy bác sĩ");
-            }
+        if(doctor==null){
+            return ResponseEntity.badRequest().body("Khong tìm thấy bác sĩ");
+        }
+        
         try {
             ws.setDoctorId(doctor);
             Workschedule workScheduleSave = workScheduleService.add(ws);
@@ -95,4 +96,7 @@ public class ApiWorlScheduleController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    
+    
+    
 }

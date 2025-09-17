@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 com/vvmntl/controllers/ApiAppointmentSlotContrller.class
 com/vvmntl/controllers/ApiWorlScheduleController.class
 com/vvmntl/services/impl/WorkScheduleServiceImpl.class
 com/vvmntl/services/WorkScheduleService.class
+=======
+com\vvmntl\controllers\ApiAppointmentSlotController.class
+com\vvmntl\controllers\ApiWorlScheduleController.class
+com\vvmntl\services\impl\WorkScheduleServiceImpl.class
+com\vvmntl\services\WorkScheduleService.class
+>>>>>>> 2a330d7e7731465e509a2560afa86d57fed925b0

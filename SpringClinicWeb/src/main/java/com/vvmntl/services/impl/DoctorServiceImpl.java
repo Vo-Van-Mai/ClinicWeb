@@ -151,4 +151,10 @@ public class DoctorServiceImpl implements DoctorService{
         Doctor doctor = this.getDoctorById(d.getId());
         return this.doctorRepo.cancelDoctor(doctor);
     }
+
+    @Override
+    public boolean isVerified(int id) {
+        Doctor d = this.getDoctorById(id);
+        return d.getIsVerified();
+    }
 }
