@@ -37,13 +37,10 @@ public class ApiSpecializeController {
             this.speciService.delSpecialize(id);
             return ResponseEntity.ok("Xóa thành công!");
         } catch (IllegalStateException ex) {
-            // Còn bác sĩ liên kết → trả HTTP 409 Conflict
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
         } catch (IllegalArgumentException ex) {
-            // Khoa không tồn tại → trả HTTP 400 Bad Request
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         } catch (Exception ex) {
-            // Lỗi khác → trả HTTP 500
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi server: " + ex.getMessage());
         }
     }
