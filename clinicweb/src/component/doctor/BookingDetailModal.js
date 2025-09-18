@@ -61,18 +61,11 @@ const BookingDetailModal = ({ show, onHide, doctor, schedule }) => {
         }
         setLoading(true);
         try {
-<<<<<<< HEAD
             let url = endpoints['bookAppointment'](selectedSlot.id);
             const res = await authApis().post(url, {
-                "serviceId": selectedService,
+                "serviceId": {"id": selectedService},
                 "online": selectType,
-
-=======
-            const res = await authApis().post(endpoints['bookAndPay'], {
-                slotId: selectedSlot.id,
-                serviceId: parseInt(selectedService),
-                paymentMethod: paymentMethod
->>>>>>> 5076b633638f3f46a7f8f5d19161acf7c376ffc9
+                "paymentMethod": paymentMethod
             });
 
             window.location.href = res.data.paymentUrl;
@@ -127,20 +120,19 @@ const BookingDetailModal = ({ show, onHide, doctor, schedule }) => {
                         ) : <Alert variant="warning">Không còn lịch trống trong ngày này.</Alert>}
                     </Form.Group>
 
-<<<<<<< HEAD
                     <Form.Group className="mb-4">
                         <Form.Label className="fw-bold">3. Chọn dịch hình thức khám</Form.Label>
                         <Form.Select value={selectType} onChange={(e) => setSelectType(e.target.value === "true")} disabled={!user}>
                             <option value="">-- Vui lòng chọn hình thức khám --</option>
                             <option value="true">-- Khám trực tuyến --</option>
                             <option value="false">-- Khám trực tiếp --</option>
-=======
+                        </Form.Select>
+                    </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label className="fw-bold">3. Chọn phương thức thanh toán</Form.Label>
                         <Form.Select value={paymentMethod} onChange={e => setPaymentMethod(e.target.value)}>
                             <option value="VNPAY">VNPAY</option>
                             <option value="MOMO" disabled>MOMO (Bảo trì)</option>
->>>>>>> 5076b633638f3f46a7f8f5d19161acf7c376ffc9
                         </Form.Select>
                     </Form.Group>
 
