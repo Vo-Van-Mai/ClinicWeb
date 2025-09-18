@@ -18,8 +18,9 @@ public interface AppointmentService {
     Appointment getAppointmentById(int id);
     boolean deleteAppointment(int id);
     List<Appointment> getAppointmentByServiceId(int id);
-    Appointment bookAppointment(int patientId, int serviceId, int slotId);
+//    Appointment bookAppointment(int patientId, int serviceId, int slotId);
     Appointment addAppointment(Appointment appointment);
     List<Appointment> loadAppointments(Map <String, String> params);
-    String bookAppointmentAndCreatePayment(int patientId, int serviceId, int slotId, PaymentMethod paymentMethod);
+    String createPaymentUrlForAppointment(Appointment appointment, PaymentMethod paymentMethod);
+//    String bookAppointmentAndCreatePayment(int patientId, int serviceId, int slotId, PaymentMethod paymentMethod);
 }
