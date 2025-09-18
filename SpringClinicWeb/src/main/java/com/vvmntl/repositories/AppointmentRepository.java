@@ -5,6 +5,8 @@
 package com.vvmntl.repositories;
 
 import com.vvmntl.pojo.Appointment;
+import com.vvmntl.pojo.Payment;
+import com.vvmntl.pojo.PaymentMethod;
 import java.util.List;
 import java.util.Map;
 
@@ -20,4 +22,6 @@ public interface AppointmentRepository {
     Appointment bookAppointment(int patientId, int serviceId, int slotId);
     Appointment addAppointment(Appointment appointment);
     List<Appointment> loadAppointmets(Map<String, String> params);
+    String bookAppointmentAndCreatePayment(int patientId, int serviceId, int slotId, PaymentMethod paymentMethod);
+    Payment createAppointmentAndPayment(int patientId, int serviceId, int slotId, PaymentMethod paymentMethod);
 }

@@ -6,9 +6,11 @@ package com.vvmntl.services.impl;
 
 import com.vvmntl.exception.ResourceNotFoundException;
 import com.vvmntl.pojo.Appointment;
-import com.vvmntl.pojo.Appointmentslot;
+import com.vvmntl.pojo.Payment;
+import com.vvmntl.pojo.PaymentMethod;
 import com.vvmntl.repositories.AppointmentRepository;
 import com.vvmntl.services.AppointmentService;
+import com.vvmntl.services.PaymentService;
 import com.vvmntl.services.ServiceService;
 import java.time.LocalDate;
 import java.util.List;
@@ -27,6 +29,9 @@ public class AppointmentServiceImpl implements AppointmentService{
     private AppointmentRepository appRepo;
     @Autowired
     private ServiceService serService;
+    
+    @Autowired
+    private PaymentService paymentService;
     
     @Override
     public List<Appointment> list() {
@@ -90,6 +95,12 @@ public class AppointmentServiceImpl implements AppointmentService{
     @Override
     public List<Appointment> loadAppointments(Map<String, String> params) {
         return this.appRepo.loadAppointmets(params);
+    }
+
+    @Override
+    public String bookAppointmentAndCreatePayment(int patientId, int serviceId, int slotId, PaymentMethod paymentMethod) {
+        Payment payment = this.appRepo.createAppointmentAndPayment(patientId, serviceId, slotId, paymentMethod);
+        return paymentService.generatePaymentUrl(payment, paymentMethod);
     }
     
 }

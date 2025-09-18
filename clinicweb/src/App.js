@@ -12,10 +12,10 @@ import { MyUserReducer } from "./reducer/MyUserReducer";
 import { useReducer } from "react";
 import AddDoctorProfile from "./component/user/AddDoctorProfile";
 import DoctorView from "./component/doctor/DoctorView";
-import CreateWorkSchedule from "./component/doctor/CreateWorkSchedule";
 import ListWorkSchedule from "./component/doctor/ListWorkSchedule";
 import AppointmentSlots from "./component/AppointmentSlot/AppointmentSlots";
 import MyBookings from "./component/booking/MyBookings";
+import PaymentReturn from "./component/payment/PaymentReturn";
 
 const App = () => {
   const [user, dispatch] = useReducer(MyUserReducer, null);
@@ -36,6 +36,7 @@ const App = () => {
           <Route path="/listWorkSchedule/:doctorId" element={<ListWorkSchedule />} />
           <Route path="/appointmentSlots/:doctorId" element={<AppointmentSlots />} />
           <Route path="/my-bookings" element={<MyBookings />} />
+          <Route path="/payment-return" element={<PaymentReturn />} />
         </Routes>
         </Container>
 

@@ -4,9 +4,12 @@
  */
 package com.vvmntl.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -45,24 +48,37 @@ public class Payment implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 6)
+    
+    @Enumerated(EnumType.STRING)
     @Column(name = "method")
-    private String method;
+    private PaymentMethodType method;
+    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "total_amount")
     private BigDecimal totalAmount;
+    
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+    
     @Size(max = 12)
     @Column(name = "type_service_payment")
     private String typeServicePayment;
+    
     @OneToMany(mappedBy = "paymentId")
     private Set<Paymentdetail> paymentdetailSet;
+    
     @JoinColumn(name = "appointment_id", referencedColumnName = "id")
     @ManyToOne
     private Appointment appointmentId;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private PaymentStatus status;
 
+    @Column(name = "transaction_id", unique = true)
+    private String transactionId;
+    
     public Payment() {
     }
 
@@ -77,15 +93,7 @@ public class Payment implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
+    
     public BigDecimal getTotalAmount() {
         return totalAmount;
     }
@@ -135,7 +143,6 @@ public class Payment implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Payment)) {
             return false;
         }
@@ -149,6 +156,48 @@ public class Payment implements Serializable {
     @Override
     public String toString() {
         return "com.vvmntl.pojo.Payment[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the status
+     */
+    public PaymentStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(PaymentStatus status) {
+        this.status = status;
+    }
+
+    /**
+     * @return the transactionId
+     */
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    /**
+     * @param transactionId the transactionId to set
+     */
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    /**
+     * @return the method
+     */
+    public PaymentMethodType getMethod() {
+        return method;
+    }
+
+    /**
+     * @param method the method to set
+     */
+    public void setMethod(PaymentMethodType method) {
+        this.method = method;
     }
     
 }

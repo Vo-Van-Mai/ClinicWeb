@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const BookingDetailModal = ({ show, onHide, doctor, schedule }) => {
     const [user] = useContext(MyUserContext);
-    
+
     const [availableSlots, setAvailableSlots] = useState([]);
     const [services, setServices] = useState([]);
 
@@ -17,6 +17,8 @@ const BookingDetailModal = ({ show, onHide, doctor, schedule }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+
+    const [paymentMethod, setPaymentMethod] = useState('VNPAY');
 
     useEffect(() => {
         if (show && doctor && schedule) {
@@ -29,7 +31,7 @@ const BookingDetailModal = ({ show, onHide, doctor, schedule }) => {
 
                 try {
                     if (doctor.specializes && doctor.specializes.length > 0) {
-                        const servicePromises = doctor.specializes.map(spec => 
+                        const servicePromises = doctor.specializes.map(spec =>
                             Apis.get(endpoints['services'], { params: { specializeId: spec.id } })
                         );
                         const serviceResponses = await Promise.all(servicePromises);
@@ -52,31 +54,31 @@ const BookingDetailModal = ({ show, onHide, doctor, schedule }) => {
         }
     }, [show, doctor, schedule]);
 
-    const handleBooking = async () => {
+    const handleBookingAndPay = async () => {
         if (!selectedSlot || !selectedService) {
             setError("Vui lòng chọn khung giờ và dịch vụ khám.");
             return;
         }
         setLoading(true);
-        setError('');
-        setSuccess('');
-
         try {
+<<<<<<< HEAD
             let url = endpoints['bookAppointment'](selectedSlot.id);
             const res = await authApis().post(url, {
                 "serviceId": selectedService,
                 "online": selectType,
 
+=======
+            const res = await authApis().post(endpoints['bookAndPay'], {
+                slotId: selectedSlot.id,
+                serviceId: parseInt(selectedService),
+                paymentMethod: paymentMethod
+>>>>>>> 5076b633638f3f46a7f8f5d19161acf7c376ffc9
             });
 
-            if (res.status === 201) {
-                setSuccess("Đặt lịch thành công! Kiểm tra trong mục 'Lịch đã đặt'.");
-                setTimeout(() => {
-                    onHide();
-                }, 2000);
-            }
+            window.location.href = res.data.paymentUrl;
+
         } catch (ex) {
-            setError(ex.response?.data?.message || "Lỗi xảy ra hoặc lịch đã được người khác đặt. Vui lòng tải lại.");
+            setError("Lỗi khi tạo yêu cầu thanh toán.");
             console.error(ex);
         } finally {
             setLoading(false);
@@ -105,6 +107,7 @@ const BookingDetailModal = ({ show, onHide, doctor, schedule }) => {
                         </Form.Select>
                     </Form.Group>
 
+
                     <Form.Group>
                         <Form.Label className="fw-bold">2. Chọn khung giờ có sẵn</Form.Label>
                         {availableSlots.length > 0 ? (
@@ -124,26 +127,35 @@ const BookingDetailModal = ({ show, onHide, doctor, schedule }) => {
                         ) : <Alert variant="warning">Không còn lịch trống trong ngày này.</Alert>}
                     </Form.Group>
 
+<<<<<<< HEAD
                     <Form.Group className="mb-4">
                         <Form.Label className="fw-bold">3. Chọn dịch hình thức khám</Form.Label>
                         <Form.Select value={selectType} onChange={(e) => setSelectType(e.target.value === "true")} disabled={!user}>
                             <option value="">-- Vui lòng chọn hình thức khám --</option>
                             <option value="true">-- Khám trực tuyến --</option>
                             <option value="false">-- Khám trực tiếp --</option>
+=======
+                    <Form.Group className="mb-3">
+                        <Form.Label className="fw-bold">3. Chọn phương thức thanh toán</Form.Label>
+                        <Form.Select value={paymentMethod} onChange={e => setPaymentMethod(e.target.value)}>
+                            <option value="VNPAY">VNPAY</option>
+                            <option value="MOMO" disabled>MOMO (Bảo trì)</option>
+>>>>>>> 5076b633638f3f46a7f8f5d19161acf7c376ffc9
                         </Form.Select>
                     </Form.Group>
 
                     {!user && <Alert variant="info" className="d-flex mt-3">Vui lòng <Link className="ms-1 me-1" to="/login">đăng nhập</Link> để đặt lịch.</Alert>}
                 </>}
             </Modal.Body>
+
             <Modal.Footer>
                 <Button variant="secondary" onClick={onHide}>Đóng</Button>
-                <Button 
-                    variant="primary" 
-                    onClick={handleBooking} 
+                <Button
+                    variant="primary"
+                    onClick={handleBookingAndPay}
                     disabled={loading || !selectedSlot || !selectedService || !user}
                 >
-                    {loading ? "Đang xử lý..." : "Xác nhận đặt lịch"}
+                    {loading ? "Đang xử lý..." : "Tiến hành thanh toán"}
                 </Button>
             </Modal.Footer>
         </Modal>

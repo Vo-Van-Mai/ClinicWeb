@@ -10,7 +10,6 @@ import com.vvmntl.pojo.Appointmentslot;
 import com.vvmntl.pojo.Doctor;
 import com.vvmntl.pojo.Medicalrecord;
 import com.vvmntl.pojo.Patient;
-import com.vvmntl.pojo.User;
 import com.vvmntl.pojo.Workschedule;
 import com.vvmntl.repositories.MedicalRecordRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;

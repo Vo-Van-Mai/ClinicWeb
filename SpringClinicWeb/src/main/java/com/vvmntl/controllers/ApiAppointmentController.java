@@ -8,6 +8,7 @@ import com.vvmntl.pojo.Appointment;
 import com.vvmntl.pojo.Appointmentslot;
 import com.vvmntl.pojo.Doctor;
 import com.vvmntl.pojo.Patient;
+import com.vvmntl.pojo.PaymentMethod;
 import com.vvmntl.pojo.Service;
 import com.vvmntl.pojo.StatusEnum;
 import com.vvmntl.pojo.User;
@@ -19,6 +20,7 @@ import com.vvmntl.services.PatientService;
 import com.vvmntl.services.ServiceService;
 import com.vvmntl.services.UserService;
 import java.security.Principal;
+import java.util.HashMap;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +28,6 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -188,5 +189,25 @@ public class ApiAppointmentController {
     public ResponseEntity<List<Appointment>> loadAppointments(@RequestParam Map <String, String> params){
         
         return ResponseEntity.ok(this.appointmentService.loadAppointments(params));
+    }
+    
+    @PostMapping("/secure/appointments/book-and-pay")
+    public ResponseEntity<?> bookAndPay(@RequestBody Map<String, String> payload, Principal principal) {
+        try {
+            int serviceId = Integer.parseInt(payload.get("serviceId"));
+            int slotId = Integer.parseInt(payload.get("slotId"));
+            PaymentMethod paymentMethod = PaymentMethod.valueOf(payload.get("paymentMethod"));
+
+            User user = userService.getUserByUsername(principal.getName());
+
+            String paymentUrl = appointmentService.bookAppointmentAndCreatePayment(user.getId(), serviceId, slotId, paymentMethod);
+            
+            Map<String, String> response = new HashMap<>();
+            response.put("paymentUrl", paymentUrl);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 }
