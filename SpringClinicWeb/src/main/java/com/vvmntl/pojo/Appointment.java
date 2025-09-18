@@ -4,7 +4,6 @@
  */
 package com.vvmntl.pojo;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -18,12 +17,9 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Set;
 
 /**

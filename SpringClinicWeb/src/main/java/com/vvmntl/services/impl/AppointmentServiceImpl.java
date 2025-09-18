@@ -5,9 +5,11 @@
 package com.vvmntl.services.impl;
 
 import com.vvmntl.pojo.Appointment;
-import com.vvmntl.pojo.Appointmentslot;
+import com.vvmntl.pojo.Payment;
+import com.vvmntl.pojo.PaymentMethod;
 import com.vvmntl.repositories.AppointmentRepository;
 import com.vvmntl.services.AppointmentService;
+import com.vvmntl.services.PaymentService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class AppointmentServiceImpl implements AppointmentService{
 
     @Autowired
     private AppointmentRepository appRepo;
+    
+    @Autowired
+    private PaymentService paymentService;
     
     @Override
     public List<Appointment> list() {
@@ -57,6 +62,12 @@ public class AppointmentServiceImpl implements AppointmentService{
     @Override
     public List<Appointment> loadAppointments(Map<String, String> params) {
         return this.appRepo.loadAppointmets(params);
+    }
+
+    @Override
+    public String bookAppointmentAndCreatePayment(int patientId, int serviceId, int slotId, PaymentMethod paymentMethod) {
+        Payment payment = this.appRepo.createAppointmentAndPayment(patientId, serviceId, slotId, paymentMethod);
+        return paymentService.generatePaymentUrl(payment, paymentMethod);
     }
     
 }

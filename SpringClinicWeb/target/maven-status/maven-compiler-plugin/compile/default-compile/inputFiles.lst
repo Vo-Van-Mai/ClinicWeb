@@ -1,12 +1,15 @@
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/configs/DispatcherServletInit.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/configs/HibernateConfig.java
+/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/configs/PaymentConfig.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/configs/SecurityWebApplicationInitializer.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/configs/SpringSecurityConfig.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/configs/ThymeleafConfig.java
+/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/configs/VNPAYConfig.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/configs/WebAppContextConfigs.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/ApiAppointmentController.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/ApiAppointmentSlotController.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/ApiDoctorController.java
+/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/ApiPaymentController.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/ApiServiceController.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/ApiSpecializeController.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/ApiUserController.java
@@ -14,6 +17,7 @@
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/DoctorController.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/IndexController.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/MedicineController.java
+/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/PaymentController.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/ServiceController.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/SpecializeController.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/controllers/StatsController.java
@@ -36,6 +40,9 @@
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Notification.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Patient.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Payment.java
+/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/PaymentMethod.java
+/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/PaymentMethodType.java
+/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/PaymentStatus.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Paymentdetail.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Pharmacy.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/pojo/Prescriptdetail.java
@@ -54,6 +61,7 @@
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/DoctorSpecializeRepository.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/MedicineRepository.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/PatientRepository.java
+/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/PaymentRepository.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/ServiceRepository.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/SpecializeRepository.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/StatsRepository.java
@@ -67,6 +75,7 @@
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/impl/DoctorSpecializeRepositoryImpl.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/impl/MedicineRepositoryImpl.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/impl/PatientRepositoryImpl.java
+/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/impl/PaymentRepositoryImpl.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/impl/ServiceRepositoryImpl.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/impl/SpecializeRepositoryImpl.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/repositories/impl/StatsRepositoryImpl.java
@@ -80,6 +89,7 @@
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/DoctorSpecializeService.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/MedicineServices.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/PatientService.java
+/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/PaymentService.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/ServiceService.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/SpecializeService.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/StatsServices.java
@@ -93,6 +103,7 @@
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/impl/DoctorSpecializeServiceImpl.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/impl/MedicineServicesImpl.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/impl/PatientServiceImpl.java
+/media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/impl/PaymentServiceImpl.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/impl/ServiceSeviceImpl.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/impl/SpecializeServiceImpl.java
 /media/locnguyen/New Volume/ClinicWeb/SpringClinicWeb/src/main/java/com/vvmntl/services/impl/StatsServicesImpl.java
