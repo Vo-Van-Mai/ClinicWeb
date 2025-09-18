@@ -166,12 +166,12 @@ public class ApiAppointmentController {
     }
 
     @GetMapping("/secure/appointments/{appointmentId}")
-    public ResponseEntity<Appointment> getAppointmentDetails(@PathVariable("appointmentId") int appointmentId) {
+    public ResponseEntity<?> getAppointmentDetails(@PathVariable("appointmentId") int appointmentId) {
         try {
             Appointment appointment = this.appointmentService.getAppointmentById(appointmentId);
             return new ResponseEntity<>(appointment, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
     

@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Alert, Button, FloatingLabel, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Apis, { authApis, endpoints } from "../../configs/Apis";
 import cookie from 'react-cookies'
 import { MyUserContext } from "../../configs/MyContext";
@@ -14,6 +14,8 @@ const Login = () => {
     const [msg, setMsg] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [, dispatch] = useContext(MyUserContext);
+    const [q] = useSearchParams();
+    const nav = useNavigate();
 
     const setState = (value, field) => {
         setUser({ ...user, [field]: value });
@@ -54,7 +56,8 @@ const Login = () => {
                 "type": "login",
                 "payload": u.data
             })
-            navigate("/");
+            let next = q.get('next')
+            nav(next === null?"/":next);
             
         } catch (error) {
             console.error("Login error:", error.response.data);

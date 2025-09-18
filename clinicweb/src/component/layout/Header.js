@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { Container, Nav, Navbar, Button, NavDropdown } from "react-bootstrap";
 import Apis, { endpoints } from "../../configs/Apis";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MyUserContext } from "../../configs/MyContext";
 
 const Header = () => {
   const [user, dispatch] = useContext(MyUserContext);
   const [specialize, setSpecialize] = useState([]);
   const [doctor, setDoctor] = useState({});
-
+  const nav = useNavigate();
   const loadSpecialize = async () => {
     try {
       const res = await Apis.get(endpoints["specializes"]);
@@ -78,16 +78,23 @@ const Header = () => {
               <>
                 <span className="text-info me-3">Chào {user.username}</span>
                 {user?.role === "DOCTOR" && (
-                  doctor.doctor?.isVerified ===true ? <Button as={Link} to={`/listWorkSchedule/${user?.id}`} variant="outline-success" className="me-2">
+                  doctor.doctor?.isVerified ===true ? <Button as={Link} to={`/listWorkSchedule/${user?.id}`} variant="outline-info" className="me-2">
                     Quản lý lịch làm
                   </Button> : <span className="text-warning me-3">Đang chờ xác nhận</span>
                 )}
-                {user.role === "PATIENT" && (
+                {user.role === "PATIENT" && (<>
+                  <Button as={Link} to={`/listMedicalRecord/${user?.id}`} variant="outline-success" className="me-2">
+                    Hồ sơ bệnh án
+                  </Button>
                     <Button as={Link} to="/my-bookings" variant="success" className="ms-3 me-3">
                         Lịch đã đặt
                     </Button>
+                </>
                 )}
-                <Button variant="outline-danger" onClick={() => dispatch({ type: "logout" })}>
+                <Button variant="outline-danger" onClick={() => {
+                  dispatch({ type: "logout" });
+                  nav("/");
+                  }}>
                   Đăng xuất
                 </Button>
               </>

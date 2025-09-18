@@ -15,8 +15,12 @@ import com.vvmntl.repositories.MedicalRecordRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,5 +100,66 @@ public class MedicalRecordRepositoryImpl implements MedicalRecordRepository{
 
         return s.createQuery(query).getResultList();
     }
-    
+
+    @Override
+    public List<Medicalrecord> loadMedicalRecord(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Medicalrecord> q = b.createQuery(Medicalrecord.class);
+        Root<Medicalrecord> r = q.from(Medicalrecord.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (params != null) {
+            String diagnosis = params.get("diagnosis");
+            if (diagnosis != null && !diagnosis.isEmpty()) {
+                predicates.add(b.like(b.lower(r.get("diagnosis")), "%" + diagnosis.toLowerCase() + "%"));
+            }
+
+            String symptoms = params.get("symptoms");
+            if (symptoms != null && !symptoms.isEmpty()) {
+                predicates.add(b.like(b.lower(r.get("symptoms")), "%" + symptoms.toLowerCase() + "%"));
+            }
+
+            String testResults = params.get("testResults");
+            if (testResults != null && !testResults.isEmpty()) {
+                predicates.add(b.like(b.lower(r.get("testResults")), "%" + testResults.toLowerCase() + "%"));
+            }
+
+            String fromDate = params.get("fromDate");
+            if (fromDate != null && !fromDate.isEmpty()) {
+                try {
+                    Date fDate = java.sql.Date.valueOf(fromDate); // yyyy-MM-dd
+                    predicates.add(b.greaterThanOrEqualTo(r.get("createdDate"), fDate));
+                } catch (Exception e) {
+                    System.err.println("Lỗi parse fromDate: " + e.getMessage());
+                }
+            }
+
+            String toDate = params.get("toDate");
+            if (toDate != null && !toDate.isEmpty()) {
+                try {
+                    Date tDate = java.sql.Date.valueOf(toDate);
+                    predicates.add(b.lessThanOrEqualTo(r.get("createdDate"), tDate));
+                } catch (Exception e) {
+                    System.err.println("Lỗi parse toDate: " + e.getMessage());
+                }
+            }
+
+            String appointmentId = params.get("appointmentId");
+            if (appointmentId != null && !appointmentId.isEmpty()) {
+                predicates.add(b.equal(r.get("appointmentId").get("id"), Integer.valueOf(appointmentId)));
+            }
+
+            if (!predicates.isEmpty()) {
+                q.where(b.and(predicates.toArray(Predicate[]::new)));
+            }
+        }
+
+        q.orderBy(b.desc(r.get("createdDate")));
+        Query query = s.createQuery(q);
+        return query.getResultList();
+    }
+
+
 }

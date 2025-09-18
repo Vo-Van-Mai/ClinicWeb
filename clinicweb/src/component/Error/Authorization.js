@@ -1,6 +1,6 @@
 import { Alert } from "react-bootstrap";
 
-const Authorization = () => {
+const   Authorization = () => {
     return(
         <>
             <Alert variant="danger" className="text-center">Không được phép truy cập!</Alert>

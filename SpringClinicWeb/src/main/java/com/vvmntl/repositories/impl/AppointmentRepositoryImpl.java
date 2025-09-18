@@ -152,6 +152,11 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
 
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
+            
+            String slotId = params.get("slotId");
+            if (slotId != null && !slotId.isEmpty()) {
+                predicates.add(cb.equal(root.get("appointmentSlot").get("id"), slotId));
+            }
 
             String status = params.get("status");
             if (status != null && !status.isEmpty()) {

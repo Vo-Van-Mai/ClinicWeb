@@ -16,6 +16,11 @@ import ListWorkSchedule from "./component/doctor/ListWorkSchedule";
 import AppointmentSlots from "./component/AppointmentSlot/AppointmentSlots";
 import MyBookings from "./component/booking/MyBookings";
 import PaymentReturn from "./component/payment/PaymentReturn";
+import Authorization from "./component/Error/Authorization";
+import AppointmentDetail from "./component/AppointmentSlot/AppointmentDetail";
+import CreateMedicalRecord from "./component/doctor/CreateMedicalRecord";
+import ListMedicalRecord from "./component/user/ListMedicalRecord";
+import MedicalRecord from "./component/user/MedicalRecord";
 
 const App = () => {
   const [user, dispatch] = useReducer(MyUserReducer, null);
@@ -37,6 +42,11 @@ const App = () => {
           <Route path="/appointmentSlots/:doctorId" element={<AppointmentSlots />} />
           <Route path="/my-bookings" element={<MyBookings />} />
           <Route path="/payment-return" element={<PaymentReturn />} />
+          <Route path="error" element={<Authorization />}/>
+          <Route path="/appointment/:appointmentId" element={<AppointmentDetail />} />
+          <Route path="createmedical/:appointmentId" element={<CreateMedicalRecord/>} />
+          <Route path="listMedicalRecord/:uerId" element={<ListMedicalRecord/>} />
+          <Route path="medicalRecorđetail/:medicalId" element={<MedicalRecord/>}/>
         </Routes>
         </Container>
 

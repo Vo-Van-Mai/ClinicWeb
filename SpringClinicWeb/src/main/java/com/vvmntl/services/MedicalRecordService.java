@@ -6,6 +6,7 @@ package com.vvmntl.services;
 
 import com.vvmntl.pojo.Medicalrecord;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -17,4 +18,5 @@ public interface MedicalRecordService {
     Medicalrecord update(Medicalrecord medicalRecord);
     List<Medicalrecord> getMedicalRecordByUserId(int patientId);
     List<Medicalrecord> getMedidalRecordBYDoctorId(int doctorId);
+    List<Medicalrecord> loadMedicalRecord(Map<String, String> params);
 }

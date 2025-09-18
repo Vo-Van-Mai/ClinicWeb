@@ -28,11 +28,18 @@ export const endpoints = {
     "deleteAppointment": (appointmentId) => `/secure/appointments/${appointmentId}`,
     "appointmentslots": (doctorId) => `/appoimentslots/${doctorId}`,
     "appointmentslotsBySchedule": (scheduleId) => `/appointmentslots?scheduleId=${scheduleId}`,
+    "appointmentDetail": "/secure/appointments",
+    
 
     //workschedule
     "workschedules":(doctorId) => `/workschedules/${doctorId}`,
     "createWorkSchedules": "/secure/workschedules",
-    "deleteWorkSchedules": (wsId) => `/secure/workschedules/delele/${wsId}`
+    "deleteWorkSchedules": (wsId) => `/secure/workschedules/delele/${wsId}`,
+    //medicalRecord
+    "createMedicalRecord":(appointmentId) => `/secure/medicalrecords/${appointmentId}`,
+    "listMedicalRecord": `secure/patients/medicalRecords`,
+    "medicalDetail":(medicalId) => `/secure/medicalrecords/${medicalId}`,
+    "medicalRedcords": "/secure/medicalrecords",
 
 };
 

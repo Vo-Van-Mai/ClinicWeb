@@ -14,6 +14,7 @@ import com.vvmntl.services.MedicalRecordService;
 import com.vvmntl.services.PatientService;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -120,6 +121,11 @@ public class MedicalRecordServiceImpl implements MedicalRecordService{
         }
         List<Medicalrecord> listMedical =  this.medicalReRecordRepo.getMedidalRecordBYDoctorId(doctorId);
         return listMedical;
+    }
+
+    @Override
+    public List<Medicalrecord> loadMedicalRecord(Map<String, String> params) {
+        return this.medicalReRecordRepo.loadMedicalRecord(params);
     }
     
 }

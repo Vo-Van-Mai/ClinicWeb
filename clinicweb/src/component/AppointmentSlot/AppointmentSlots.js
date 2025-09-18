@@ -1,7 +1,7 @@
 import { Button, Card, Col, Row, Spinner, Table } from "react-bootstrap";
 import Apis, { endpoints } from "../../configs/Apis";
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MyUserContext } from "../../configs/MyContext";
 import Authorization from "../Error/Authorization";
 
@@ -10,6 +10,7 @@ const AppointmentSlots = () => {
     const [loadingAppointments, setLoadingAppointments] = useState(false);
     const { doctorId } = useParams();
     const [user, ] = useContext(MyUserContext);
+    const nav = useNavigate();
     
     const loadAppointments = async () => {
         try {
@@ -28,11 +29,11 @@ const AppointmentSlots = () => {
         loadAppointments();
     }, []);
 
-    if(!user){
-        return(<>
-           <Authorization />
-        </>)
-    }
+    if(!user || user.role !== "DOCTOR" || user.id !== Number(doctorId))
+        {
+            console.log(user.role, user.id, doctorId);
+            nav("/error");
+        }
 
     return(
         <>
@@ -66,7 +67,7 @@ const AppointmentSlots = () => {
                                     <td>{a.endTime}</td>
                                     {a.isBooked === false ?<td >Còn trống</td>:
                                     <td className="text-danger fw-bold">Đã được đặt</td>}
-                                    <td><Button variant="outline-dark" >Xem</Button></td>
+                                    <td>{a.isBooked === true && <Button variant="outline-dark" onClick={() => nav(`/appointment/${a.id}`)} >Xem</Button>}</td>
                                 </tr>
                             ))}
                             {appointmentSlots.length === 0 && (
