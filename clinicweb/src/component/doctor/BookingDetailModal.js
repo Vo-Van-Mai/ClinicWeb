@@ -65,14 +65,23 @@ const BookingDetailModal = ({ show, onHide, doctor, schedule }) => {
             const res = await authApis().post(url, {
                 "serviceId": {"id": selectedService},
                 "online": selectType,
-                "paymentMethod": paymentMethod
             });
+            console.log(res);
+            if(res.status === 201){
+                let urlPay = endpoints['bookAndPay'];
+                const resPay = await authApis().post(urlPay, {
+                        "serviceId": selectedService,
+                        "slotId": selectedSlot.id,
+                        "paymentMethod": "VNPAY"
+                });
+                console.log("respay", resPay)
+                window.location.href = resPay.data.paymentUrl;
+            }
 
-            window.location.href = res.data.paymentUrl;
 
         } catch (ex) {
-            setError("Lỗi khi tạo yêu cầu thanh toán.");
-            console.error(ex);
+            setError(ex.message);
+            console.error(ex.message);
         } finally {
             setLoading(false);
         }
@@ -129,7 +138,7 @@ const BookingDetailModal = ({ show, onHide, doctor, schedule }) => {
                         </Form.Select>
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label className="fw-bold">3. Chọn phương thức thanh toán</Form.Label>
+                        <Form.Label className="fw-bold">4. Chọn phương thức thanh toán</Form.Label>
                         <Form.Select value={paymentMethod} onChange={e => setPaymentMethod(e.target.value)}>
                             <option value="VNPAY">VNPAY</option>
                             <option value="MOMO" disabled>MOMO (Bảo trì)</option>

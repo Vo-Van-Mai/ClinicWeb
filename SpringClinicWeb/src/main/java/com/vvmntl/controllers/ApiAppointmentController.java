@@ -148,7 +148,7 @@ public class ApiAppointmentController {
                 content.append("Phòng khám online: ")
                         .append(appoinment.getRoomUrl())
                         .append("\n\n");
-            }
+            }               
             content.append("Trân trọng,\n")
                     .append("Phòng khám");
             String emailTo = appoinment.getPatientId().getUser().getEmail();
