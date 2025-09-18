@@ -9,6 +9,7 @@ import com.vvmntl.pojo.Appointment;
 import com.vvmntl.pojo.Payment;
 import com.vvmntl.pojo.PaymentMethod;
 import com.vvmntl.pojo.PaymentStatus;
+import com.vvmntl.pojo.StatusEnum;
 import com.vvmntl.repositories.AppointmentRepository;
 import com.vvmntl.repositories.PaymentRepository;
 import com.vvmntl.services.PaymentService;
@@ -29,10 +30,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PaymentServiceImpl implements PaymentService {
+
     @Autowired
     private PaymentRepository paymentRepo;
     @Autowired
-    private AppointmentRepository appointmentRepo;
+    private AppointmentRepository appRepo;
 
     private String createVnpayUrl(Payment payment) throws Exception {
         long amount = payment.getTotalAmount().longValue() * 100;
@@ -43,12 +45,12 @@ public class PaymentServiceImpl implements PaymentService {
         vnpParams.put("vnp_TmnCode", PaymentConfig.VNPAY_TMN_CODE);
         vnpParams.put("vnp_Amount", String.valueOf(amount));
         vnpParams.put("vnp_CurrCode", "VND");
-        vnpParams.put("vnp_TxnRef", payment.getTransactionId()); // Dùng transactionId đã tạo
+        vnpParams.put("vnp_TxnRef", payment.getTransactionId());
         vnpParams.put("vnp_OrderInfo", "Thanh toan lich hen " + payment.getAppointmentId().getId());
         vnpParams.put("vnp_OrderType", "other");
         vnpParams.put("vnp_Locale", "vn");
         vnpParams.put("vnp_ReturnUrl", PaymentConfig.RETURN_URL);
-        vnpParams.put("vnp_IpAddr", "127.0.0.1"); // Nên lấy IP động
+        vnpParams.put("vnp_IpAddr", "127.0.0.1");
         vnpParams.put("vnp_CreateDate", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
 
         StringBuilder signData = new StringBuilder();
@@ -56,14 +58,14 @@ public class PaymentServiceImpl implements PaymentService {
             signData.append(entry.getKey()).append("=").append(URLEncoder.encode(entry.getValue(), StandardCharsets.US_ASCII.toString())).append("&");
         }
         signData.deleteCharAt(signData.length() - 1);
-        
+
         String signature = Hex.encodeHexString(HmacUtils.hmacSha512(PaymentConfig.VNPAY_HASH_SECRET, signData.toString()));
         vnpParams.put("vnp_SecureHash", signature);
 
         StringBuilder query = new StringBuilder(PaymentConfig.VNPAY_ENDPOINT).append("?");
         for (Map.Entry<String, String> entry : vnpParams.entrySet()) {
             query.append(URLEncoder.encode(entry.getKey(), StandardCharsets.US_ASCII.toString()))
-                 .append("=").append(URLEncoder.encode(entry.getValue(), StandardCharsets.US_ASCII.toString())).append("&");
+                    .append("=").append(URLEncoder.encode(entry.getValue(), StandardCharsets.US_ASCII.toString())).append("&");
         }
         query.deleteCharAt(query.length() - 1);
         return query.toString();
@@ -75,17 +77,15 @@ public class PaymentServiceImpl implements PaymentService {
         Payment payment = paymentRepo.findByTransactionId(transactionId);
 
         if (payment != null) {
-
             String responseCode = params.get("vnp_ResponseCode");
             if ("00".equals(responseCode)) {
                 payment.setStatus(PaymentStatus.SUCCESSFUL);
-                
+
                 Appointment app = payment.getAppointmentId();
-//                app.setStatus("CONFIRMED");
+                app.setStatus(StatusEnum.CONFIRM);
                 app.setPaymentForService(true);
-                appointmentRepo.addAppointment(app);
-            } else {
-                payment.setStatus(PaymentStatus.FAILED);
+
+                this.appRepo.updateAppointment(app);
             }
             paymentRepo.save(payment);
         }

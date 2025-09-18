@@ -65,8 +65,8 @@ public class Payment implements Serializable {
     @Column(name = "type_service_payment")
     private String typeServicePayment;
     
-    @OneToMany(mappedBy = "paymentId")
-    private Set<Paymentdetail> paymentdetailSet;
+//    @OneToMany(mappedBy = "paymentId")
+//    private Set<Paymentdetail> paymentdetailSet;
     
     @JoinColumn(name = "appointment_id", referencedColumnName = "id")
     @ManyToOne
@@ -75,6 +75,10 @@ public class Payment implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private PaymentStatus status;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private PaymentType type;
 
     @Column(name = "transaction_id", unique = true)
     private String transactionId;
@@ -118,13 +122,13 @@ public class Payment implements Serializable {
         this.typeServicePayment = typeServicePayment;
     }
 
-    public Set<Paymentdetail> getPaymentdetailSet() {
-        return paymentdetailSet;
-    }
-
-    public void setPaymentdetailSet(Set<Paymentdetail> paymentdetailSet) {
-        this.paymentdetailSet = paymentdetailSet;
-    }
+//    public Set<Paymentdetail> getPaymentdetailSet() {
+//        return paymentdetailSet;
+//    }
+//
+//    public void setPaymentdetailSet(Set<Paymentdetail> paymentdetailSet) {
+//        this.paymentdetailSet = paymentdetailSet;
+//    }
 
     public Appointment getAppointmentId() {
         return appointmentId;
@@ -158,46 +162,36 @@ public class Payment implements Serializable {
         return "com.vvmntl.pojo.Payment[ id=" + id + " ]";
     }
 
-    /**
-     * @return the status
-     */
     public PaymentStatus getStatus() {
         return status;
     }
 
-    /**
-     * @param status the status to set
-     */
     public void setStatus(PaymentStatus status) {
         this.status = status;
     }
 
-    /**
-     * @return the transactionId
-     */
     public String getTransactionId() {
         return transactionId;
     }
 
-    /**
-     * @param transactionId the transactionId to set
-     */
     public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
     }
 
-    /**
-     * @return the method
-     */
     public PaymentMethodType getMethod() {
         return method;
     }
 
-    /**
-     * @param method the method to set
-     */
     public void setMethod(PaymentMethodType method) {
         this.method = method;
+    }
+
+    public PaymentType getType() {
+        return type;
+    }
+
+    public void setType(PaymentType type) {
+        this.type = type;
     }
     
 }

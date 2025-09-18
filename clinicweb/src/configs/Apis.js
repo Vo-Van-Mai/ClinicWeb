@@ -24,12 +24,14 @@ export const endpoints = {
     "available-slots": "/available-slots",
     "bookAppointment": (slotId) => `/secure/patients/appointments/${slotId}`,
     "myAppointments": "/secure/appointments",
-    "bookAndPay": "/secure/appointments/book-and-pay",
-    "deleteAppointment": (appointmentId) => `/secure/appointments/${appointmentId}`,
     "appointmentslots": (doctorId) => `/appoimentslots/${doctorId}`,
     "appointmentslotsBySchedule": (scheduleId) => `/appointmentslots?scheduleId=${scheduleId}`,
     "appointmentDetail": "/secure/appointments",
     
+    "deleteAppointment": (appointmentId) => `/secure/appointments/${appointmentId}`,
+
+    //payment
+    "createPayment": "/secure/appointments/create-payment",
 
     //workschedule
     "workschedules":(doctorId) => `/workschedules/${doctorId}`,

@@ -4,6 +4,7 @@
  */
 package com.vvmntl.controllers;
 
+import com.vvmntl.exception.ResourceNotFoundException;
 import com.vvmntl.pojo.Appointment;
 import com.vvmntl.pojo.Appointmentslot;
 import com.vvmntl.pojo.Doctor;
@@ -124,7 +125,7 @@ public class ApiAppointmentController {
             if(Boolean.TRUE.equals(appoinment.getOnline())){
                 appoinment.setRoomUrl("https://meet.jit.si/" + appoinment.getAppointmentSlot().getId() 
                 + "-" + appoinment.getPatientId().getId() + "-" + appoinment.getServiceId().getName());
-           }
+            }
             appoinment.setPaymentForPrescription(Boolean.FALSE);
             
             slotService.updateSlot(appSlot);
@@ -191,21 +192,33 @@ public class ApiAppointmentController {
         return ResponseEntity.ok(this.appointmentService.loadAppointments(params));
     }
     
-    @PostMapping("/secure/appointments/book-and-pay")
-    public ResponseEntity<?> bookAndPay(@RequestBody Map<String, String> payload, Principal principal) {
+    @PostMapping("/secure/appointments/create-payment")
+    public ResponseEntity<?> createPaymentForAppointment(@RequestBody Map<String, String> payload, Principal principal) {
         try {
-            int serviceId = Integer.parseInt(payload.get("serviceId"));
-            int slotId = Integer.parseInt(payload.get("slotId"));
+            int appointmentId = Integer.parseInt(payload.get("appointmentId"));
             PaymentMethod paymentMethod = PaymentMethod.valueOf(payload.get("paymentMethod"));
 
             User user = userService.getUserByUsername(principal.getName());
+            Appointment appointment = this.appointmentService.getAppointmentById(appointmentId);
 
-            String paymentUrl = appointmentService.bookAppointmentAndCreatePayment(user.getId(), serviceId, slotId, paymentMethod);
+            if (!Objects.equals(appointment.getPatientId().getId(), user.getId())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Bạn không có quyền thanh toán cho lịch hẹn này.");
+            }
+            
+            if (appointment.getStatus() != StatusEnum.PENDING) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Lịch hẹn này không cần thanh toán hoặc đã được xử lý.");
+            }
+            
+            String paymentUrl = appointmentService.createPaymentUrlForAppointment(appointment, paymentMethod);
             
             Map<String, String> response = new HashMap<>();
             response.put("paymentUrl", paymentUrl);
 
             return ResponseEntity.ok(response);
+        } catch (NumberFormatException e) {
+             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("AppointmentId không hợp lệ.");
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

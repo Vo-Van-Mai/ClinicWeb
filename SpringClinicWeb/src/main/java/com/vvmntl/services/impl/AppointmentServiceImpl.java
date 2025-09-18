@@ -6,13 +6,20 @@ package com.vvmntl.services.impl;
 
 import com.vvmntl.exception.ResourceNotFoundException;
 import com.vvmntl.pojo.Appointment;
+import com.vvmntl.pojo.Appointmentslot;
 import com.vvmntl.pojo.Payment;
 import com.vvmntl.pojo.PaymentMethod;
+import com.vvmntl.pojo.PaymentMethodType;
+import com.vvmntl.pojo.PaymentStatus;
+import com.vvmntl.pojo.PaymentType;
 import com.vvmntl.repositories.AppointmentRepository;
+import com.vvmntl.repositories.PaymentRepository;
 import com.vvmntl.services.AppointmentService;
+import com.vvmntl.services.AppointmentSlotService;
 import com.vvmntl.services.PaymentService;
 import com.vvmntl.services.ServiceService;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +34,15 @@ public class AppointmentServiceImpl implements AppointmentService{
 
     @Autowired
     private AppointmentRepository appRepo;
+    
+    @Autowired
+    private PaymentRepository paymentRepo;
+    
     @Autowired
     private ServiceService serService;
+    
+    @Autowired
+    private AppointmentSlotService appSlotService;
     
     @Autowired
     private PaymentService paymentService;
@@ -53,10 +67,10 @@ public class AppointmentServiceImpl implements AppointmentService{
        return this.appRepo.getAppointmentByServiceId(id);
     }
 
-    @Override
-    public Appointment bookAppointment(int patientId, int serviceId, int slotId) {
-        return this.appRepo.bookAppointment(patientId, serviceId, slotId);
-    }
+//    @Override
+//    public Appointment bookAppointment(int patientId, int serviceId, int slotId) {
+//        return this.appRepo.bookAppointment(patientId, serviceId, slotId);
+//    }
 
     @Override
     public Appointment addAppointment(Appointment appointment) {
@@ -88,6 +102,10 @@ public class AppointmentServiceImpl implements AppointmentService{
         if(appointment.getAppointmentSlot().getIsBooked()){
             throw new IllegalArgumentException("Lịch này đã được chọn, vui lòng chọn lịch khác!");
         }
+        
+        Appointmentslot appSlot = this.appSlotService.getSlotById(appointment.getAppointmentSlot().getId());
+        appSlot.setIsBooked(Boolean.TRUE);
+        this.appSlotService.updateSlot(appSlot);
         return this.appRepo.addAppointment(appointment);
     }
 
@@ -97,10 +115,27 @@ public class AppointmentServiceImpl implements AppointmentService{
         return this.appRepo.loadAppointmets(params);
     }
 
+//    @Override
+//    public String bookAppointmentAndCreatePayment(int patientId, int serviceId, int slotId, PaymentMethod paymentMethod) {
+//        Payment payment = this.appRepo.createAppointmentAndPayment(patientId, serviceId, slotId, paymentMethod);
+//        return paymentService.generatePaymentUrl(payment, paymentMethod);
+//    }
+
     @Override
-    public String bookAppointmentAndCreatePayment(int patientId, int serviceId, int slotId, PaymentMethod paymentMethod) {
-        Payment payment = this.appRepo.createAppointmentAndPayment(patientId, serviceId, slotId, paymentMethod);
-        return paymentService.generatePaymentUrl(payment, paymentMethod);
+    public String createPaymentUrlForAppointment(Appointment appointment, PaymentMethod paymentMethod) {
+        Payment p = new Payment();
+        p.setAppointmentId(appointment);
+        p.setTotalAmount(appointment.getServiceId().getPrice());
+        p.setMethod(PaymentMethodType.ONLINE);
+        p.setStatus(PaymentStatus.PENDING);
+        p.setCreatedDate(new Date());
+        p.setType(PaymentType.SERVICE_FEE);
+        
+        String transactionId = String.format("APP%d_%d", appointment.getId(), System.currentTimeMillis());
+        p.setTransactionId(transactionId);
+        
+        Payment savedPayment = this.paymentRepo.save(p);
+        
+        return paymentService.generatePaymentUrl(savedPayment, paymentMethod);
     }
-    
 }

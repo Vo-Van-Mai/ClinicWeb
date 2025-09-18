@@ -18,6 +18,8 @@ const BookingDetailModal = ({ show, onHide, doctor, schedule }) => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
+    const [bookedAppointment, setBookedAppointment] = useState(null);
+
     const [paymentMethod, setPaymentMethod] = useState('VNPAY');
 
     useEffect(() => {
@@ -51,41 +53,91 @@ const BookingDetailModal = ({ show, onHide, doctor, schedule }) => {
                 }
             };
             loadServicesAndSlots();
+            setBookedAppointment(null);
+            setSuccess('');
+            setError('');
         }
     }, [show, doctor, schedule]);
 
-    const handleBookingAndPay = async () => {
+    const handleBooking = async () => {
         if (!selectedSlot || !selectedService) {
             setError("Vui lòng chọn khung giờ và dịch vụ khám.");
             return;
         }
         setLoading(true);
+        setError('');
         try {
             let url = endpoints['bookAppointment'](selectedSlot.id);
             const res = await authApis().post(url, {
-                "serviceId": {"id": selectedService},
+                "serviceId": { "id": selectedService },
                 "online": selectType,
             });
-            console.log(res);
-            if(res.status === 201){
-                let urlPay = endpoints['bookAndPay'];
-                const resPay = await authApis().post(urlPay, {
-                        "serviceId": selectedService,
-                        "slotId": selectedSlot.id,
-                        "paymentMethod": "VNPAY"
-                });
-                console.log("respay", resPay)
-                window.location.href = resPay.data.paymentUrl;
+            
+            if (res.status === 201) {
+                setSuccess("Đặt lịch thành công! Bạn có thể thanh toán ngay hoặc thanh toán sau tại trang 'Lịch đã đặt'.");
+                setBookedAppointment(res.data);
             }
-
-
         } catch (ex) {
-            setError(ex.message);
-            console.error(ex.message);
+            setError(ex.response?.data?.message || "Có lỗi xảy ra khi đặt lịch.");
+            console.error(ex);
         } finally {
             setLoading(false);
         }
     };
+
+    const handlePayment = async (appointmentId) => {
+        setLoading(true);
+        setError('');
+        try {
+            let urlPay = endpoints['createPayment'];
+            const resPay = await authApis().post(urlPay, {
+                "appointmentId": appointmentId,
+                "paymentMethod": paymentMethod
+            });
+
+            if (resPay.data.paymentUrl) {
+                window.location.href = resPay.data.paymentUrl;
+            }
+        } catch (ex) {
+            setError(ex.response?.data || "Không thể tạo yêu cầu thanh toán.");
+            console.error(ex);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // const handleBookingAndPay = async () => {
+    //     if (!selectedSlot || !selectedService) {
+    //         setError("Vui lòng chọn khung giờ và dịch vụ khám.");
+    //         return;
+    //     }
+    //     setLoading(true);
+    //     try {
+    //         let url = endpoints['bookAppointment'](selectedSlot.id);
+    //         const res = await authApis().post(url, {
+    //             "serviceId": {"id": selectedService},
+    //             "online": selectType,
+    //         });
+    //         console.log(res);
+    //         if(res.status === 201){
+    //             let urlPay = endpoints['bookAndPay'];
+    //             const resPay = await authApis().post(urlPay, {
+    //                     "serviceId": selectedService,
+    //                     "slotId": selectedSlot.id,
+    //                     "paymentMethod": "VNPAY"
+    //             });
+    //             console.log("respay", resPay)
+    //             window.location.href = resPay.data.paymentUrl;
+    //         }
+
+
+    //     } catch (ex) {
+    //         setError(ex.message);
+    //         console.error(ex.message);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
 
     if (!doctor || !schedule) return null;
 
@@ -96,68 +148,92 @@ const BookingDetailModal = ({ show, onHide, doctor, schedule }) => {
                     Đặt lịch khám ngày: <span className="text-success">{schedule.dateWork}</span>
                 </Modal.Title>
             </Modal.Header>
+            
             <Modal.Body>
                 {error && <Alert variant="danger">{error}</Alert>}
                 {success && <Alert variant="success">{success}</Alert>}
 
-                {loading ? <div className="text-center"><Spinner /></div> : <>
-                    <Form.Group className="mb-4">
-                        <Form.Label className="fw-bold">1. Chọn dịch vụ khám</Form.Label>
-                        <Form.Select value={selectedService} onChange={(e) => setSelectedService(e.target.value)} disabled={!user}>
-                            <option value="">-- Vui lòng chọn dịch vụ --</option>
-                            {services.map(s => <option key={s.id} value={s.id}>{s.name} - {s.price.toLocaleString('vi-VN')} VNĐ</option>)}
-                        </Form.Select>
-                    </Form.Group>
+                {loading ? <div className="text-center"><Spinner /></div> : (
+                    !bookedAppointment ? (
+                    <>
+                        <Form.Group className="mb-4">
+                            <Form.Label className="fw-bold">1. Chọn dịch vụ khám</Form.Label>
+                            <Form.Select value={selectedService} onChange={(e) => setSelectedService(e.target.value)} disabled={!user}>
+                                <option value="">Vui lòng chọn dịch vụ</option>
+                                {services.map(s => <option key={s.id} value={s.id}>{s.name} - {s.price.toLocaleString('vi-VN')} VNĐ</option>)}
+                            </Form.Select>
+                        </Form.Group>
 
 
-                    <Form.Group>
-                        <Form.Label className="fw-bold">2. Chọn khung giờ có sẵn</Form.Label>
-                        {availableSlots.length > 0 ? (
-                            <div className="d-flex flex-wrap">
-                                {availableSlots.map(slot => (
-                                    <Button
-                                        key={slot.id}
-                                        variant={selectedSlot?.id === slot.id ? "primary" : "outline-secondary"}
-                                        className="me-2 mb-2"
-                                        onClick={() => setSelectedSlot(slot)}
-                                        disabled={!user}
-                                    >
-                                        {slot.startTime} - {slot.endTime}
-                                    </Button>
-                                ))}
-                            </div>
-                        ) : <Alert variant="warning">Không còn lịch trống trong ngày này.</Alert>}
-                    </Form.Group>
+                        <Form.Group>
+                            <Form.Label className="fw-bold">2. Chọn khung giờ có sẵn</Form.Label>
+                            {availableSlots.length > 0 ? (
+                                <div className="d-flex flex-wrap">
+                                    {availableSlots.map(slot => (
+                                        <Button
+                                            key={slot.id}
+                                            variant={selectedSlot?.id === slot.id ? "primary" : "outline-secondary"}
+                                            className="me-2 mb-2"
+                                            onClick={() => setSelectedSlot(slot)}
+                                            disabled={!user}
+                                        >
+                                            {slot.startTime} - {slot.endTime}
+                                        </Button>
+                                    ))}
+                                </div>
+                            ) : <Alert variant="warning">Không còn lịch trống trong ngày này.</Alert>}
+                        </Form.Group>
 
-                    <Form.Group className="mb-4">
-                        <Form.Label className="fw-bold">3. Chọn dịch hình thức khám</Form.Label>
-                        <Form.Select value={selectType} onChange={(e) => setSelectType(e.target.value === "true")} disabled={!user}>
-                            <option value="">-- Vui lòng chọn hình thức khám --</option>
-                            <option value="true">-- Khám trực tuyến --</option>
-                            <option value="false">-- Khám trực tiếp --</option>
-                        </Form.Select>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label className="fw-bold">4. Chọn phương thức thanh toán</Form.Label>
-                        <Form.Select value={paymentMethod} onChange={e => setPaymentMethod(e.target.value)}>
-                            <option value="VNPAY">VNPAY</option>
-                            <option value="MOMO" disabled>MOMO (Bảo trì)</option>
-                        </Form.Select>
-                    </Form.Group>
-
-                    {!user && <Alert variant="info" className="d-flex mt-3">Vui lòng <Link className="ms-1 me-1" to="/login">đăng nhập</Link> để đặt lịch.</Alert>}
-                </>}
+                        <Form.Group className="mb-4">
+                            <Form.Label className="fw-bold">3. Chọn dịch hình thức khám</Form.Label>
+                            <Form.Select value={selectType} onChange={(e) => setSelectType(e.target.value === "true")} disabled={!user}>
+                                <option value="">Vui lòng chọn hình thức khám</option>
+                                <option value="true">Khám trực tuyến</option>
+                                <option value="false">Khám trực tiếp</option>
+                            </Form.Select>
+                        </Form.Group>
+                    </>
+                    ) : (
+                        <div className="text-center">
+                            <h4>Đặt lịch thành công!</h4>
+                            <p>Vui lòng thanh toán để xác nhận lịch hẹn.</p>
+                        </div>
+                        )
+                    )}
+                {!user && <Alert variant="info" className="d-flex mt-3">Vui lòng <Link className="ms-1 me-1" to="/login">đăng nhập</Link> để đặt lịch.</Alert>}
             </Modal.Body>
+
+            {/* //         <Form.Group className="mb-3">
+            //             <Form.Label className="fw-bold">4. Chọn phương thức thanh toán</Form.Label>
+            //             <Form.Select value={paymentMethod} onChange={e => setPaymentMethod(e.target.value)}>
+            //                 <option value="VNPAY">VNPAY</option>
+            //                 <option value="MOMO" disabled>MOMO (Bảo trì)</option>
+            //             </Form.Select>
+            //         </Form.Group>
+
+            //         {!user && <Alert variant="info" className="d-flex mt-3">Vui lòng <Link className="ms-1 me-1" to="/login">đăng nhập</Link> để đặt lịch.</Alert>}
+            //     </>} */}
+            {/* // </Modal.Body> */}
 
             <Modal.Footer>
                 <Button variant="secondary" onClick={onHide}>Đóng</Button>
-                <Button
-                    variant="primary"
-                    onClick={handleBookingAndPay}
-                    disabled={loading || !selectedSlot || !selectedService || !user}
-                >
-                    {loading ? "Đang xử lý..." : "Tiến hành thanh toán"}
-                </Button>
+                {!bookedAppointment ? (
+                    <Button
+                        variant="primary"
+                        onClick={handleBooking}
+                        disabled={loading || !selectedSlot || !selectedService || !user}
+                    >
+                        {loading ? "Đang xử lý..." : "Xác nhận đặt lịch"}
+                    </Button>
+                ) : (
+                    <Button
+                        variant="success"
+                        onClick={() => handlePayment(bookedAppointment.id)}
+                        disabled={loading}
+                    >
+                        {loading ? "Đang tạo thanh toán..." : "Thanh toán ngay"}
+                    </Button>
+                )}
             </Modal.Footer>
         </Modal>
     );

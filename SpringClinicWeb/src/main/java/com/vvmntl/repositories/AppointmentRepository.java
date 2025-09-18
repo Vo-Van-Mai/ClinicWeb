@@ -19,9 +19,10 @@ public interface AppointmentRepository {
     Appointment getAppointmentById(int id);
     boolean deleteAppointment(int id);
     List<Appointment> getAppointmentByServiceId(int id);
-    Appointment bookAppointment(int patientId, int serviceId, int slotId);
+//    Appointment bookAppointment(int patientId, int serviceId, int slotId);
     Appointment addAppointment(Appointment appointment);
+//    Payment createPaymentForAppointment(Appointment appointment);
+    Appointment updateAppointment(Appointment appointment);
     List<Appointment> loadAppointmets(Map<String, String> params);
-    String bookAppointmentAndCreatePayment(int patientId, int serviceId, int slotId, PaymentMethod paymentMethod);
-    Payment createAppointmentAndPayment(int patientId, int serviceId, int slotId, PaymentMethod paymentMethod);
+//    Payment createAppointmentAndPayment(int patientId, int serviceId, int slotId, PaymentMethod paymentMethod);
 }
