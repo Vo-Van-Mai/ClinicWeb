@@ -80,7 +80,7 @@ public class AppointmentServiceImpl implements AppointmentService{
             throw new ResourceNotFoundException("Không tìm thấy dịch vụ hợp lệ!");
         }
         
-        if(appointment.getAppointmentSlot().getIsBooked() == true){
+        if(appointment.getAppointmentSlot().getIsBooked()){
             throw new IllegalArgumentException("Lịch này đã được chọn, vui lòng chọn lịch khác!");
         }
         return this.appRepo.addAppointment(appointment);

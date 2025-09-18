@@ -14,6 +14,7 @@ import com.vvmntl.pojo.User;
 import com.vvmntl.services.AppointmentService;
 import com.vvmntl.services.AppointmentSlotService;
 import com.vvmntl.services.DoctorService;
+import com.vvmntl.services.EmailService;
 import com.vvmntl.services.PatientService;
 import com.vvmntl.services.ServiceService;
 import com.vvmntl.services.UserService;
@@ -58,6 +59,8 @@ public class ApiAppointmentController {
     private PatientService patientService;
     @Autowired
     private DoctorService doctorService;
+    @Autowired
+    private EmailService emailService;
     
     @DeleteMapping("/secure/appointments/{appointmentId}")
     public ResponseEntity<?> cancelAppointment(@PathVariable("appointmentId") int appointmentId, Principal principal) {
@@ -99,14 +102,12 @@ public class ApiAppointmentController {
     public ResponseEntity<?> bookAppointment(@RequestBody Appointment appoinment, Principal principal, @PathVariable(value="slotId") int slotId) {
         try{
             Service service = this.serService.getServiceById(appoinment.getServiceId().getId());
-            
             if(service == null){
                 return ResponseEntity.badRequest().body("Không tìm thấy dịch vụ!");
             }
-            
             Appointmentslot appSlot = this.slotService.getSlotById(slotId);
-            if(appSlot.getIsBooked()==true){
-                return ResponseEntity.badRequest().body("Lịch này đã được đặt vui lòng chọn lịch khác!");
+            if(Boolean.TRUE.equals(appSlot.getIsBooked())){
+                return ResponseEntity.badRequest().body("Lịch này đã được đặt vui lòng chọn lịch khác!" + appSlot.getIsBooked());
             }
             User user = this.userService.getUserByUsername(principal.getName());
             
@@ -119,11 +120,40 @@ public class ApiAppointmentController {
             appoinment.setAppointmentSlot(appSlot);
             appoinment.setCreatedDate(LocalDate.now());
             appoinment.setStatus(StatusEnum.PENDING);
-            appoinment.setRoomUrl("https://meet.jit.si/" + appoinment.getAppointmentSlot().getId() + "-" + appoinment.getPatientId().getId()+ "-" + appoinment.getServiceId().getName());
+            if(Boolean.TRUE.equals(appoinment.getOnline())){
+                appoinment.setRoomUrl("https://meet.jit.si/" + appoinment.getAppointmentSlot().getId() 
+                + "-" + appoinment.getPatientId().getId() + "-" + appoinment.getServiceId().getName());
+           }
             appoinment.setPaymentForPrescription(Boolean.FALSE);
-            Appointment appt = appointmentService.addAppointment(appoinment);
-            appSlot.setIsBooked(true);
+            
             slotService.updateSlot(appSlot);
+            String subject = "THÔNG TIN LỊCH HẸN";
+            StringBuilder content = new StringBuilder();
+            content.append("Xin chào ")
+                    .append(appoinment.getPatientId().getUser().getLastName())
+                    .append(" ")
+                    .append(appoinment.getPatientId().getUser().getFirstName())
+                    .append(",\n\n")
+                    .append("Lịch đặt của bạn đã được lưu trong hệ thống!\n")
+                    .append("Ngày khám: ")
+                    .append(appoinment.getAppointmentSlot().getScheduleId().getDateWork())
+                    .append("\n\n")
+                    .append("Thời gian khám: ")
+                    .append(appoinment.getAppointmentSlot().getStartTime())
+                    .append(" đến ")
+                    .append(appoinment.getAppointmentSlot().getEndTime())
+                    .append("\n\n");
+            if (Boolean.TRUE.equals(appoinment.getOnline()) && appoinment.getRoomUrl() != null) {
+                content.append("Phòng khám online: ")
+                        .append(appoinment.getRoomUrl())
+                        .append("\n\n");
+            }
+            content.append("Trân trọng,\n")
+                    .append("Phòng khám");
+            String emailTo = appoinment.getPatientId().getUser().getEmail();
+            Appointment appt = this.appointmentService.addAppointment(appoinment);
+            this.emailService.sendSimpleEmail(emailTo, subject, content.toString());
+            appSlot.setIsBooked(true);
             return ResponseEntity.status(HttpStatus.CREATED).body(appt);
         } catch (IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

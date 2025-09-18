@@ -12,6 +12,7 @@ const BookingDetailModal = ({ show, onHide, doctor, schedule }) => {
 
     const [selectedSlot, setSelectedSlot] = useState(null);
     const [selectedService, setSelectedService] = useState('');
+    const [selectType, setSelectType] = useState("");
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -63,7 +64,9 @@ const BookingDetailModal = ({ show, onHide, doctor, schedule }) => {
         try {
             let url = endpoints['bookAppointment'](selectedSlot.id);
             const res = await authApis().post(url, {
-                serviceId: parseInt(selectedService)
+                "serviceId": selectedService,
+                "online": selectType,
+
             });
 
             if (res.status === 201) {
@@ -119,6 +122,15 @@ const BookingDetailModal = ({ show, onHide, doctor, schedule }) => {
                                 ))}
                             </div>
                         ) : <Alert variant="warning">Không còn lịch trống trong ngày này.</Alert>}
+                    </Form.Group>
+
+                    <Form.Group className="mb-4">
+                        <Form.Label className="fw-bold">3. Chọn dịch hình thức khám</Form.Label>
+                        <Form.Select value={selectType} onChange={(e) => setSelectType(e.target.value === "true")} disabled={!user}>
+                            <option value="">-- Vui lòng chọn hình thức khám --</option>
+                            <option value="true">-- Khám trực tuyến --</option>
+                            <option value="false">-- Khám trực tiếp --</option>
+                        </Form.Select>
                     </Form.Group>
 
                     {!user && <Alert variant="info" className="d-flex mt-3">Vui lòng <Link className="ms-1 me-1" to="/login">đăng nhập</Link> để đặt lịch.</Alert>}
