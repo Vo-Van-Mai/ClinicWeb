@@ -9,14 +9,18 @@ import com.vvmntl.pojo.Appointmentslot;
 import com.vvmntl.pojo.Doctor;
 import com.vvmntl.pojo.Patient;
 import com.vvmntl.pojo.PaymentMethod;
+import com.vvmntl.pojo.Service;
+import com.vvmntl.pojo.StatusEnum;
 import com.vvmntl.pojo.User;
 import com.vvmntl.services.AppointmentService;
 import com.vvmntl.services.AppointmentSlotService;
 import com.vvmntl.services.DoctorService;
 import com.vvmntl.services.PatientService;
+import com.vvmntl.services.ServiceService;
 import com.vvmntl.services.UserService;
 import java.security.Principal;
 import java.util.HashMap;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -49,7 +53,8 @@ public class ApiAppointmentController {
 
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private ServiceService serService;
     @Autowired
     private PatientService patientService;
     @Autowired
@@ -90,19 +95,36 @@ public class ApiAppointmentController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @PostMapping("/secure/appointments/{slotId}")
-    public ResponseEntity<?> bookAppointment(@PathVariable("slotId") int slotId, @RequestBody Map<String, Integer> payload, Principal principal) {
-        try {
-            Integer serviceId = payload.get("serviceId");
-            if (serviceId == null) {
-                return ResponseEntity.badRequest().body("Thiếu serviceId");
+    
+    @PostMapping("/secure/patients/appointments/{slotId}")
+    public ResponseEntity<?> bookAppointment(@RequestBody Appointment appoinment, Principal principal, @PathVariable(value="slotId") int slotId) {
+        try{
+            Service service = this.serService.getServiceById(appoinment.getServiceId().getId());
+            
+            if(service == null){
+                return ResponseEntity.badRequest().body("Không tìm thấy dịch vụ!");
             }
-
-            User user = userService.getUserByUsername(principal.getName());
-            Patient patient = this.patientService.getPatientById(user.getId());
-
-            Appointment appt = appointmentService.bookAppointment(patient.getId(), serviceId, slotId);
+            
+            Appointmentslot appSlot = this.slotService.getSlotById(slotId);
+            if(appSlot.getIsBooked()==true){
+                return ResponseEntity.badRequest().body("Lịch này đã được đặt vui lòng chọn lịch khác!");
+            }
+            User user = this.userService.getUserByUsername(principal.getName());
+            
+            Patient patient = patientService.getPatientById(user.getId());
+            if (patient == null) {
+                return ResponseEntity.badRequest().body("Không tìm thấy hồ sơ bệnh nhân!");
+            }
+            appoinment.setPatientId(patient);
+            appoinment.setServiceId(service);
+            appoinment.setAppointmentSlot(appSlot);
+            appoinment.setCreatedDate(LocalDate.now());
+            appoinment.setStatus(StatusEnum.PENDING);
+            appoinment.setRoomUrl("https://meet.jit.si/" + appoinment.getAppointmentSlot().getId() + "-" + appoinment.getPatientId().getId()+ "-" + appoinment.getServiceId().getName());
+            appoinment.setPaymentForPrescription(Boolean.FALSE);
+            Appointment appt = appointmentService.addAppointment(appoinment);
+            appSlot.setIsBooked(true);
+            slotService.updateSlot(appSlot);
             return ResponseEntity.status(HttpStatus.CREATED).body(appt);
         } catch (IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -125,13 +147,12 @@ public class ApiAppointmentController {
     
     @GetMapping("/appoimentslots/{doctorId}")
     public ResponseEntity<?> list(@PathVariable(value = "doctorId") int id){
-            try {
-                Doctor doctor = this.doctorService.getDoctorById(id);
-                return ResponseEntity.ok(this.slotService.getListAppointmentSlotByDoctorId(doctor));
-            } catch (Exception e) {
-                return ResponseEntity.badRequest().body(e.getMessage());
-            }
-        
+        try {
+            Doctor doctor = this.doctorService.getDoctorById(id);
+            return ResponseEntity.ok(this.slotService.getListAppointmentSlotByDoctorId(doctor));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     
     @GetMapping("/secure/appointments")

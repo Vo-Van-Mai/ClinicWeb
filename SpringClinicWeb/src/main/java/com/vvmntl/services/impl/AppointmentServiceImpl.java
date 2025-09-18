@@ -4,12 +4,15 @@
  */
 package com.vvmntl.services.impl;
 
+import com.vvmntl.exception.ResourceNotFoundException;
 import com.vvmntl.pojo.Appointment;
 import com.vvmntl.pojo.Payment;
 import com.vvmntl.pojo.PaymentMethod;
 import com.vvmntl.repositories.AppointmentRepository;
 import com.vvmntl.services.AppointmentService;
 import com.vvmntl.services.PaymentService;
+import com.vvmntl.services.ServiceService;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,8 @@ public class AppointmentServiceImpl implements AppointmentService{
 
     @Autowired
     private AppointmentRepository appRepo;
+    @Autowired
+    private ServiceService serService;
     
     @Autowired
     private PaymentService paymentService;
@@ -55,6 +60,34 @@ public class AppointmentServiceImpl implements AppointmentService{
 
     @Override
     public Appointment addAppointment(Appointment appointment) {
+        
+        if (appointment.getPatientId() == null) {
+            throw new IllegalArgumentException("Bệnh nhân không được để trống");
+        }
+
+        if (Boolean.TRUE.equals(appointment.getOnline())) {
+            if (appointment.getRoomUrl() == null || appointment.getRoomUrl().trim().isEmpty()) {
+                throw new IllegalArgumentException("Phải có link phòng khi đặt lịch online");
+            }
+            if (appointment.getRoomUrl().length() > 255) {
+                throw new IllegalArgumentException("Đường dẫn phòng không được vượt quá 255 ký tự");
+            }
+        }
+        if (appointment.getCreatedDate().isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("Thời gian đặt lịch phải trong tương lai");
+        }
+        
+        if (appointment.getServiceId()==null){
+            throw new IllegalArgumentException("Dịch vụ chưa được chọn!");
+        }
+        com.vvmntl.pojo.Service service = this.serService.getServiceById(appointment.getServiceId().getId());
+        if(service == null){
+            throw new ResourceNotFoundException("Không tìm thấy dịch vụ hợp lệ!");
+        }
+        
+        if(appointment.getAppointmentSlot().getIsBooked() == true){
+            throw new IllegalArgumentException("Lịch này đã được chọn, vui lòng chọn lịch khác!");
+        }
         return this.appRepo.addAppointment(appointment);
     }
 

@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,7 +39,7 @@ import java.util.Set;
     @NamedQuery(name = "Appointment.findByRoomUrl", query = "SELECT a FROM Appointment a WHERE a.roomUrl = :roomUrl"),
     @NamedQuery(name = "Appointment.findByPaymentForService", query = "SELECT a FROM Appointment a WHERE a.paymentForService = :paymentForService"),
     @NamedQuery(name = "Appointment.findByPaymentForPrescription", query = "SELECT a FROM Appointment a WHERE a.paymentForPrescription = :paymentForPrescription")})
-@JsonIgnoreProperties(value = {"medicalrecordSet", "patientId", "paymentSet"})
+@JsonIgnoreProperties(value = {"medicalrecordSet", "paymentSet"})
 public class Appointment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,9 +50,9 @@ public class Appointment implements Serializable {
     private Integer id;
     @Column(name = "created_date")
     private LocalDate createdDate;
-    @Size(max = 9)
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
     @Column(name = "online")
     private Boolean online;
     @Size(max = 255)
@@ -97,11 +99,11 @@ public class Appointment implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 

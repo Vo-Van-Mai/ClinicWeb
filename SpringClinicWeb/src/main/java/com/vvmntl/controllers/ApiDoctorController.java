@@ -9,7 +9,6 @@ import com.vvmntl.pojo.Doctor;
 import com.vvmntl.pojo.DoctorSpecialize;
 import com.vvmntl.pojo.Specialize;
 import com.vvmntl.pojo.User;
-import com.vvmntl.pojo.Workschedule;
 import com.vvmntl.services.DoctorService;
 import com.vvmntl.services.DoctorSpecializeService;
 import com.vvmntl.services.SpecializeService;
@@ -95,9 +94,7 @@ public class ApiDoctorController {
     
     
     @PostMapping("/doctors/{doctorId}/specializes")
-    public ResponseEntity<?> addSpecializes(
-            @PathVariable(value = "doctorId") int doctorId,
-            @RequestBody Map<String, List<Integer>> payload) {
+    public ResponseEntity<?> addSpecializes(@PathVariable(value = "doctorId") int doctorId, @RequestBody Map<String, List<Integer>> payload) {
         try {
             Doctor doctor = this.docService.getDoctorById(doctorId);
             if (doctor == null) {

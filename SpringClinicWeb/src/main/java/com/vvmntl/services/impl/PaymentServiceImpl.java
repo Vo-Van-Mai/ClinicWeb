@@ -81,7 +81,7 @@ public class PaymentServiceImpl implements PaymentService {
                 payment.setStatus(PaymentStatus.SUCCESSFUL);
                 
                 Appointment app = payment.getAppointmentId();
-                app.setStatus("CONFIRMED");
+//                app.setStatus("CONFIRMED");
                 app.setPaymentForService(true);
                 appointmentRepo.addAppointment(app);
             } else {

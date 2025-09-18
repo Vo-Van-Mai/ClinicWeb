@@ -11,7 +11,6 @@ import com.vvmntl.services.MedicineServices;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,7 +40,6 @@ public class IndexController {
         long totalDoctors = this.doctorService.countDoctor(params);
         int totalPages = (int) Math.ceil((double) totalDoctors /10);
         model.addAttribute("totalPages", totalPages);
-        
         model.addAttribute("medicines", this.mediService.getMedicines(params));
         return "index";
     }

@@ -53,6 +53,8 @@ public class SpringSecurityConfig {
 
     @Autowired
     private UserDetailsService userDetailService;
+    @Autowired
+    private DoctorService doctorService;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -75,7 +77,9 @@ public class SpringSecurityConfig {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(c -> c.disable()).authorizeHttpRequests(requests
                 -> requests.requestMatchers("/home", "/doctor", "/stats", "/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/secure/workschedules/**").hasRole("DOCTOR")
+                        .requestMatchers("/api/secure/workschedules/**").access(new DoctorAuthorizationManager())
+                        .requestMatchers("/api/secure/patients/**").hasRole("PATIENT")
+                        .requestMatchers("/api/secure/doctors/**").hasRole("DOCTOR")
                         .requestMatchers("/api/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/specialize").hasRole("ADMIN")
                         .anyRequest().authenticated())
@@ -115,6 +119,30 @@ public class SpringSecurityConfig {
         return cloudinary;
     }
     
-    
+    public class DoctorAuthorizationManager implements AuthorizationManager<RequestAuthorizationContext> {
+
+        @Override
+        public AuthorizationDecision check(Supplier<Authentication> authenticationSupplier, RequestAuthorizationContext context) {
+            Authentication authentication = authenticationSupplier.get();
+            if (authentication == null || !authentication.isAuthenticated()) {
+                return new AuthorizationDecision(false);
+            }
+
+            boolean hasDoctorRole = authentication.getAuthorities().stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_DOCTOR"));
+            if (!hasDoctorRole) {
+                return new AuthorizationDecision(false);
+            }
+
+            String username = authentication.getName();
+            User user = (User) userDetailService.loadUserByUsername(username);
+            if (user == null) {
+                return new AuthorizationDecision(false);
+            }
+
+            boolean isVerified = doctorService.isVerified(user.getId());
+            return new AuthorizationDecision(isVerified);
+        }
+    }
     
 }
