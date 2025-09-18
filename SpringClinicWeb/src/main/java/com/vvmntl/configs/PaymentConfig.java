@@ -20,5 +20,5 @@ public class PaymentConfig {
     // public static final String MOMO_ENDPOINT = "https://test-payment.momo.vn/v2/gateway/api/create"; 
 
     public static final String RETURN_URL = "http://localhost:3000/payment-return";
-    public static final String NOTIFY_URL = "http://localhost:8080/SpringClinicWeb/api/payment/notify";
+    public static final String NOTIFY_URL = "https://2415135105d5.ngrok-free.app/SpringClinicWeb/api/payment/notify";
 }
