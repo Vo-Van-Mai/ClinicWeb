@@ -34,19 +34,14 @@ public class AppointmentServiceImpl implements AppointmentService{
 
     @Autowired
     private AppointmentRepository appRepo;
-    
     @Autowired
     private PaymentRepository paymentRepo;
-    
     @Autowired
     private ServiceService serService;
-    
     @Autowired
     private AppointmentSlotService appSlotService;
-    
     @Autowired
     private PaymentService paymentService;
-    
     @Override
     public List<Appointment> list() {
         return this.appRepo.list();

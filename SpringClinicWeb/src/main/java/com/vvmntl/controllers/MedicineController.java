@@ -45,8 +45,6 @@ public class MedicineController {
         model.addAttribute("medicine", this.mediService.getMedicineById(id));
         model.addAttribute("categories", this.cateService.getCates());
         
-//        CategoryMedicine cm = this.cateMediService.getCateMediById(id);
-//        model.addAttribute("currentCateId", cm != null? cm.getCategoryId().getId(): null);
         return "medicines";
     }
     
