@@ -101,39 +101,6 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         s.persist(appointment);
         return appointment;
     }
-
-//    @Override
-//    public Appointment bookAppointment(int patientId, int serviceId, int slotId) {
-//        Session s = this.factory.getObject().getCurrentSession();
-//
-//        Appointmentslot slot = this.slotRepo.getSlotByIdForUpdate(slotId);
-//
-//        if (slot == null || Boolean.TRUE.equals(slot.getIsBooked())) {
-//            throw new IllegalStateException("Slot không tồn tại hoặc đã được đặt!");
-//        }
-//        
-//        Patient patient = this.patientRepo.getPatientById(patientId);
-//        Service service = this.serviceRepo.getServiceById(serviceId);
-//        
-//        if (patient == null || service == null) {
-//            throw new IllegalArgumentException("Bệnh nhân hoặc dịch vụ không hợp lệ!");
-//        }
-//
-//        Appointment appointment = new Appointment();
-//        appointment.setPatientId(patient);
-//        appointment.setServiceId(service);
-//        appointment.setAppointmentSlot(slot);
-//        appointment.setCreatedDate(LocalDate.now());
-//        appointment.setStatus(StatusEnum.PENDING);
-//        appointment.setPaymentForService(false);
-//
-//        s.persist(appointment);
-//
-//        slot.setIsBooked(true);
-//        s.merge(slot);
-//
-//        return appointment;
-//    }
     
     
     @Override
@@ -186,46 +153,6 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         return q.getResultList();
     }
 
-//    @Override
-//    public Payment createAppointmentAndPayment(int patientId, int serviceId, int slotId, PaymentMethod paymentMethod) {
-//        Session s = this.factory.getObject().getCurrentSession();
-//
-//        Appointmentslot slot = this.slotRepo.getSlotByIdForUpdate(slotId);
-//        if (slot == null || Boolean.TRUE.equals(slot.getIsBooked())) {
-//            throw new IllegalStateException("Slot không tồn tại hoặc đã được đặt!");
-//        }
-//        Patient patient = this.patientRepo.getPatientById(patientId);
-//        Service service = this.serviceRepo.getServiceById(serviceId);
-//        if (patient == null || service == null) {
-//            throw new IllegalArgumentException("Bệnh nhân hoặc dịch vụ không hợp lệ!");
-//        }
-//
-//        Appointment appointment = new Appointment();
-//        appointment.setPatientId(patient);
-//        appointment.setServiceId(service);
-//        appointment.setAppointmentSlot(slot);
-//        appointment.setCreatedDate(LocalDate.now());
-//        appointment.setStatus(StatusEnum.PENDING);
-//        appointment.setPaymentForService(false);
-//        s.persist(appointment);
-//
-//        slot.setIsBooked(true);
-//        s.merge(slot);
-//
-//        Payment payment = new Payment();
-//        payment.setAppointmentId(appointment);
-//        payment.setTotalAmount(service.getPrice());
-//        payment.setMethod(PaymentMethodType.ONLINE);
-//        payment.setStatus(PaymentStatus.PENDING);
-//        payment.setCreatedDate(new Date());
-//        payment.setType(PaymentType.SERVICE_FEE);
-//        String transactionId = String.format("APP%d_%d", appointment.getId(), System.currentTimeMillis());
-//        payment.setTransactionId(transactionId);
-//        s.persist(payment);
-//
-//        return payment;
-//    }
-
     @Override
     public Appointment updateAppointment(Appointment appointment) {
         Session s = this.factory.getObject().getCurrentSession();
@@ -233,24 +160,4 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         return appointment;
     }
 
-//    @Override
-//    public Payment createPaymentForAppointment(Appointment appointment) {
-//        Session s = this.factory.getObject().getCurrentSession();
-//        Service service = appointment.getServiceId();
-//
-//        Payment payment = new Payment();
-//        payment.setAppointmentId(appointment);
-//        payment.setTotalAmount(service.getPrice());
-//        payment.setMethod(PaymentMethodType.ONLINE);
-//        payment.setStatus(PaymentStatus.PENDING);
-//        payment.setCreatedDate(new Date());
-//        payment.setType(PaymentType.SERVICE_FEE);
-//        
-//        String transactionId = String.format("APP%d_%d", appointment.getId(), System.currentTimeMillis());
-//        payment.setTransactionId(transactionId);
-//        
-//        s.persist(payment);
-//        
-//        return payment;
-//    }
 }
